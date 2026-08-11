@@ -1,5 +1,5 @@
 // ============================================================
-// DATOS DE CURSOS
+// DATOS DE CURSOS - COMPLETO
 // ============================================================
 const datos = {
   "Ciclo 0": {
@@ -132,6 +132,8 @@ const ciclos = Object.keys(datos);
 let modoActual = 'teoria';
 let cursosSeleccionados = [];
 let coloresAsignados = {};
+let cursosFiltrados = [];
+let temporizadorMensaje = null;
 
 const paletaColores = [
     '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7',
@@ -145,9 +147,8 @@ const horas = ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00',
                '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00'];
 
 // ============================================================
-// FUNCIONES PRINCIPALES
+// FUNCIONES DE COLOR
 // ============================================================
-
 function obtenerColor(nombreCurso) {
     if (!coloresAsignados[nombreCurso]) {
         const color = paletaColores[Object.keys(coloresAsignados).length % paletaColores.length];
@@ -156,11 +157,20 @@ function obtenerColor(nombreCurso) {
     return coloresAsignados[nombreCurso];
 }
 
+// ============================================================
+// FUNCIONES PRINCIPALES
+// ============================================================
 function actualizarCursos() {
     const cicloNombre = ciclos[cicloActual];
     document.getElementById('labelCiclo').textContent = cicloNombre;
     
     const cursos = datos[cicloNombre][modoActual];
+    cursosFiltrados = [...cursos];
+    mostrarCursos(cursosFiltrados);
+    actualizarHorario();
+}
+
+function mostrarCursos(cursos) {
     const lista = document.getElementById('listaCursos');
     lista.innerHTML = '';
     
@@ -180,8 +190,23 @@ function actualizarCursos() {
         li.onclick = () => clickCurso(curso);
         lista.appendChild(li);
     });
+}
+
+function filtrarCursos() {
+    const busqueda = document.getElementById('buscador').value.toLowerCase().trim();
+    const cicloNombre = ciclos[cicloActual];
+    const cursos = datos[cicloNombre][modoActual];
     
-    actualizarHorario();
+    if (busqueda === '') {
+        cursosFiltrados = [...cursos];
+    } else {
+        cursosFiltrados = cursos.filter(curso => 
+            curso.nombre.toLowerCase().includes(busqueda) ||
+            curso.profesor.toLowerCase().includes(busqueda) ||
+            curso.seccion.includes(busqueda)
+        );
+    }
+    mostrarCursos(cursosFiltrados);
 }
 
 function clickCurso(curso) {
@@ -191,19 +216,17 @@ function clickCurso(curso) {
     
     if (index !== -1) {
         cursosSeleccionados.splice(index, 1);
-        document.getElementById('labelInfo').textContent = `❌ Quitado: ${curso.nombre}`;
-        document.getElementById('labelInfo').style.color = '#e74c3c';
+        mostrarMensaje(`❌ Quitado: ${curso.nombre}`, '#e74c3c');
     } else {
         // Verificar conflicto
         for (const c of cursosSeleccionados) {
             if (c.dia === curso.dia && horasSeSuperponen(c.hora, curso.hora)) {
-                alert(`¡Conflicto de horario!\n${c.nombre} ya está en ${c.dia} ${c.hora}`);
+                mostrarMensaje(`⚠️ Conflicto: ${c.nombre} ya está en ${c.dia} ${c.hora}`, '#e67e22');
                 return;
             }
         }
         cursosSeleccionados.push(curso);
-        document.getElementById('labelInfo').textContent = `✅ Agregado: ${curso.nombre}`;
-        document.getElementById('labelInfo').style.color = '#27ae60';
+        mostrarMensaje(`✅ Agregado: ${curso.nombre}`, '#27ae60');
     }
     
     actualizarCreditos();
@@ -226,6 +249,25 @@ function horasSeSuperponen(hora1, hora2) {
     const [ini1, fin1] = convertirAMinutos(hora1);
     const [ini2, fin2] = convertirAMinutos(hora2);
     return !(fin1 <= ini2 || fin2 <= ini1);
+}
+
+function mostrarMensaje(texto, color) {
+    const label = document.getElementById('labelInfo');
+    label.textContent = texto;
+    label.style.color = color;
+    label.style.fontWeight = 'bold';
+    
+    // Limpiar temporizador anterior
+    if (temporizadorMensaje) {
+        clearTimeout(temporizadorMensaje);
+    }
+    
+    // Restaurar mensaje después de 3 segundos
+    temporizadorMensaje = setTimeout(() => {
+        label.textContent = '💡 Haz click en un curso para agregarlo/quitarlo del horario';
+        label.style.color = '#7f8c8d';
+        label.style.fontWeight = 'normal';
+    }, 3000);
 }
 
 function actualizarCreditos() {
@@ -275,18 +317,49 @@ function actualizarHorario() {
         const tdHora = document.createElement('td');
         tdHora.textContent = hora;
         tdHora.style.fontWeight = 'bold';
-        tdHora.style.background = '#ecf0f1';
+        tdHora.style.background = document.body.classList.contains('modo-oscuro') ? '#1a2a4a' : '#ecf0f1';
+        tdHora.style.width = '60px';
+        tdHora.style.fontSize = '12px';
         tr.appendChild(tdHora);
         
         dias.forEach(dia => {
             const td = document.createElement('td');
+            td.style.padding = '2px';
+            td.style.height = '40px';
+            td.style.verticalAlign = 'middle';
+            td.style.textAlign = 'center';
+            
             const curso = horario[dia][hora];
             if (curso) {
-                const div = document.createElement('div');
-                div.className = 'bloque-curso';
-                div.style.background = obtenerColor(curso.nombre);
-                div.textContent = curso.nombre.substring(0, 15) + '...';
-                td.appendChild(div);
+                const partes = curso.hora.split(' - ');
+                const horaInicio = partes[0].trim();
+                const horaFin = partes[1].trim();
+                const idxInicio = horas.indexOf(horaInicio);
+                const idxFin = horas.indexOf(horaFin);
+                
+                // Solo mostrar el bloque en la hora de inicio
+                if (idxInicio === horas.indexOf(hora)) {
+                    const duracion = idxFin - idxInicio;
+                    
+                    const div = document.createElement('div');
+                    div.className = 'bloque-curso';
+                    div.style.background = obtenerColor(curso.nombre);
+                    div.style.height = (duracion * 40 - 4) + 'px';
+                    div.title = `${curso.nombre}\nSección: ${curso.seccion}\nProfesor: ${curso.profesor}\nCréditos: ${curso.creditos}`;
+                    
+                    const nombreSpan = document.createElement('span');
+                    nombreSpan.textContent = curso.nombre.substring(0, 15) + (curso.nombre.length > 15 ? '...' : '');
+                    
+                    const seccionSpan = document.createElement('span');
+                    seccionSpan.textContent = `Sec:${curso.seccion}`;
+                    
+                    div.appendChild(nombreSpan);
+                    div.appendChild(seccionSpan);
+                    td.appendChild(div);
+                } else {
+                    td.style.background = obtenerColor(curso.nombre);
+                    td.style.opacity = '0.3';
+                }
             } else {
                 td.className = 'vacio';
             }
@@ -301,6 +374,7 @@ function cambiarModo(modo) {
     modoActual = modo;
     document.getElementById('btnTeoria').className = `btn-teoria ${modo === 'teoria' ? 'activo' : ''}`;
     document.getElementById('btnLaboratorio').className = `btn-laboratorio ${modo === 'laboratorio' ? 'activo' : ''}`;
+    document.getElementById('buscador').value = '';
     actualizarCursos();
 }
 
@@ -308,34 +382,48 @@ function cambiarCiclo(direccion) {
     const nuevo = cicloActual + direccion;
     if (nuevo >= 0 && nuevo < ciclos.length) {
         cicloActual = nuevo;
+        document.getElementById('buscador').value = '';
         actualizarCursos();
+    }
+}
+
+// ============================================================
+// CONFIRMAR LIMPIAR
+// ============================================================
+function confirmarLimpiar() {
+    if (cursosSeleccionados.length === 0) {
+        mostrarMensaje('ℹ️ El horario ya está vacío', '#3498db');
+        return;
+    }
+    
+    if (confirm('¿Estás seguro de que quieres limpiar todo el horario?')) {
+        limpiarHorario();
     }
 }
 
 function limpiarHorario() {
-    if (cursosSeleccionados.length > 0) {
-        cursosSeleccionados = [];
-        coloresAsignados = {};
-        actualizarCreditos();
-        actualizarCursos();
-        document.getElementById('labelInfo').textContent = '🗑️ Horario limpiado';
-        document.getElementById('labelInfo').style.color = '#e74c3c';
-    }
+    cursosSeleccionados = [];
+    coloresAsignados = {};
+    actualizarCreditos();
+    actualizarCursos();
+    mostrarMensaje('🗑️ Horario limpiado', '#e74c3c');
 }
 
+// ============================================================
+// GENERAR AUTOMÁTICO
+// ============================================================
 function generarAutomatico() {
     const cicloNombre = ciclos[cicloActual];
     const cursos = datos[cicloNombre][modoActual];
     
     if (!cursos || cursos.length === 0) {
-        alert('No hay cursos disponibles');
+        mostrarMensaje('❌ No hay cursos disponibles', '#e74c3c');
         return;
     }
     
     cursosSeleccionados = [];
     coloresAsignados = {};
     
-    // Selección aleatoria simple
     const numCursos = Math.min(5 + Math.floor(Math.random() * 4), cursos.length);
     const seleccionados = [];
     const disponibles = [...cursos];
@@ -344,7 +432,6 @@ function generarAutomatico() {
         const idx = Math.floor(Math.random() * disponibles.length);
         const curso = disponibles.splice(idx, 1)[0];
         
-        // Verificar conflicto
         let conflicto = false;
         for (const c of seleccionados) {
             if (c.dia === curso.dia && horasSeSuperponen(c.hora, curso.hora)) {
@@ -360,13 +447,15 @@ function generarAutomatico() {
     cursosSeleccionados = seleccionados;
     actualizarCreditos();
     actualizarCursos();
-    document.getElementById('labelInfo').textContent = `⚡ Generado automáticamente: ${cursosSeleccionados.length} cursos`;
-    document.getElementById('labelInfo').style.color = '#2ecc71';
+    mostrarMensaje(`⚡ Generado: ${cursosSeleccionados.length} cursos`, '#2ecc71');
 }
 
+// ============================================================
+// EXPORTAR A TEXTO
+// ============================================================
 function exportarTexto() {
     if (cursosSeleccionados.length === 0) {
-        alert('No hay cursos en el horario');
+        mostrarMensaje('❌ No hay cursos en el horario', '#e74c3c');
         return;
     }
     
@@ -390,24 +479,163 @@ function exportarTexto() {
         texto += '\n';
     });
     
-    // Descargar archivo
     const blob = new Blob([texto], { type: 'text/plain;charset=utf-8' });
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
     link.download = 'mi_horario.txt';
     link.click();
     URL.revokeObjectURL(link.href);
+    
+    mostrarMensaje('✅ Texto exportado exitosamente', '#27ae60');
 }
 
+// ============================================================
+// EXPORTAR A IMAGEN
+// ============================================================
+function exportarImagen() {
+    if (cursosSeleccionados.length === 0) {
+        mostrarMensaje('❌ No hay cursos en el horario', '#e74c3c');
+        return;
+    }
+    
+    const tabla = document.getElementById('tablaContainer');
+    mostrarMensaje('⏳ Generando imagen...', '#f39c12');
+    
+    // Verificar que html2canvas esté disponible
+    if (typeof html2canvas === 'undefined') {
+        mostrarMensaje('❌ Error: html2canvas no cargado', '#e74c3c');
+        return;
+    }
+    
+    html2canvas(tabla, {
+        scale: 2,
+        backgroundColor: document.body.classList.contains('modo-oscuro') ? '#1a1a2e' : '#ffffff',
+        allowTaint: true,
+        useCORS: true,
+        logging: false
+    }).then(canvas => {
+        const link = document.createElement('a');
+        link.download = 'mi_horario.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+        mostrarMensaje('✅ Imagen exportada exitosamente', '#27ae60');
+    }).catch(error => {
+        console.error('Error:', error);
+        mostrarMensaje('❌ Error al generar imagen', '#e74c3c');
+    });
+}
+
+// ============================================================
+// GUARDAR HORARIO (LocalStorage)
+// ============================================================
+function guardarHorario() {
+    if (cursosSeleccionados.length === 0) {
+        mostrarMensaje('❌ No hay cursos para guardar', '#e74c3c');
+        return;
+    }
+    
+    const datosGuardar = {
+        fecha: new Date().toLocaleString(),
+        ciclo: ciclos[cicloActual],
+        modo: modoActual,
+        cursos: cursosSeleccionados
+    };
+    
+    try {
+        // Obtener horarios guardados
+        let horariosGuardados = JSON.parse(localStorage.getItem('horariosGuardados')) || [];
+        horariosGuardados.push(datosGuardar);
+        localStorage.setItem('horariosGuardados', JSON.stringify(horariosGuardados));
+        
+        mostrarMensaje('✅ Horario guardado exitosamente', '#27ae60');
+    } catch (error) {
+        mostrarMensaje('❌ Error al guardar', '#e74c3c');
+    }
+}
+
+// ============================================================
+// CARGAR HORARIO DESDE LOCALSTORAGE
+// ============================================================
+function cargarHorarioGuardado(index) {
+    try {
+        const horariosGuardados = JSON.parse(localStorage.getItem('horariosGuardados')) || [];
+        if (index >= 0 && index < horariosGuardados.length) {
+            const datos = horariosGuardados[index];
+            // Cambiar al ciclo y modo correspondiente
+            const cicloIndex = ciclos.indexOf(datos.ciclo);
+            if (cicloIndex !== -1) {
+                cicloActual = cicloIndex;
+                modoActual = datos.modo;
+                cursosSeleccionados = datos.cursos;
+                
+                // Actualizar UI
+                document.getElementById('btnTeoria').className = `btn-teoria ${modoActual === 'teoria' ? 'activo' : ''}`;
+                document.getElementById('btnLaboratorio').className = `btn-laboratorio ${modoActual === 'laboratorio' ? 'activo' : ''}`;
+                
+                actualizarCreditos();
+                actualizarCursos();
+                mostrarMensaje('✅ Horario cargado exitosamente', '#27ae60');
+            }
+        }
+    } catch (error) {
+        mostrarMensaje('❌ Error al cargar', '#e74c3c');
+    }
+}
+
+// ============================================================
+// MODO OSCURO
+// ============================================================
 function toggleModo() {
     document.body.classList.toggle('modo-oscuro');
     const btn = document.getElementById('btnModo');
     if (document.body.classList.contains('modo-oscuro')) {
         btn.textContent = '☀️ Modo Claro';
+        localStorage.setItem('modoOscuro', 'true');
     } else {
         btn.textContent = '🌙 Modo Oscuro';
+        localStorage.setItem('modoOscuro', 'false');
+    }
+    actualizarHorario();
+}
+
+function cargarModo() {
+    const modo = localStorage.getItem('modoOscuro');
+    if (modo === 'true') {
+        document.body.classList.add('modo-oscuro');
+        document.getElementById('btnModo').textContent = '☀️ Modo Claro';
     }
 }
+
+// ============================================================
+// ATEJOS DE TECLADO
+// ============================================================
+document.addEventListener('keydown', function(event) {
+    // Flecha izquierda: ciclo anterior
+    if (event.key === 'ArrowLeft') {
+        cambiarCiclo(-1);
+        event.preventDefault();
+    }
+    // Flecha derecha: ciclo siguiente
+    else if (event.key === 'ArrowRight') {
+        cambiarCiclo(1);
+        event.preventDefault();
+    }
+    // Tecla 'L' o 'l': limpiar horario
+    else if (event.key === 'l' || event.key === 'L') {
+        confirmarLimpiar();
+        event.preventDefault();
+    }
+    // Tecla 'G' o 'g': generar automático
+    else if (event.key === 'g' || event.key === 'G') {
+        generarAutomatico();
+        event.preventDefault();
+    }
+    // Tecla 'D' o 'd': modo oscuro
+    else if (event.key === 'd' || event.key === 'D') {
+        toggleModo();
+        event.preventDefault();
+    }
+});
 
 // ============================================================
 // EVENTOS
@@ -421,4 +649,19 @@ document.getElementById('btnModo').onclick = toggleModo;
 // ============================================================
 // INICIALIZAR
 // ============================================================
+cargarModo();
 actualizarCursos();
+
+// Mostrar horarios guardados al cargar
+window.addEventListener('load', function() {
+    try {
+        const horariosGuardados = JSON.parse(localStorage.getItem('horariosGuardados')) || [];
+        if (horariosGuardados.length > 0) {
+            console.log(`📂 ${horariosGuardados.length} horario(s) guardado(s)`);
+            // Opcional: mostrar un mensaje con la cantidad
+            setTimeout(() => {
+                mostrarMensaje(`📂 ${horariosGuardados.length} horario(s) guardado(s)`, '#3498db');
+            }, 500);
+        }
+    } catch (e) {}
+});
