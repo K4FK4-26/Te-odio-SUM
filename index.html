@@ -11,7 +11,10 @@
         <!-- Barra superior -->
         <header>
             <h1>📚 GENERADOR DE HORARIOS - UNMSM</h1>
-            <button id="btnModo" class="btn-modo">🌙 Modo Oscuro</button>
+            <div class="header-botones">
+                <button id="btnModo" class="btn-modo">🌙 Modo Oscuro</button>
+                <button id="btnGuardar" class="btn-guardar" onclick="guardarHorario()">💾 Guardar Horario</button>
+            </div>
         </header>
 
         <!-- Contenido principal -->
@@ -19,6 +22,11 @@
             <!-- Columna izquierda: Cursos -->
             <div class="col-izquierda">
                 <h2>📋 CURSOS DISPONIBLES</h2>
+                
+                <!-- Buscador -->
+                <div class="buscador-container">
+                    <input type="text" id="buscador" placeholder="🔍 Buscar curso..." onkeyup="filtrarCursos()">
+                </div>
                 
                 <!-- Navegación -->
                 <div class="nav-ciclos">
@@ -51,7 +59,7 @@
                 </div>
                 
                 <!-- Tabla del horario -->
-                <div class="tabla-container">
+                <div class="tabla-container" id="tablaContainer">
                     <table id="tablaHorario">
                         <thead>
                             <tr>
@@ -73,8 +81,9 @@
         <!-- Botones inferiores -->
         <div class="botones-inferiores">
             <button class="btn-generar" onclick="generarAutomatico()">⚡ Generar Automático</button>
-            <button class="btn-limpiar" onclick="limpiarHorario()">🗑️ Limpiar</button>
+            <button class="btn-limpiar" onclick="confirmarLimpiar()">🗑️ Limpiar</button>
             <button class="btn-exportar" onclick="exportarTexto()">📄 Exportar Texto</button>
+            <button class="btn-exportar-imagen" onclick="exportarImagen()">🖼️ Exportar Imagen</button>
         </div>
         
         <div id="labelInfo" class="label-info">
@@ -82,6 +91,8 @@
         </div>
     </div>
     
+    <!-- Librerías externas -->
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
