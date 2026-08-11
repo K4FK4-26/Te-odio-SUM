@@ -1,0 +1,412 @@
+/* ========== ESTILOS GLOBALES ========== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f0f4f8;
+    color: #2c3e50;
+    min-height: 100vh;
+    transition: background 0.3s, color 0.3s;
+}
+
+/* ========== MODO OSCURO ========== */
+body.modo-oscuro {
+    background: #1a1a2e;
+    color: #e0e0e0;
+}
+
+body.modo-oscuro .col-izquierda,
+body.modo-oscuro .col-derecha {
+    background: #16213e;
+    border-color: #2a3a5a;
+}
+
+body.modo-oscuro .lista-cursos-container ul {
+    background: #1e2a4a;
+    color: #e0e0e0;
+}
+
+body.modo-oscuro .lista-cursos-container ul li {
+    color: #e0e0e0;
+    border-bottom-color: #2a3a5a;
+}
+
+body.modo-oscuro .lista-cursos-container ul li:hover {
+    background: #2a3a5a;
+}
+
+body.modo-oscuro table th {
+    background: #0f3460;
+    color: white;
+}
+
+body.modo-oscuro table td {
+    background: #1a1a2e;
+    border-color: #2a3a5a;
+}
+
+body.modo-oscuro table td.vacio {
+    background: #1a1a2e;
+}
+
+body.modo-oscuro .label-ciclo {
+    color: white;
+}
+
+body.modo-oscuro .label-creditos {
+    color: #b0b0b0;
+}
+
+body.modo-oscuro .label-info {
+    color: #b0b0b0;
+}
+
+body.modo-oscuro .nav-ciclos span {
+    color: white;
+}
+
+body.modo-oscuro header h1 {
+    color: white;
+}
+
+body.modo-oscuro .leyenda {
+    background: #1a2a4a;
+    color: #b0b0b0;
+}
+
+/* ========== CONTENEDOR PRINCIPAL ========== */
+.container {
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* ========== HEADER ========== */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+    background: transparent;
+}
+
+header h1 {
+    font-size: 22px;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.btn-modo {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    background: #3498db;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.btn-modo:hover {
+    background: #2980b9;
+}
+
+/* ========== CONTENIDO PRINCIPAL ========== */
+.main-content {
+    display: flex;
+    gap: 20px;
+    min-height: 600px;
+}
+
+/* ========== COLUMNA IZQUIERDA ========== */
+.col-izquierda {
+    flex: 1;
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    transition: background 0.3s, border-color 0.3s;
+}
+
+.col-izquierda h2 {
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 18px;
+}
+
+/* Navegación de ciclos */
+.nav-ciclos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+.btn-nav {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    background: #3498db;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.btn-nav:hover {
+    background: #2980b9;
+}
+
+.label-ciclo {
+    font-size: 16px;
+    font-weight: bold;
+    color: #2c3e50;
+    min-width: 120px;
+    text-align: center;
+}
+
+/* Switch Teoría/Laboratorio */
+.switch-modo {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.switch-modo button {
+    padding: 8px 25px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-teoria {
+    background: #95a5a6;
+    color: white;
+}
+
+.btn-teoria.activo {
+    background: #2ecc71;
+}
+
+.btn-laboratorio {
+    background: #95a5a6;
+    color: white;
+}
+
+.btn-laboratorio.activo {
+    background: #2ecc71;
+}
+
+/* Lista de cursos */
+.lista-cursos-container {
+    max-height: 500px;
+    overflow-y: auto;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+.lista-cursos-container ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background: #f8f9fa;
+}
+
+.lista-cursos-container ul li {
+    padding: 10px 15px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+}
+
+.lista-cursos-container ul li:hover {
+    background: #e8f0fe;
+}
+
+/* Leyenda */
+.leyenda {
+    text-align: center;
+    padding: 10px;
+    margin-top: 10px;
+    background: #f8f9fa;
+    border-radius: 6px;
+    font-size: 13px;
+    color: #7f8c8d;
+}
+
+/* ========== COLUMNA DERECHA ========== */
+.col-derecha {
+    flex: 2;
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    transition: background 0.3s, border-color 0.3s;
+    display: flex;
+    flex-direction: column;
+}
+
+.header-horario {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.header-horario h2 {
+    font-size: 18px;
+}
+
+.label-creditos {
+    font-size: 14px;
+    color: #7f8c8d;
+}
+
+/* ========== TABLA DEL HORARIO ========== */
+.tabla-container {
+    flex: 1;
+    overflow: auto;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+table th {
+    background: #2c3e50;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+table td {
+    padding: 8px;
+    text-align: center;
+    border: 1px solid #ddd;
+    min-height: 40px;
+    vertical-align: middle;
+    transition: background 0.3s;
+}
+
+table td.vacio {
+    background: #fafafa;
+}
+
+table td .bloque-curso {
+    padding: 6px 8px;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 11px;
+    display: block;
+    margin: 2px 0;
+    color: #2c3e50;
+    border: 2px solid #2c3e50;
+}
+
+/* ========== BOTONES INFERIORES ========== */
+.botones-inferiores {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    padding: 15px 0;
+    flex-wrap: wrap;
+}
+
+.botones-inferiores button {
+    padding: 10px 25px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    color: white;
+}
+
+.btn-generar {
+    background: #2ecc71;
+}
+
+.btn-generar:hover {
+    background: #27ae60;
+}
+
+.btn-limpiar {
+    background: #e74c3c;
+}
+
+.btn-limpiar:hover {
+    background: #c0392b;
+}
+
+.btn-exportar {
+    background: #8e44ad;
+}
+
+.btn-exportar:hover {
+    background: #7d3c98;
+}
+
+.label-info {
+    text-align: center;
+    padding: 10px;
+    font-size: 14px;
+    color: #7f8c8d;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 900px) {
+    .main-content {
+        flex-direction: column;
+    }
+    
+    .col-izquierda, .col-derecha {
+        flex: none;
+    }
+    
+    .tabla-container {
+        max-height: 500px;
+    }
+}
+
+@media (max-width: 600px) {
+    header {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    header h1 {
+        font-size: 16px;
+    }
+    
+    .botones-inferiores button {
+        padding: 8px 15px;
+        font-size: 12px;
+    }
+    
+    table {
+        font-size: 10px;
+    }
+    
+    table td, table th {
+        padding: 4px 2px;
+    }
+}
