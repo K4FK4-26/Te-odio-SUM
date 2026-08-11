@@ -78,6 +78,20 @@ body.modo-oscuro .leyenda {
     color: #b0b0b0;
 }
 
+body.modo-oscuro .buscador-container input {
+    background: #1e2a4a;
+    color: #e0e0e0;
+    border-color: #2a3a5a;
+}
+
+body.modo-oscuro .buscador-container input::placeholder {
+    color: #7f8c8d;
+}
+
+body.modo-oscuro .bloque-curso {
+    border-color: #2a3a5a !important;
+}
+
 /* ========== CONTENEDOR PRINCIPAL ========== */
 .container {
     max-width: 1500px;
@@ -93,12 +107,19 @@ header {
     padding: 10px 20px;
     margin-bottom: 20px;
     background: transparent;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
 header h1 {
     font-size: 22px;
     font-weight: bold;
     color: #2c3e50;
+}
+
+.header-botones {
+    display: flex;
+    gap: 10px;
 }
 
 .btn-modo {
@@ -116,6 +137,21 @@ header h1 {
     background: #2980b9;
 }
 
+.btn-guardar {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    background: #f39c12;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.btn-guardar:hover {
+    background: #e67e22;
+}
+
 /* ========== CONTENIDO PRINCIPAL ========== */
 .main-content {
     display: flex;
@@ -131,6 +167,7 @@ header h1 {
     padding: 20px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     transition: background 0.3s, border-color 0.3s;
+    min-width: 300px;
 }
 
 .col-izquierda h2 {
@@ -139,7 +176,28 @@ header h1 {
     font-size: 18px;
 }
 
-/* Navegación de ciclos */
+/* ========== BUSCADOR ========== */
+.buscador-container {
+    margin-bottom: 10px;
+}
+
+.buscador-container input {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: border 0.3s;
+    background: #f8f9fa;
+}
+
+.buscador-container input:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+}
+
+/* ========== NAVEGACIÓN ========== */
 .nav-ciclos {
     display: flex;
     justify-content: center;
@@ -171,7 +229,7 @@ header h1 {
     text-align: center;
 }
 
-/* Switch Teoría/Laboratorio */
+/* ========== SWITCH TEORÍA/LABORATORIO ========== */
 .switch-modo {
     display: flex;
     justify-content: center;
@@ -206,9 +264,9 @@ header h1 {
     background: #2ecc71;
 }
 
-/* Lista de cursos */
+/* ========== LISTA DE CURSOS ========== */
 .lista-cursos-container {
-    max-height: 500px;
+    max-height: 450px;
     overflow-y: auto;
     border-radius: 8px;
     border: 1px solid #ddd;
@@ -235,7 +293,7 @@ header h1 {
     background: #e8f0fe;
 }
 
-/* Leyenda */
+/* ========== LEYENDA ========== */
 .leyenda {
     text-align: center;
     padding: 10px;
@@ -256,6 +314,7 @@ header h1 {
     transition: background 0.3s, border-color 0.3s;
     display: flex;
     flex-direction: column;
+    min-width: 400px;
 }
 
 .header-horario {
@@ -263,6 +322,8 @@ header h1 {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 15px;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
 .header-horario h2 {
@@ -299,10 +360,11 @@ table th {
 }
 
 table td {
-    padding: 8px;
+    padding: 2px;
     text-align: center;
     border: 1px solid #ddd;
     min-height: 40px;
+    height: 40px;
     vertical-align: middle;
     transition: background 0.3s;
 }
@@ -311,15 +373,41 @@ table td.vacio {
     background: #fafafa;
 }
 
-table td .bloque-curso {
-    padding: 6px 8px;
+/* ========== BLOQUES DE CURSOS ========== */
+.bloque-curso {
+    padding: 6px 4px;
     border-radius: 6px;
     font-weight: bold;
     font-size: 11px;
-    display: block;
-    margin: 2px 0;
     color: #2c3e50;
     border: 2px solid #2c3e50;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    min-height: 36px;
+    width: 100%;
+}
+
+.bloque-curso:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    z-index: 10;
+}
+
+.bloque-curso span:first-child {
+    font-size: 10px;
+    font-weight: bold;
+    line-height: 1.2;
+    text-align: center;
+}
+
+.bloque-curso span:last-child {
+    font-size: 8px;
+    opacity: 0.8;
 }
 
 /* ========== BOTONES INFERIORES ========== */
@@ -365,11 +453,21 @@ table td .bloque-curso {
     background: #7d3c98;
 }
 
+.btn-exportar-imagen {
+    background: #1abc9c;
+}
+
+.btn-exportar-imagen:hover {
+    background: #16a085;
+}
+
+/* ========== LABEL DE INFORMACIÓN ========== */
 .label-info {
     text-align: center;
     padding: 10px;
     font-size: 14px;
     color: #7f8c8d;
+    transition: all 0.3s;
 }
 
 /* ========== RESPONSIVE ========== */
@@ -380,6 +478,7 @@ table td .bloque-curso {
     
     .col-izquierda, .col-derecha {
         flex: none;
+        min-width: auto;
     }
     
     .tabla-container {
@@ -390,11 +489,17 @@ table td .bloque-curso {
 @media (max-width: 600px) {
     header {
         flex-direction: column;
+        align-items: stretch;
         gap: 10px;
     }
     
     header h1 {
         font-size: 16px;
+        text-align: center;
+    }
+    
+    .header-botones {
+        justify-content: center;
     }
     
     .botones-inferiores button {
@@ -407,6 +512,81 @@ table td .bloque-curso {
     }
     
     table td, table th {
-        padding: 4px 2px;
+        padding: 2px;
+        height: 30px;
+        min-height: 30px;
     }
+    
+    .bloque-curso {
+        font-size: 8px !important;
+        padding: 2px !important;
+        min-height: 20px;
+    }
+    
+    .bloque-curso span:first-child {
+        font-size: 7px !important;
+    }
+    
+    .bloque-curso span:last-child {
+        font-size: 6px !important;
+    }
+    
+    .buscador-container input {
+        font-size: 12px;
+        padding: 8px 12px;
+    }
+}
+
+/* ========== ANIMACIONES ========== */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.bloque-curso {
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+}
+
+.btn-generar:active, .btn-limpiar:active, .btn-exportar:active {
+    animation: pulse 0.2s ease;
+}
+
+/* ========== SCROLLBAR PERSONALIZADA ========== */
+.lista-cursos-container::-webkit-scrollbar,
+.tabla-container::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.lista-cursos-container::-webkit-scrollbar-track,
+.tabla-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.lista-cursos-container::-webkit-scrollbar-thumb,
+.tabla-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.lista-cursos-container::-webkit-scrollbar-thumb:hover,
+.tabla-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+body.modo-oscuro .lista-cursos-container::-webkit-scrollbar-track,
+body.modo-oscuro .tabla-container::-webkit-scrollbar-track {
+    background: #1a2a4a;
+}
+
+body.modo-oscuro .lista-cursos-container::-webkit-scrollbar-thumb,
+body.modo-oscuro .tabla-container::-webkit-scrollbar-thumb {
+    background: #2a3a5a;
 }
