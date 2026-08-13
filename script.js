@@ -1039,17 +1039,14 @@ document.getElementById('buscador').addEventListener('keyup', filtrarCursos);
 // ATEJOS DE TECLADO (CORREGIDOS - NO INTERFIEREN CON BÚSQUEDA)
 // ============================================================
 document.addEventListener('keydown', function(event) {
-    // Verificar si el usuario está escribiendo en un campo de texto
     var tagName = event.target.tagName.toLowerCase();
     var isInput = tagName === 'input' || tagName === 'textarea' || tagName === 'select';
     var isContentEditable = event.target.isContentEditable;
     
-    // Si está escribiendo en un campo de texto, NO activar atajos
     if (isInput || isContentEditable) {
         return;
     }
     
-    // Atajos de teclado (solo cuando NO está escribiendo)
     if (event.key === 'ArrowLeft') {
         cambiarCiclo(-1);
         event.preventDefault();
@@ -1072,7 +1069,6 @@ document.addEventListener('keydown', function(event) {
     }
 });
 
-// Cerrar modal al hacer clic fuera
 window.addEventListener('click', function(event) {
     var modal = document.getElementById('panelDatos');
     if (event.target === modal) {
