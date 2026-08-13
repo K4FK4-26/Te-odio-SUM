@@ -5,8 +5,8 @@ const DATOS_DEFAULT = {
   "Ciclo 2": {
     "teoria": [
       {"nombre": "TOPOGRAFÍA APLICADA A LA INGENIERÍA CIVIL I", "seccion": "01", "profesor": "CRUZ MONTES, FRANCI BENITO", "creditos": 3, "dia": "MIERCOLES", "hora": "12:00 - 13:00"},
-      {"nombre": "TOPOGRAFÍA APLICADA A LA INGENIERÍA CIVIL I", "seccion": "02", "profesor": "CRUZ MONTES, FRANCI BENITO", "creditos": 3, "dia": "JUEVES", "hora": "12:00 - 13:00"},
-      {"nombre": "TOPOGRAFÍA APLICADA A LA INGENIERÍA CIVIL I", "seccion": "03", "profesor": "CRUZ MONTES, FRANCI BENITO", "creditos": 3, "dia": "LUNES", "hora": "08:00 - 09:00"},
+      {"nombre": "TOPOGRAFÍA APLICADA A LA INGENIERÍA CIVIL II", "seccion": "02", "profesor": "CRUZ MONTES, FRANCI BENITO", "creditos": 3, "dia": "JUEVES", "hora": "12:00 - 13:00"},
+      {"nombre": "TOPOGRAFÍA APLICADA A LA INGENIERÍA CIVIL III", "seccion": "03", "profesor": "CRUZ MONTES, FRANCI BENITO", "creditos": 3, "dia": "LUNES", "hora": "08:00 - 09:00"},
       {"nombre": "GEOMETRÍA DESCRIPTIVA", "seccion": "01", "profesor": "RAMIREZ PEJERREY, VICTOR NICOLAS", "creditos": 3, "dia": "MARTES", "hora": "18:00 - 20:00"},
       {"nombre": "GEOMETRÍA DESCRIPTIVA", "seccion": "02", "profesor": "RAMIREZ PEJERREY, VICTOR NICOLAS", "creditos": 3, "dia": "JUEVES", "hora": "08:00 - 10:00"},
       {"nombre": "INVESTIGACIÓN FORMATIVA", "seccion": "01", "profesor": "RIVERA VIDAL, JIM ARTURO", "creditos": 3, "dia": "MIERCOLES", "hora": "08:00 - 10:00"},
@@ -708,80 +708,134 @@ function convertirCSVaJSON(csvText) {
         nuevosDatos[c] = { teoria: [], laboratorio: [] };
     });
     
+    // También aceptar "Ciclo 0" si viene
+    nuevosDatos['Ciclo 0'] = { teoria: [], laboratorio: [] };
+    
     let errores = [];
     let cursosProcesados = 0;
+    let lineasIgnoradas = 0;
     
     lineas.forEach((linea, numLinea) => {
-        const partes = linea.split(',');
+        let lineaLimpia = linea.trim();
+        if (lineaLimpia.startsWith('"') && lineaLimpia.endsWith('"')) {
+            lineaLimpia = lineaLimpia.substring(1, lineaLimpia.length - 1);
+        }
+        
+        const partes = lineaLimpia.split(',');
         
         if (partes.length < 10) {
-            errores.push(`Línea ${numLinea + 1}: Formato incorrecto (${partes.length} columnas, se esperan 13)`);
+            errores.push(`Línea ${numLinea + 1}: Formato incorrecto (${partes.length} columnas, se esperan 13) - Línea ignorada`);
+            lineasIgnoradas++;
             return;
         }
         
         try {
-            const ciclo = partes[0].trim();
-            const creditos = parseInt(partes[1].trim()) || 3;
-            const curso = partes[2].trim();
-            const tipo = partes[3].trim().toUpperCase();
-            const gr = partes[5] ? partes[5].trim() : '00';
-            const docente = partes[6] ? partes[6].trim() : 'No especificado';
-            const dia1 = partes[7] ? partes[7].trim() : '';
-            const inicio1 = partes[8] ? partes[8].trim() : '';
-            const final1 = partes[9] ? partes[9].trim() : '';
-            const dia2 = partes[10] ? partes[10].trim() : '';
-            const inicio2 = partes[11] ? partes[11].trim() : '';
-            const final2 = partes[12] ? partes[12].trim() : '';
+            const partesLimpia = partes.map(p => p.trim());
             
-            if (!ciclosEsperados.includes(ciclo)) {
-                errores.push(`Línea ${numLinea + 1}: Ciclo inválido "${ciclo}"`);
-                return;
-            }
-            
-            let tipoFinal = '';
-            if (tipo.includes('TEORIA') || tipo.includes('TEÓRICA') || tipo === 'T') {
-                tipoFinal = 'teoria';
-            } else if (tipo.includes('LABORATORIO') || tipo.includes('LAB') || tipo === 'L') {
-                tipoFinal = 'laboratorio';
+            let ciclo = partesLimpia[0] || '';
+            if (ciclo.toLowerCase().includes('ciclo 0') || ciclo === '0' || ciclo === 'Ciclo 0') {
+                ciclo = 'Ciclo 0';
+            } else if (ciclo.toLowerCase().includes('ciclo 2') || ciclo === '2') {
+                ciclo = 'Ciclo 2';
+            } else if (ciclo.toLowerCase().includes('ciclo 3') || ciclo === '3') {
+                ciclo = 'Ciclo 3';
+            } else if (ciclo.toLowerCase().includes('ciclo 4') || ciclo === '4') {
+                ciclo = 'Ciclo 4';
+            } else if (ciclo.toLowerCase().includes('ciclo 5') || ciclo === '5') {
+                ciclo = 'Ciclo 5';
+            } else if (ciclo.toLowerCase().includes('ciclo 6') || ciclo === '6') {
+                ciclo = 'Ciclo 6';
             } else {
-                errores.push(`Línea ${numLinea + 1}: Tipo inválido "${tipo}" (debe ser TEORIA o LABORATORIO)`);
+                errores.push(`Línea ${numLinea + 1}: Ciclo no reconocido "${partesLimpia[0]}" - Línea ignorada`);
+                lineasIgnoradas++;
                 return;
             }
+            
+            if (!nuevosDatos[ciclo]) {
+                nuevosDatos[ciclo] = { teoria: [], laboratorio: [] };
+            }
+            
+            let creditos = parseInt(partesLimpia[1]) || 3;
+            if (isNaN(creditos) || creditos < 1) creditos = 3;
+            
+            let curso = partesLimpia[2] || 'Curso sin nombre';
+            if (curso === '' || curso === ' ') {
+                curso = 'Curso sin nombre';
+            }
+            
+            let tipo = partesLimpia[3] ? partesLimpia[3].toUpperCase() : '';
+            let tipoFinal = '';
+            if (tipo.includes('TEORIA') || tipo.includes('TEÓRICA') || tipo === 'T' || tipo === 'TEORÍA') {
+                tipoFinal = 'teoria';
+            } else if (tipo.includes('LABORATORIO') || tipo.includes('LAB') || tipo === 'L' || tipo === 'LAB') {
+                tipoFinal = 'laboratorio';
+            } else if (tipo.includes('PRACTICA') || tipo.includes('PRÁCTICA')) {
+                tipoFinal = 'teoria';
+            } else {
+                if (curso.includes('LAB') || curso.includes('LABORATORIO')) {
+                    tipoFinal = 'laboratorio';
+                } else {
+                    tipoFinal = 'teoria';
+                }
+                errores.push(`Línea ${numLinea + 1}: Tipo no reconocido "${partesLimpia[3]}", se asume ${tipoFinal.toUpperCase()}`);
+            }
+            
+            let gr = partesLimpia[5] ? partesLimpia[5].trim() : '00';
+            if (gr === '' || gr === ' ') gr = '00';
+            
+            let docente = partesLimpia[6] ? partesLimpia[6].trim() : 'No especificado';
+            if (docente === '' || docente === ' ') docente = 'No especificado';
             
             const diasValidos = ['LUNES', 'MARTES', 'MIÉRCOLES', 'JUEVES', 'VIERNES', 'SÁBADO'];
-            if (dia1 && !diasValidos.includes(dia1)) {
-                errores.push(`Línea ${numLinea + 1}: Día inválido "${dia1}"`);
+            
+            const dia1 = partesLimpia[7] ? partesLimpia[7].trim().toUpperCase() : '';
+            const inicio1 = partesLimpia[8] ? partesLimpia[8].trim() : '';
+            const final1 = partesLimpia[9] ? partesLimpia[9].trim() : '';
+            const dia2 = partesLimpia[10] ? partesLimpia[10].trim().toUpperCase() : '';
+            const inicio2 = partesLimpia[11] ? partesLimpia[11].trim() : '';
+            const final2 = partesLimpia[12] ? partesLimpia[12].trim() : '';
+            
+            if (!dia1 || !diasValidos.includes(dia1)) {
+                errores.push(`Línea ${numLinea + 1}: Día inválido "${dia1}" - Línea ignorada`);
+                lineasIgnoradas++;
                 return;
             }
             
-            if (dia1 && inicio1 && final1) {
-                const cursoObj = {
-                    nombre: curso,
-                    seccion: gr,
-                    profesor: docente,
-                    creditos: creditos,
-                    dia: dia1,
-                    hora: `${inicio1} - ${final1}`
-                };
-                nuevosDatos[ciclo][tipoFinal].push(cursoObj);
-                cursosProcesados++;
+            if (!inicio1 || !final1) {
+                errores.push(`Línea ${numLinea + 1}: Horas inválidas "${inicio1} - ${final1}" - Línea ignorada`);
+                lineasIgnoradas++;
+                return;
             }
             
-            if (dia2 && inicio2 && final2) {
-                const cursoObj2 = {
-                    nombre: curso,
-                    seccion: gr,
-                    profesor: docente,
-                    creditos: creditos,
-                    dia: dia2,
-                    hora: `${inicio2} - ${final2}`
-                };
-                nuevosDatos[ciclo][tipoFinal].push(cursoObj2);
-                cursosProcesados++;
+            const cursoObj = {
+                nombre: curso,
+                seccion: gr,
+                profesor: docente,
+                creditos: creditos,
+                dia: dia1,
+                hora: `${inicio1} - ${final1}`
+            };
+            nuevosDatos[ciclo][tipoFinal].push(cursoObj);
+            cursosProcesados++;
+            
+            if (dia2 && diasValidos.includes(dia2) && inicio2 && final2) {
+                if (dia2 !== dia1 || inicio2 !== inicio1 || final2 !== final1) {
+                    const cursoObj2 = {
+                        nombre: curso,
+                        seccion: gr,
+                        profesor: docente,
+                        creditos: creditos,
+                        dia: dia2,
+                        hora: `${inicio2} - ${final2}`
+                    };
+                    nuevosDatos[ciclo][tipoFinal].push(cursoObj2);
+                    cursosProcesados++;
+                }
             }
             
         } catch (e) {
             errores.push(`Línea ${numLinea + 1}: Error al procesar - ${e.message}`);
+            lineasIgnoradas++;
         }
     });
     
@@ -792,11 +846,12 @@ function convertirCSVaJSON(csvText) {
     }
     
     if (errores.length > 0) {
-        console.warn('Errores en CSV:', errores);
+        console.warn('⚠️ Errores en CSV:', errores);
         if (cursosProcesados === 0) {
-            throw new Error(`No se pudo procesar ningún curso. Errores:\n${errores.join('\n')}`);
+            throw new Error(`No se pudo procesar ningún curso.\nErrores:\n${errores.slice(0, 5).join('\n')}${errores.length > 5 ? `\n... y ${errores.length - 5} más` : ''}`);
         }
-        mostrarMensajePanel(`⚠️ ${cursosProcesados} cursos procesados con ${errores.length} advertencias`, 'info');
+        const mensaje = `⚠️ ${cursosProcesados} cursos procesados, ${lineasIgnoradas} líneas ignoradas. Revisa la consola para más detalles.`;
+        mostrarMensajePanel(mensaje, 'info');
     }
     
     return nuevosDatos;
@@ -839,7 +894,6 @@ function restaurarDatosDefault() {
     Object.assign(datos, JSON.parse(JSON.stringify(DATOS_DEFAULT)));
     localStorage.removeItem('datosCursos');
     
-    // Actualizar lista de ciclos
     ciclos.length = 0;
     Object.keys(datos).forEach(c => ciclos.push(c));
     
@@ -859,7 +913,6 @@ function cargarDatosGuardados() {
             const datosParseados = JSON.parse(datosGuardados);
             if (typeof datosParseados === 'object' && Object.keys(datosParseados).length > 0) {
                 Object.assign(datos, datosParseados);
-                // Actualizar lista de ciclos
                 ciclos.length = 0;
                 Object.keys(datos).forEach(c => ciclos.push(c));
                 console.log('✅ Datos cargados desde LocalStorage');
