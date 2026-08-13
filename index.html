@@ -6,15 +6,15 @@
     <title>Generador de Horarios - UNMSM</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="modo-oscuro">
     <div class="container">
         <!-- Barra superior -->
         <header>
             <h1>📚 GENERADOR DE HORARIOS - UNMSM</h1>
             <div class="header-botones">
-                <button id="btnModo" class="btn-modo">🌙 Modo Oscuro</button>
-                <button id="btnGuardar" class="btn-guardar" onclick="guardarHorario()">💾 Guardar Horario</button>
-                <button id="btnGestionarDatos" class="btn-gestionar" onclick="abrirPanelDatos()">📊 Gestionar Datos</button>
+                <button id="btnModo" class="btn-modo">☀️ Modo Claro</button>
+                <button id="btnGuardar" class="btn-guardar">💾 Guardar Horario</button>
+                <button id="btnGestionarDatos" class="btn-gestionar">📊 Gestionar Datos</button>
             </div>
         </header>
 
@@ -26,7 +26,7 @@
                 
                 <!-- Buscador -->
                 <div class="buscador-container">
-                    <input type="text" id="buscador" placeholder="🔍 Buscar curso..." onkeyup="filtrarCursos()">
+                    <input type="text" id="buscador" placeholder="🔍 Buscar curso...">
                 </div>
                 
                 <!-- Navegación -->
@@ -81,10 +81,10 @@
         
         <!-- Botones inferiores -->
         <div class="botones-inferiores">
-            <button class="btn-generar" onclick="generarAutomatico()">⚡ Generar Automático</button>
-            <button class="btn-limpiar" onclick="confirmarLimpiar()">🗑️ Limpiar</button>
-            <button class="btn-exportar" onclick="exportarTexto()">📄 Exportar Texto</button>
-            <button class="btn-exportar-imagen" onclick="exportarImagen()">🖼️ Exportar Imagen</button>
+            <button id="btnGenerar" class="btn-generar">⚡ Generar Automático</button>
+            <button id="btnLimpiar" class="btn-limpiar">🗑️ Limpiar</button>
+            <button id="btnExportarTexto" class="btn-exportar">📄 Exportar Texto</button>
+            <button id="btnExportarImagen" class="btn-exportar-imagen">🖼️ Exportar Imagen</button>
         </div>
         
         <div id="labelInfo" class="label-info">
@@ -99,7 +99,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2>📊 GESTIÓN DE DATOS DE CURSOS</h2>
-                <button class="modal-close" onclick="cerrarPanelDatos()">✕</button>
+                <button class="modal-close" id="btnCerrarModal">✕</button>
             </div>
             <div class="modal-body">
                 
@@ -125,8 +125,8 @@ REGLAS ESTRICTAS:
 ⚠️ IMPORTANTE: Solo responde con el CSV, sin texto adicional.
                         </div>
                         <div class="prompt-botones">
-                            <button class="btn-copiar" onclick="copiarPrompt()">📋 Copiar Prompt</button>
-                            <button class="btn-ejemplo" onclick="copiarEjemploCSV()">📋 Copiar Ejemplo CSV</button>
+                            <button id="btnCopiarPrompt" class="btn-copiar">📋 Copiar Prompt</button>
+                            <button id="btnCopiarEjemplo" class="btn-ejemplo">📋 Copiar Ejemplo CSV</button>
                         </div>
                     </div>
                 </div>
@@ -136,9 +136,9 @@ REGLAS ESTRICTAS:
                     <h3>📋 2. PEGA EL CSV QUE TE DIO LA IA</h3>
                     <textarea id="csvInput" class="csv-textarea" placeholder="Pega aquí el CSV que te dio la IA..."></textarea>
                     <div class="csv-botones">
-                        <button class="btn-procesar" onclick="procesarCSV()">📥 Procesar CSV</button>
-                        <button class="btn-ver-datos" onclick="verDatosActuales()">📋 Ver Datos Actuales</button>
-                        <button class="btn-limpiar-csv" onclick="limpiarCSV()">🗑️ Limpiar</button>
+                        <button id="btnProcesarCSV" class="btn-procesar">📥 Procesar CSV</button>
+                        <button id="btnVerDatos" class="btn-ver-datos">📋 Ver Datos Actuales</button>
+                        <button id="btnLimpiarCSV" class="btn-limpiar-csv">🗑️ Limpiar</button>
                     </div>
                     <div id="mensajeProcesamiento" class="mensaje-procesamiento"></div>
                 </div>
@@ -153,8 +153,8 @@ REGLAS ESTRICTAS:
 
             </div>
             <div class="modal-footer">
-                <button class="btn-restaurar" onclick="restaurarDatosDefault()">🔄 Restaurar Datos Predeterminados</button>
-                <button class="btn-cerrar-modal" onclick="cerrarPanelDatos()">✕ Cerrar</button>
+                <button id="btnRestaurar" class="btn-restaurar">🔄 Restaurar Datos Predeterminados</button>
+                <button id="btnCerrarModalFooter" class="btn-cerrar-modal">✕ Cerrar</button>
             </div>
         </div>
     </div>
