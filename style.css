@@ -1,3 +1,4 @@
+/* ========== ESTILOS GLOBALES ========== */
 * {
     margin: 0;
     padding: 0;
@@ -10,8 +11,31 @@ body {
     color: #e0e0e0;
     min-height: 100vh;
     transition: background 0.3s, color 0.3s;
+    position: relative;
 }
 
+/* ========== FONDO CON ESCUDO DE LA UNMSM ========== */
+.fondo-escudo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0.08;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Ccircle cx='200' cy='200' r='180' fill='none' stroke='%23ffffff' stroke-width='2'/%3E%3Ccircle cx='200' cy='200' r='160' fill='none' stroke='%23ffffff' stroke-width='1'/%3E%3Cpath d='M200 40 L200 360 M40 200 L360 200 M80 80 L320 320 M80 320 L320 80' stroke='%23ffffff' stroke-width='0.5' opacity='0.3'/%3E%3Ctext x='200' y='140' text-anchor='middle' font-family='serif' font-size='28' fill='%23ffffff' font-weight='bold'%3EUNIVERSIDAD%3C/text%3E%3Ctext x='200' y='175' text-anchor='middle' font-family='serif' font-size='24' fill='%23ffffff' font-weight='bold'%3ENACIONAL%3C/text%3E%3Ctext x='200' y='210' text-anchor='middle' font-family='serif' font-size='24' fill='%23ffffff' font-weight='bold'%3EMAYOR DE%3C/text%3E%3Ctext x='200' y='245' text-anchor='middle' font-family='serif' font-size='28' fill='%23ffffff' font-weight='bold'%3ESAN MARCOS%3C/text%3E%3Ctext x='200' y='280' text-anchor='middle' font-family='serif' font-size='12' fill='%23ffffff'%3EUniversidad del Perú%3C/text%3E%3Ctext x='200' y='300' text-anchor='middle' font-family='serif' font-size='12' fill='%23ffffff'%3EDecana de América%3C/text%3E%3C/svg%3E");
+    background-size: 60% auto;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+body.modo-claro .fondo-escudo {
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Ccircle cx='200' cy='200' r='180' fill='none' stroke='%232c3e50' stroke-width='2'/%3E%3Ccircle cx='200' cy='200' r='160' fill='none' stroke='%232c3e50' stroke-width='1'/%3E%3Cpath d='M200 40 L200 360 M40 200 L360 200 M80 80 L320 320 M80 320 L320 80' stroke='%232c3e50' stroke-width='0.5' opacity='0.3'/%3E%3Ctext x='200' y='140' text-anchor='middle' font-family='serif' font-size='28' fill='%232c3e50' font-weight='bold'%3EUNIVERSIDAD%3C/text%3E%3Ctext x='200' y='175' text-anchor='middle' font-family='serif' font-size='24' fill='%232c3e50' font-weight='bold'%3ENACIONAL%3C/text%3E%3Ctext x='200' y='210' text-anchor='middle' font-family='serif' font-size='24' fill='%232c3e50' font-weight='bold'%3EMAYOR DE%3C/text%3E%3Ctext x='200' y='245' text-anchor='middle' font-family='serif' font-size='28' fill='%232c3e50' font-weight='bold'%3ESAN MARCOS%3C/text%3E%3Ctext x='200' y='280' text-anchor='middle' font-family='serif' font-size='12' fill='%232c3e50'%3EUniversidad del Perú%3C/text%3E%3Ctext x='200' y='300' text-anchor='middle' font-family='serif' font-size='12' fill='%232c3e50'%3EDecana de América%3C/text%3E%3C/svg%3E");
+}
+
+/* ========== MODO CLARO ========== */
 body.modo-claro {
     background: #f0f4f8;
     color: #2c3e50;
@@ -45,10 +69,6 @@ body.modo-claro table th {
 body.modo-claro table td {
     background: #ffffff;
     border-color: #ddd;
-}
-
-body.modo-claro table td.vacio {
-    background: #fafafa;
 }
 
 body.modo-claro .label-ciclo {
@@ -138,12 +158,20 @@ body.modo-claro .prompt-text {
     color: #e0e0e0;
 }
 
+body.modo-claro .mensaje-bienvenida {
+    background: rgba(255, 255, 255, 0.92);
+}
+
+/* ========== CONTENEDOR ========== */
 .container {
     max-width: 1500px;
     margin: 0 auto;
     padding: 20px;
+    position: relative;
+    z-index: 1;
 }
 
+/* ========== HEADER ========== */
 header {
     display: flex;
     justify-content: space-between;
@@ -156,9 +184,10 @@ header {
 }
 
 header h1 {
-    font-size: 22px;
+    font-size: 24px;
     font-weight: bold;
     color: #ffffff;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
 }
 
 .header-botones {
@@ -167,15 +196,19 @@ header h1 {
     flex-wrap: wrap;
 }
 
-.btn-modo {
+.btn-modo, .btn-guardar, .btn-gestionar {
     padding: 10px 20px;
     border: none;
     border-radius: 8px;
-    background: #3498db;
     color: white;
     font-weight: bold;
     cursor: pointer;
     transition: background 0.3s;
+    font-size: 14px;
+}
+
+.btn-modo {
+    background: #3498db;
 }
 
 .btn-modo:hover {
@@ -183,14 +216,7 @@ header h1 {
 }
 
 .btn-guardar {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 8px;
     background: #f39c12;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background 0.3s;
 }
 
 .btn-guardar:hover {
@@ -198,20 +224,69 @@ header h1 {
 }
 
 .btn-gestionar {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 8px;
     background: #8e44ad;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background 0.3s;
 }
 
 .btn-gestionar:hover {
     background: #7d3c98;
 }
 
+/* ========== MENSAJE DE BIENVENIDA ========== */
+.mensaje-bienvenida {
+    background: rgba(26, 26, 46, 0.92);
+    border-radius: 16px;
+    padding: 50px 40px;
+    margin: 20px 0;
+    text-align: center;
+    border: 2px solid #3498db;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+.bienvenida-content h2 {
+    font-size: 32px;
+    color: #ffffff;
+    margin-bottom: 15px;
+}
+
+.bienvenida-content p {
+    font-size: 18px;
+    color: #e0e0e0;
+    margin-bottom: 10px;
+}
+
+.bienvenida-content ol {
+    display: inline-block;
+    text-align: left;
+    font-size: 16px;
+    color: #e0e0e0;
+    margin: 15px auto;
+    padding-left: 25px;
+    line-height: 1.8;
+}
+
+.bienvenida-content ol li {
+    margin-bottom: 5px;
+}
+
+.btn-gestionar-grande {
+    padding: 15px 40px;
+    border: none;
+    border-radius: 10px;
+    background: #2ecc71;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    margin-top: 15px;
+}
+
+.btn-gestionar-grande:hover {
+    background: #27ae60;
+    transform: scale(1.05);
+}
+
+/* ========== CONTENIDO PRINCIPAL ========== */
 .main-content {
     display: flex;
     gap: 20px;
@@ -220,12 +295,12 @@ header h1 {
 
 .col-izquierda {
     flex: 1;
-    background: #16213e;
+    background: rgba(22, 33, 62, 0.92);
     border-radius: 12px;
     padding: 20px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-    transition: background 0.3s, border-color 0.3s;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
     min-width: 300px;
+    backdrop-filter: blur(5px);
 }
 
 .col-izquierda h2 {
@@ -245,7 +320,6 @@ header h1 {
     border: 1px solid #2a3a5a;
     border-radius: 8px;
     font-size: 14px;
-    transition: border 0.3s;
     background: #1e2a4a;
     color: #e0e0e0;
 }
@@ -257,7 +331,6 @@ header h1 {
 .buscador-container input:focus {
     outline: none;
     border-color: #3498db;
-    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
 }
 
 .nav-ciclos {
@@ -343,11 +416,9 @@ header h1 {
     padding: 10px 15px;
     border-bottom: 1px solid #2a3a5a;
     cursor: pointer;
-    transition: background 0.2s;
     font-size: 13px;
-    display: flex;
-    align-items: center;
     color: #e0e0e0;
+    transition: background 0.2s;
 }
 
 .lista-cursos-container ul li:hover {
@@ -366,14 +437,14 @@ header h1 {
 
 .col-derecha {
     flex: 2;
-    background: #16213e;
+    background: rgba(22, 33, 62, 0.92);
     border-radius: 12px;
     padding: 20px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-    transition: background 0.3s, border-color 0.3s;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
     display: flex;
     flex-direction: column;
     min-width: 400px;
+    backdrop-filter: blur(5px);
 }
 
 .header-horario {
@@ -424,13 +495,7 @@ table td {
     border: 1px solid #2a3a5a;
     min-height: 40px;
     height: 40px;
-    vertical-align: middle;
-    transition: background 0.3s;
-    background: #1a1a2e;
-}
-
-table td.vacio {
-    background: #1a1a2e;
+    background: rgba(26, 26, 46, 0.8);
 }
 
 .bloque-curso {
@@ -441,7 +506,6 @@ table td.vacio {
     color: #2c3e50;
     border: 2px solid #2c3e50;
     cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -449,24 +513,13 @@ table td.vacio {
     height: 100%;
     min-height: 36px;
     width: 100%;
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .bloque-curso:hover {
     transform: scale(1.05);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
     z-index: 10;
-}
-
-.bloque-curso span:first-child {
-    font-size: 10px;
-    font-weight: bold;
-    line-height: 1.2;
-    text-align: center;
-}
-
-.bloque-curso span:last-child {
-    font-size: 8px;
-    opacity: 0.8;
 }
 
 .botones-inferiores {
@@ -483,8 +536,8 @@ table td.vacio {
     border-radius: 8px;
     font-weight: bold;
     cursor: pointer;
-    transition: all 0.3s;
     color: white;
+    transition: background 0.3s;
 }
 
 .btn-generar {
@@ -524,118 +577,9 @@ table td.vacio {
     padding: 10px;
     font-size: 14px;
     color: #b0b0b0;
-    transition: all 0.3s;
 }
 
-@media (max-width: 900px) {
-    .main-content {
-        flex-direction: column;
-    }
-    
-    .col-izquierda, .col-derecha {
-        flex: none;
-        min-width: auto;
-    }
-    
-    .tabla-container {
-        max-height: 500px;
-    }
-}
-
-@media (max-width: 600px) {
-    header {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 10px;
-    }
-    
-    header h1 {
-        font-size: 16px;
-        text-align: center;
-    }
-    
-    .header-botones {
-        justify-content: center;
-    }
-    
-    .botones-inferiores button {
-        padding: 8px 15px;
-        font-size: 12px;
-    }
-    
-    table {
-        font-size: 10px;
-    }
-    
-    table td, table th {
-        padding: 2px;
-        height: 30px;
-        min-height: 30px;
-    }
-    
-    .bloque-curso {
-        font-size: 8px !important;
-        padding: 2px !important;
-        min-height: 20px;
-    }
-    
-    .bloque-curso span:first-child {
-        font-size: 7px !important;
-    }
-    
-    .bloque-curso span:last-child {
-        font-size: 6px !important;
-    }
-    
-    .buscador-container input {
-        font-size: 12px;
-        padding: 8px 12px;
-    }
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.bloque-curso {
-    animation: fadeIn 0.3s ease;
-}
-
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.02); }
-    100% { transform: scale(1); }
-}
-
-.btn-generar:active, .btn-limpiar:active, .btn-exportar:active {
-    animation: pulse 0.2s ease;
-}
-
-.lista-cursos-container::-webkit-scrollbar,
-.tabla-container::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-}
-
-.lista-cursos-container::-webkit-scrollbar-track,
-.tabla-container::-webkit-scrollbar-track {
-    background: #1a2a4a;
-    border-radius: 4px;
-}
-
-.lista-cursos-container::-webkit-scrollbar-thumb,
-.tabla-container::-webkit-scrollbar-thumb {
-    background: #2a3a5a;
-    border-radius: 4px;
-}
-
-.lista-cursos-container::-webkit-scrollbar-thumb:hover,
-.tabla-container::-webkit-scrollbar-thumb:hover {
-    background: #3a4a6a;
-}
-
-/* MODAL */
+/* ========== MODAL ========== */
 .modal {
     display: none;
     position: fixed;
@@ -644,9 +588,7 @@ table td.vacio {
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,0.7);
-    backdrop-filter: blur(5px);
-    animation: fadeIn 0.3s ease;
+    background-color: rgba(0, 0, 0, 0.7);
 }
 
 .modal-content {
@@ -657,7 +599,6 @@ table td.vacio {
     max-width: 1000px;
     max-height: 90vh;
     border-radius: 16px;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -670,8 +611,6 @@ table td.vacio {
     padding: 20px 25px;
     background: linear-gradient(135deg, #0f3460, #3498db);
     color: white;
-    border-radius: 16px 16px 0 0;
-    flex-shrink: 0;
 }
 
 .modal-header h2 {
@@ -686,7 +625,6 @@ table td.vacio {
     font-size: 28px;
     cursor: pointer;
     opacity: 0.8;
-    transition: opacity 0.3s;
 }
 
 .modal-close:hover {
@@ -706,7 +644,6 @@ table td.vacio {
     padding: 15px 25px;
     background: #16213e;
     border-top: 1px solid #2a3a5a;
-    flex-shrink: 0;
     flex-wrap: wrap;
     gap: 10px;
 }
@@ -718,7 +655,6 @@ table td.vacio {
     padding: 15px 20px;
     background: #16213e;
     border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
 }
 
 .seccion-prompt h3,
@@ -739,23 +675,18 @@ table td.vacio {
     border: 1px solid #2a3a5a;
 }
 
-.prompt-box p {
-    margin: 0 0 8px 0;
-    color: #e0e0e0;
-}
-
 .prompt-text {
     background: #0f1a2e;
     color: #e0e0e0;
     padding: 15px;
     border-radius: 8px;
-    font-family: 'Courier New', monospace;
+    font-family: monospace;
     font-size: 13px;
     white-space: pre-wrap;
-    max-height: 250px;
+    max-height: 200px;
     overflow-y: auto;
-    line-height: 1.6;
     margin-bottom: 12px;
+    line-height: 1.6;
 }
 
 .prompt-botones,
@@ -777,8 +708,8 @@ table td.vacio {
     border-radius: 6px;
     font-weight: bold;
     cursor: pointer;
-    transition: all 0.3s;
     color: white;
+    transition: background 0.3s;
 }
 
 .btn-copiar {
@@ -839,26 +770,15 @@ table td.vacio {
 
 .csv-textarea {
     width: 100%;
-    min-height: 200px;
+    min-height: 150px;
     padding: 15px;
     border: 2px solid #2a3a5a;
     border-radius: 8px;
-    font-family: 'Courier New', monospace;
+    font-family: monospace;
     font-size: 13px;
-    resize: vertical;
-    transition: border-color 0.3s;
     background: #1a2a4a;
     color: #e0e0e0;
-}
-
-.csv-textarea:focus {
-    outline: none;
-    border-color: #3498db;
-    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
-}
-
-.csv-botones {
-    margin-top: 12px;
+    resize: vertical;
 }
 
 .mensaje-procesamiento {
@@ -896,19 +816,14 @@ table td.vacio {
     padding: 15px;
     max-height: 200px;
     overflow-y: auto;
-    font-family: 'Courier New', monospace;
+    font-family: monospace;
     font-size: 13px;
-    line-height: 1.8;
     color: #e0e0e0;
 }
 
 .vista-previa .resumen-linea {
     padding: 4px 0;
     border-bottom: 1px solid #2a3a5a;
-}
-
-.vista-previa .resumen-linea:last-child {
-    border-bottom: none;
 }
 
 .vista-previa .total {
@@ -919,48 +834,66 @@ table td.vacio {
     border-top: 2px solid #3498db;
 }
 
-@media (max-width: 768px) {
-    .modal-content {
-        width: 95%;
-        margin: 5% auto;
-        max-height: 95vh;
-    }
-    
-    .modal-header h2 {
-        font-size: 16px;
-    }
-    
-    .prompt-text {
-        font-size: 11px;
-        max-height: 180px;
-    }
-    
-    .csv-textarea {
-        min-height: 150px;
-        font-size: 11px;
-    }
-    
-    .modal-footer {
+/* ========== RESPONSIVE ========== */
+@media (max-width: 900px) {
+    .main-content {
         flex-direction: column;
-        align-items: stretch;
     }
     
-    .btn-restaurar,
-    .btn-cerrar-modal {
-        width: 100%;
-        text-align: center;
+    .col-izquierda, .col-derecha {
+        flex: none;
+        min-width: auto;
+    }
+    
+    .tabla-container {
+        max-height: 500px;
+    }
+    
+    .mensaje-bienvenida {
+        padding: 30px 20px;
+    }
+    
+    .bienvenida-content h2 {
+        font-size: 24px;
     }
 }
 
-@media (max-width: 480px) {
-    .prompt-botones,
-    .csv-botones {
+@media (max-width: 600px) {
+    header {
         flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
     }
     
-    .prompt-botones button,
-    .csv-botones button {
-        width: 100%;
+    header h1 {
+        font-size: 18px;
         text-align: center;
+    }
+    
+    .header-botones {
+        justify-content: center;
+    }
+    
+    .botones-inferiores button {
+        padding: 8px 15px;
+        font-size: 12px;
+    }
+    
+    table {
+        font-size: 10px;
+    }
+    
+    table td, table th {
+        padding: 2px;
+        height: 30px;
+    }
+    
+    .bienvenida-content h2 {
+        font-size: 20px;
+    }
+    
+    .btn-gestionar-grande {
+        padding: 12px 25px;
+        font-size: 16px;
     }
 }
