@@ -14,6 +14,7 @@
             <div class="header-botones">
                 <button id="btnModo" class="btn-modo">🌙 Modo Oscuro</button>
                 <button id="btnGuardar" class="btn-guardar" onclick="guardarHorario()">💾 Guardar Horario</button>
+                <button id="btnGestionarDatos" class="btn-gestionar" onclick="abrirPanelDatos()">📊 Gestionar Datos</button>
             </div>
         </header>
 
@@ -90,8 +91,81 @@
             💡 Haz click en un curso para agregarlo/quitarlo del horario
         </div>
     </div>
-    
-    <!-- Librerías externas -->
+
+    <!-- ============================================================ -->
+    <!-- PANEL DE GESTIÓN DE DATOS (MODAL) -->
+    <!-- ============================================================ -->
+    <div id="panelDatos" class="modal" style="display:none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>📊 GESTIÓN DE DATOS DE CURSOS</h2>
+                <button class="modal-close" onclick="cerrarPanelDatos()">✕</button>
+            </div>
+            <div class="modal-body">
+                
+                <!-- Sección 1: Instrucciones y Prompt -->
+                <div class="seccion-prompt">
+                    <h3>📋 1. COPIAR PROMPT PARA IA (CSV)</h3>
+                    <div class="prompt-box">
+                        <p><strong>📌 INSTRUCCIONES PARA LA IA:</strong></p>
+                        <div class="prompt-text" id="promptText">
+Proporciona el contenido en formato CSV (solo texto, sin cabecera) con las siguientes columnas en este orden: CICLO,CRÉDITOS,CURSO,TIPO,HRS,GR,DOCENTE,DIA1,INICIO1,FINAL1,DIA2,INICIO2,FINAL2.
+
+Reglas:
+• Asigna el valor 0 a todos los registros en la columna HRS
+• En la columna TIPO, solo deben aparecer dos opciones: 'TEORIA' o 'LABORATORIO' (considera 'TEORÍA Y PRÁCTICA' como 'TEORIA')
+• No modifiques el contenido de la columna DOCENTE, incluso si contiene dos nombres
+• Días válidos: LUNES, MARTES, MIÉRCOLES, JUEVES, VIERNES, SÁBADO
+• Horas en formato: HH:MM (ejemplo: 08:00, 13:00, 17:00)
+• Si un curso tiene 2 días diferentes, usa DIA2, INICIO2, FINAL2
+• Si un curso solo tiene 1 día, deja DIA2, INICIO2, FINAL2 vacíos
+• Los ciclos son: Ciclo 2, Ciclo 3, Ciclo 4, Ciclo 5, Ciclo 6
+• La columna GR es el número de grupo/sección (ejemplo: 01, 02, 03 para teoría, 00 para laboratorio)
+• Extrae TODOS los cursos que aparecen en el PDF
+
+⚠️ IMPORTANTE: Solo responde con el CSV, sin texto adicional, sin explicaciones, sin markdown, sin comillas triples.
+
+Ejemplo de formato CSV:
+Ciclo 2,3,TOPOGRAFÍA APLICADA A LA INGENIERÍA CIVIL I,TEORIA,0,01,CRUZ MONTES, FRANCI BENITO,MIERCOLES,12:00,13:00,,,
+Ciclo 2,3,TOPOGRAFÍA APLICADA A LA INGENIERÍA CIVIL I,LABORATORIO,0,00,CRUZ MONTES, FRANCI BENITO,MIERCOLES,13:00,17:00,,,
+Ciclo 3,4,CÁLCULO III,TEORIA,0,01,BUSTAMANTE RAMOS, ELVIS,MIERCOLES,08:00,11:00,,,
+                        </div>
+                        <div class="prompt-botones">
+                            <button class="btn-copiar" onclick="copiarPrompt()">📋 Copiar Prompt</button>
+                            <button class="btn-ejemplo" onclick="copiarEjemploCSV()">📋 Copiar Ejemplo CSV</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sección 2: Pegar CSV -->
+                <div class="seccion-csv">
+                    <h3>📋 2. PEGA EL CSV QUE TE DIO LA IA</h3>
+                    <textarea id="csvInput" class="csv-textarea" placeholder="Pega aquí el CSV que te dio la IA..."></textarea>
+                    <div class="csv-botones">
+                        <button class="btn-procesar" onclick="procesarCSV()">📥 Procesar CSV</button>
+                        <button class="btn-ver-datos" onclick="verDatosActuales()">📋 Ver Datos Actuales</button>
+                        <button class="btn-limpiar-csv" onclick="limpiarCSV()">🗑️ Limpiar</button>
+                    </div>
+                    <div id="mensajeProcesamiento" class="mensaje-procesamiento"></div>
+                </div>
+
+                <!-- Sección 3: Vista previa -->
+                <div class="seccion-preview">
+                    <h3>📊 3. VISTA PREVIA DE DATOS ACTUALES</h3>
+                    <div id="vistaPrevia" class="vista-previa">
+                        <p>Cargando datos...</p>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn-restaurar" onclick="restaurarDatosDefault()">🔄 Restaurar Datos Predeterminados</button>
+                <button class="btn-cerrar-modal" onclick="cerrarPanelDatos()">✕ Cerrar</button>
+            </div>
+        </div>
+    </div>
+    <!-- ============================================================ -->
+
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <script src="script.js"></script>
 </body>
