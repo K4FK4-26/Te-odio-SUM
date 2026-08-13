@@ -16,7 +16,7 @@
             <div class="header-botones">
                 <button id="btnModo" class="btn-modo">🌙 Modo Oscuro</button>
                 <button id="btnGuardar" class="btn-guardar">💾 Guardar</button>
-                <button id="btnGestionarDatos" class="btn-gestionar">📊 Gestionar Datos</button>
+                <button id="btnGestionarDatos" class="btn-gestionar">📊 Gestionar</button>
             </div>
         </header>
 
@@ -27,9 +27,9 @@
                 <p>Para comenzar, haz clic en <strong>"Gestionar Datos"</strong> y carga tus cursos.</p>
                 <p>📋 <strong>Pasos:</strong></p>
                 <ol>
-                    <li>Descarga tu <strong>Programación de Asignaturas</strong> (PDF) desde el sistema de la universidad</li>
-                    <li>Usa una IA (ChatGPT, Claude, etc.) con el <strong>prompt que te proporcionamos</strong></li>
-                    <li>Pega el <strong>CSV generado</strong> en el panel de gestión</li>
+                    <li>Descarga tu <strong>Programación de Asignaturas</strong> (PDF)</li>
+                    <li>Usa una IA con el <strong>prompt que te proporcionamos</strong></li>
+                    <li>Pega el <strong>CSV generado</strong> en el panel</li>
                     <li>¡Listo! Tus cursos aparecerán automáticamente</li>
                 </ol>
                 <button id="btnIrGestionar" class="btn-gestionar-grande">📊 Ir a Gestionar Datos</button>
@@ -53,7 +53,7 @@
                 </div>
                 <div class="lista-cursos-container">
                     <ul id="listaCursos">
-                        <li style="text-align:center;padding:20px;color:#7f8c8d;">No hay cursos cargados. Ve a "Gestionar Datos"</li>
+                        <li style="text-align:center;padding:20px;color:#7f8c8d;">No hay cursos cargados.</li>
                     </ul>
                 </div>
                 <div class="leyenda">💡 Click en curso → Agregar/Quitar</div>
@@ -106,43 +106,35 @@
                 <div class="seccion-prompt">
                     <h3>📋 1. COPIAR PROMPT PARA IA</h3>
                     <div class="prompt-box">
-                       <div class="prompt-text" id="promptText">
-Proporciona el contenido en formato CSV (solo texto, sin cabecera) con las siguientes columnas en este orden:
+                        <div class="prompt-text" id="promptText">
+Proporciona el contenido en formato CSV con las columnas:
 CICLO,CRÉDITOS,CURSO,TIPO,HRS,GR,DOCENTE,DIA1,INICIO1,FINAL1,DIA2,INICIO2,FINAL2
 
-REGLAS IMPORTANTES PARA LOS CICLOS:
-- Ciclo 2: TOPOGRAFÍA, GEOMETRÍA DESCRIPTIVA, INVESTIGACIÓN FORMATIVA, REALIDAD NACIONAL, CÁLCULO II, FÍSICA I, QUÍMICA GENERAL
+REGLAS PARA CICLOS:
+- Ciclo 2: TOPOGRAFÍA, GEOMETRÍA DESCRIPTIVA, INVESTIGACIÓN FORMATIVA, REALIDAD NACIONAL, CÁLCULO II, FÍSICA I, QUÍMICA GENERAL, ECONOMIA GENERAL
 - Ciclo 3: CÁLCULO III, GEOLOGÍA, FÍSICA II, ESTÁTICA
 - Ciclo 4: CÁLCULO IV, ALGORITMO Y PROGRAMACIÓN, DIBUJO ASISTIDO, DINÁMICA, MECÁNICA DE SUELOS, TECNOLOGÍA DE LOS MATERIALES, ECOLOGÍA
 - Ciclo 5: MECÁNICA DE FLUIDOS, CONSTRUCCIÓN I
 - Ciclo 6: HIDRÁULICA APLICADA, ANÁLISIS ESTRUCTURAL I, GEOLOGÍA APLICADA, DESARROLLO SUSTENTABLE, MODELAMIENTO INFORMÁTICO (BIM), CONSTRUCCIÓN II, GESTIÓN DE RIESGOS
-- ECONOMIA GENERAL: Ciclo 2
 
-OTRAS REGLAS:
-1. TIPO: "TEORIA" o "LABORATORIO"
-2. Días válidos: LUNES, MARTES, MIÉRCOLES, JUEVES, VIERNES, SÁBADO
-3. Horas en formato: HH:MM
-4. Si tiene 2 días, llenar DIA2, INICIO2, FINAL2
-5. Si solo tiene 1 día, dejar DIA2, INICIO2, FINAL2 vacíos (,,)
-
-EJEMPLO DE UNA LÍNEA CORRECTA:
+EJEMPLO:
 Ciclo 6,4,HIDRÁULICA APLICADA,TEORIA,0,01,QUISCA ASTOCAHUANA, SAMUEL,MIERCOLES,08:00,11:00,,,
 
-IMPORTANTE: Solo responde con el CSV, sin texto adicional.
+⚠️ Solo responde con el CSV.
                         </div>
                         <div class="prompt-botones">
-                            <button id="btnCopiarPrompt" class="btn-copiar">📋 Copiar Prompt</button>
-                            <button id="btnCopiarEjemplo" class="btn-ejemplo">📋 Copiar Ejemplo</button>
+                            <button id="btnCopiarPrompt" class="btn-copiar">📋 Copiar</button>
+                            <button id="btnCopiarEjemplo" class="btn-ejemplo">📋 Ejemplo</button>
                         </div>
                     </div>
                 </div>
 
                 <div class="seccion-csv">
-                    <h3>📋 2. PEGA EL CSV GENERADO</h3>
-                    <textarea id="csvInput" class="csv-textarea" placeholder="Pega aquí el CSV que te dio la IA..."></textarea>
+                    <h3>📋 2. PEGA EL CSV</h3>
+                    <textarea id="csvInput" class="csv-textarea" placeholder="Pega aquí el CSV..."></textarea>
                     <div class="csv-botones">
-                        <button id="btnProcesarCSV" class="btn-procesar">📥 Procesar CSV</button>
-                        <button id="btnVerDatos" class="btn-ver-datos">👁️ Ver Datos</button>
+                        <button id="btnProcesarCSV" class="btn-procesar">📥 Procesar</button>
+                        <button id="btnVerDatos" class="btn-ver-datos">👁️ Ver</button>
                         <button id="btnLimpiarCSV" class="btn-limpiar-csv">🗑️ Limpiar</button>
                     </div>
                     <div id="mensajeProcesamiento" class="mensaje-procesamiento"></div>
