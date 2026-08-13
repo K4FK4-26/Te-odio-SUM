@@ -1,115 +1,89 @@
 // ============================================================
-// DATOS DE CURSOS - PREDETERMINADOS (BACKUP)
+// DATOS DE CURSOS - PREDETERMINADOS
 // ============================================================
 const DATOS_DEFAULT = {
   "Ciclo 2": {
     "teoria": [
-      {"nombre": "TOPOGRAFÍA APLICADA A LA INGENIERÍA CIVIL I", "seccion": "01", "profesor": "CRUZ MONTES, FRANCI BENITO", "creditos": 3, "dia": "MIERCOLES", "hora": "12:00 - 13:00"},
-      {"nombre": "TOPOGRAFÍA APLICADA A LA INGENIERÍA CIVIL II", "seccion": "02", "profesor": "CRUZ MONTES, FRANCI BENITO", "creditos": 3, "dia": "JUEVES", "hora": "12:00 - 13:00"},
-      {"nombre": "TOPOGRAFÍA APLICADA A LA INGENIERÍA CIVIL III", "seccion": "03", "profesor": "CRUZ MONTES, FRANCI BENITO", "creditos": 3, "dia": "LUNES", "hora": "08:00 - 09:00"},
-      {"nombre": "GEOMETRÍA DESCRIPTIVA", "seccion": "01", "profesor": "RAMIREZ PEJERREY, VICTOR NICOLAS", "creditos": 3, "dia": "MARTES", "hora": "18:00 - 20:00"},
-      {"nombre": "GEOMETRÍA DESCRIPTIVA", "seccion": "02", "profesor": "RAMIREZ PEJERREY, VICTOR NICOLAS", "creditos": 3, "dia": "JUEVES", "hora": "08:00 - 10:00"},
-      {"nombre": "INVESTIGACIÓN FORMATIVA", "seccion": "01", "profesor": "RIVERA VIDAL, JIM ARTURO", "creditos": 3, "dia": "MIERCOLES", "hora": "08:00 - 10:00"},
-      {"nombre": "INVESTIGACIÓN FORMATIVA", "seccion": "02", "profesor": "JAVE NAKAYO, JORGE LEONARDO", "creditos": 3, "dia": "MIERCOLES", "hora": "08:00 - 10:00"},
-      {"nombre": "REALIDAD NACIONAL Y MUNDIAL", "seccion": "01", "profesor": "RENDON SCHNEIR, ERIC", "creditos": 2, "dia": "MIERCOLES", "hora": "17:00 - 19:00"},
-      {"nombre": "REALIDAD NACIONAL Y MUNDIAL", "seccion": "02", "profesor": "MALCA CASAVILCA, NORA ROSA CONCEPCIÓN", "creditos": 2, "dia": "MARTES", "hora": "11:00 - 13:00"},
-      {"nombre": "CÁLCULO II", "seccion": "01", "profesor": "No especificado", "creditos": 4, "dia": "VIERNES", "hora": "08:00 - 10:00"},
-      {"nombre": "FÍSICA I", "seccion": "01", "profesor": "SÁNCHEZ NOLASCO, FELIPE", "creditos": 4, "dia": "LUNES", "hora": "13:00 - 16:00"},
-      {"nombre": "FÍSICA I", "seccion": "02", "profesor": "SÁNCHEZ NOLASCO, FELIPE", "creditos": 4, "dia": "MARTES", "hora": "13:00 - 16:00"},
-      {"nombre": "QUÍMICA GENERAL", "seccion": "01", "profesor": "No especificado", "creditos": 4, "dia": "VIERNES", "hora": "14:00 - 17:00"}
+      {"nombre": "TOPOGRAFIA APLICADA A LA INGENIERIA CIVIL I", "seccion": "01", "profesor": "CRUZ MONTES, FRANCI BENITO", "creditos": 3, "dia": "MIERCOLES", "hora": "12:00 - 13:00"},
+      {"nombre": "TOPOGRAFIA APLICADA A LA INGENIERIA CIVIL II", "seccion": "02", "profesor": "CRUZ MONTES, FRANCI BENITO", "creditos": 3, "dia": "JUEVES", "hora": "12:00 - 13:00"},
+      {"nombre": "GEOMETRIA DESCRIPTIVA", "seccion": "01", "profesor": "RAMIREZ PEJERREY, VICTOR NICOLAS", "creditos": 3, "dia": "MARTES", "hora": "18:00 - 20:00"},
+      {"nombre": "INVESTIGACION FORMATIVA", "seccion": "01", "profesor": "RIVERA VIDAL, JIM ARTURO", "creditos": 3, "dia": "MIERCOLES", "hora": "08:00 - 10:00"},
+      {"nombre": "CALCULO II", "seccion": "01", "profesor": "No especificado", "creditos": 4, "dia": "VIERNES", "hora": "08:00 - 10:00"},
+      {"nombre": "FISICA I", "seccion": "01", "profesor": "SANCHEZ NOLASCO, FELIPE", "creditos": 4, "dia": "LUNES", "hora": "13:00 - 16:00"},
+      {"nombre": "QUIMICA GENERAL", "seccion": "01", "profesor": "No especificado", "creditos": 4, "dia": "VIERNES", "hora": "14:00 - 17:00"}
     ],
     "laboratorio": [
-      {"nombre": "TOPOGRAFÍA APLICADA A LA INGENIERÍA CIVIL I (LAB)", "seccion": "00", "profesor": "CRUZ MONTES, FRANCI BENITO", "creditos": 3, "dia": "MIERCOLES", "hora": "13:00 - 17:00"},
-      {"nombre": "TOPOGRAFÍA APLICADA A LA INGENIERÍA CIVIL II (LAB)", "seccion": "00", "profesor": "CRUZ MONTES, FRANCI BENITO", "creditos": 3, "dia": "JUEVES", "hora": "13:00 - 17:00"},
-      {"nombre": "TOPOGRAFÍA APLICADA A LA INGENIERÍA CIVIL III (LAB)", "seccion": "00", "profesor": "CRUZ MONTES, FRANCI BENITO", "creditos": 3, "dia": "LUNES", "hora": "09:00 - 13:00"},
-      {"nombre": "GEOMETRÍA DESCRIPTIVA (LAB)", "seccion": "00", "profesor": "RAMIREZ PEJERREY, VICTOR NICOLAS", "creditos": 3, "dia": "MARTES", "hora": "20:00 - 22:00"},
-      {"nombre": "GEOMETRÍA DESCRIPTIVA (LAB)", "seccion": "00", "profesor": "RAMIREZ PEJERREY, VICTOR NICOLAS", "creditos": 3, "dia": "JUEVES", "hora": "10:00 - 12:00"},
-      {"nombre": "INVESTIGACIÓN FORMATIVA (LAB)", "seccion": "00", "profesor": "RIVERA VIDAL, JIM ARTURO", "creditos": 3, "dia": "MIERCOLES", "hora": "10:00 - 12:00"},
-      {"nombre": "INVESTIGACIÓN FORMATIVA (LAB)", "seccion": "00", "profesor": "JAVE NAKAYO, JORGE LEONARDO", "creditos": 3, "dia": "MIERCOLES", "hora": "10:00 - 12:00"},
-      {"nombre": "CÁLCULO II (LAB)", "seccion": "00", "profesor": "No especificado", "creditos": 4, "dia": "VIERNES", "hora": "10:00 - 14:00"},
-      {"nombre": "FÍSICA I (LAB)", "seccion": "00", "profesor": "SÁNCHEZ NOLASCO, FELIPE", "creditos": 4, "dia": "LUNES", "hora": "17:00 - 18:00"},
-      {"nombre": "FÍSICA I (LAB)", "seccion": "00", "profesor": "SÁNCHEZ NOLASCO, FELIPE", "creditos": 4, "dia": "MARTES", "hora": "17:00 - 18:00"},
-      {"nombre": "QUÍMICA GENERAL (LAB)", "seccion": "00", "profesor": "No especificado", "creditos": 4, "dia": "VIERNES", "hora": "14:00 - 17:00"},
-      {"nombre": "QUÍMICA GENERAL (LAB)", "seccion": "00", "profesor": "No especificado", "creditos": 4, "dia": "VIERNES", "hora": "17:00 - 19:00"}
+      {"nombre": "TOPOGRAFIA APLICADA A LA INGENIERIA CIVIL I (LAB)", "seccion": "00", "profesor": "CRUZ MONTES, FRANCI BENITO", "creditos": 3, "dia": "MIERCOLES", "hora": "13:00 - 17:00"},
+      {"nombre": "TOPOGRAFIA APLICADA A LA INGENIERIA CIVIL II (LAB)", "seccion": "00", "profesor": "CRUZ MONTES, FRANCI BENITO", "creditos": 3, "dia": "JUEVES", "hora": "13:00 - 17:00"},
+      {"nombre": "GEOMETRIA DESCRIPTIVA (LAB)", "seccion": "00", "profesor": "RAMIREZ PEJERREY, VICTOR NICOLAS", "creditos": 3, "dia": "MARTES", "hora": "20:00 - 22:00"},
+      {"nombre": "INVESTIGACION FORMATIVA (LAB)", "seccion": "00", "profesor": "RIVERA VIDAL, JIM ARTURO", "creditos": 3, "dia": "MIERCOLES", "hora": "10:00 - 12:00"},
+      {"nombre": "CALCULO II (LAB)", "seccion": "00", "profesor": "No especificado", "creditos": 4, "dia": "VIERNES", "hora": "10:00 - 14:00"},
+      {"nombre": "FISICA I (LAB)", "seccion": "00", "profesor": "SANCHEZ NOLASCO, FELIPE", "creditos": 4, "dia": "LUNES", "hora": "17:00 - 18:00"},
+      {"nombre": "QUIMICA GENERAL (LAB)", "seccion": "00", "profesor": "No especificado", "creditos": 4, "dia": "VIERNES", "hora": "14:00 - 17:00"}
     ]
   },
   "Ciclo 3": {
     "teoria": [
-      {"nombre": "CÁLCULO III", "seccion": "01", "profesor": "BUSTAMANTE RAMOS, ELVIS", "creditos": 4, "dia": "MIERCOLES", "hora": "08:00 - 11:00"},
-      {"nombre": "CÁLCULO III", "seccion": "02", "profesor": "No especificado", "creditos": 4, "dia": "VIERNES", "hora": "08:00 - 11:00"},
-      {"nombre": "GEOLOGÍA", "seccion": "01", "profesor": "MEDINA SANDOVAL, ROSA JULIA", "creditos": 3, "dia": "JUEVES", "hora": "08:00 - 10:00"},
-      {"nombre": "FÍSICA II", "seccion": "01", "profesor": "No especificado", "creditos": 4, "dia": "LUNES", "hora": "13:00 - 16:00"},
-      {"nombre": "ESTÁTICA", "seccion": "01", "profesor": "JIMENEZ RODRIGO, EDGAR GABRIEL", "creditos": 4, "dia": "VIERNES", "hora": "15:00 - 17:00"}
+      {"nombre": "CALCULO III", "seccion": "01", "profesor": "BUSTAMANTE RAMOS, ELVIS", "creditos": 4, "dia": "MIERCOLES", "hora": "08:00 - 11:00"},
+      {"nombre": "GEOLOGIA", "seccion": "01", "profesor": "MEDINA SANDOVAL, ROSA JULIA", "creditos": 3, "dia": "JUEVES", "hora": "08:00 - 10:00"},
+      {"nombre": "FISICA II", "seccion": "01", "profesor": "No especificado", "creditos": 4, "dia": "LUNES", "hora": "13:00 - 16:00"},
+      {"nombre": "ESTATICA", "seccion": "01", "profesor": "JIMENEZ RODRIGO, EDGAR GABRIEL", "creditos": 4, "dia": "VIERNES", "hora": "15:00 - 17:00"}
     ],
     "laboratorio": [
-      {"nombre": "CÁLCULO III (LAB)", "seccion": "00", "profesor": "BUSTAMANTE RAMOS, ELVIS", "creditos": 4, "dia": "VIERNES", "hora": "11:00 - 13:00"},
-      {"nombre": "GEOLOGÍA (LAB)", "seccion": "00", "profesor": "MEDINA SANDOVAL, ROSA JULIA", "creditos": 3, "dia": "JUEVES", "hora": "10:00 - 12:00"},
-      {"nombre": "FÍSICA II (LAB)", "seccion": "00", "profesor": "No especificado", "creditos": 4, "dia": "LUNES", "hora": "16:00 - 18:00"},
-      {"nombre": "ESTÁTICA (LAB)", "seccion": "00", "profesor": "JIMENEZ RODRIGO, EDGAR GABRIEL", "creditos": 4, "dia": "MARTES", "hora": "15:00 - 18:00"}
+      {"nombre": "CALCULO III (LAB)", "seccion": "00", "profesor": "BUSTAMANTE RAMOS, ELVIS", "creditos": 4, "dia": "VIERNES", "hora": "11:00 - 13:00"},
+      {"nombre": "GEOLOGIA (LAB)", "seccion": "00", "profesor": "MEDINA SANDOVAL, ROSA JULIA", "creditos": 3, "dia": "JUEVES", "hora": "10:00 - 12:00"},
+      {"nombre": "FISICA II (LAB)", "seccion": "00", "profesor": "No especificado", "creditos": 4, "dia": "LUNES", "hora": "16:00 - 18:00"},
+      {"nombre": "ESTATICA (LAB)", "seccion": "00", "profesor": "JIMENEZ RODRIGO, EDGAR GABRIEL", "creditos": 4, "dia": "MARTES", "hora": "15:00 - 18:00"}
     ]
   },
   "Ciclo 4": {
     "teoria": [
-      {"nombre": "CÁLCULO IV", "seccion": "01", "profesor": "BUSTAMANTE RAMOS, ELVIS", "creditos": 4, "dia": "JUEVES", "hora": "08:00 - 11:00"},
-      {"nombre": "ALGORITMO Y PROGRAMACIÓN", "seccion": "01", "profesor": "AROSOQUIPA MINA, YVAN MANUEL", "creditos": 3, "dia": "JUEVES", "hora": "18:00 - 20:00"},
+      {"nombre": "CALCULO IV", "seccion": "01", "profesor": "BUSTAMANTE RAMOS, ELVIS", "creditos": 4, "dia": "JUEVES", "hora": "08:00 - 11:00"},
+      {"nombre": "ALGORITMO Y PROGRAMACION", "seccion": "01", "profesor": "AROSOQUIPA MINA, YVAN MANUEL", "creditos": 3, "dia": "JUEVES", "hora": "18:00 - 20:00"},
       {"nombre": "DIBUJO ASISTIDO POR COMPUTADORA", "seccion": "01", "profesor": "CAYA RAMOS, OCTAVIO JOSE", "creditos": 3, "dia": "MIERCOLES", "hora": "13:00 - 14:00"},
-      {"nombre": "DIBUJO ASISTIDO POR COMPUTADORA", "seccion": "02", "profesor": "CAYA RAMOS, OCTAVIO JOSE", "creditos": 3, "dia": "JUEVES", "hora": "13:00 - 14:00"},
-      {"nombre": "DIBUJO ASISTIDO POR COMPUTADORA", "seccion": "03", "profesor": "CAYA RAMOS, OCTAVIO JOSE", "creditos": 3, "dia": "SABADO", "hora": "08:00 - 09:00"},
-      {"nombre": "DINÁMICA", "seccion": "01", "profesor": "JIMENEZ RODRIGO, EDGAR GABRIEL", "creditos": 4, "dia": "MARTES", "hora": "17:00 - 21:00"},
-      {"nombre": "DINÁMICA", "seccion": "02", "profesor": "No especificado", "creditos": 4, "dia": "MARTES", "hora": "18:00 - 21:00"},
-      {"nombre": "MECÁNICA DE SUELOS", "seccion": "01", "profesor": "PEHOVAZ ALVAREZ, HUMBERTO IVÁN", "creditos": 4, "dia": "MARTES", "hora": "14:00 - 17:00"},
-      {"nombre": "MECÁNICA DE SUELOS", "seccion": "02", "profesor": "PEHOVAZ ALVAREZ, HUMBERTO IVÁN", "creditos": 4, "dia": "LUNES", "hora": "14:00 - 17:00"},
-      {"nombre": "TECNOLOGÍA DE LOS MATERIALES", "seccion": "01", "profesor": "ESCALANTE CONTRERAS, JORGE", "creditos": 3, "dia": "LUNES", "hora": "18:00 - 20:00"},
-      {"nombre": "TECNOLOGÍA DE LOS MATERIALES", "seccion": "02", "profesor": "ESCALANTE CONTRERAS, JORGE", "creditos": 3, "dia": "VIERNES", "hora": "08:00 - 10:00"},
-      {"nombre": "ECOLOGÍA Y EVALUACIÓN AMBIENTAL", "seccion": "01", "profesor": "CHAMBI ECHEGARAY, GINA GABRIELA", "creditos": 3, "dia": "MARTES", "hora": "08:00 - 10:00"},
-      {"nombre": "ECOLOGÍA Y EVALUACIÓN AMBIENTAL", "seccion": "02", "profesor": "MALCA CASAVILCA, NORA ROSA CONCEPCIÓN", "creditos": 3, "dia": "JUEVES", "hora": "09:00 - 11:00"}
+      {"nombre": "DINAMICA", "seccion": "01", "profesor": "JIMENEZ RODRIGO, EDGAR GABRIEL", "creditos": 4, "dia": "MARTES", "hora": "17:00 - 21:00"},
+      {"nombre": "MECANICA DE SUELOS", "seccion": "01", "profesor": "PEHOVAZ ALVAREZ, HUMBERTO IVAN", "creditos": 4, "dia": "MARTES", "hora": "14:00 - 17:00"},
+      {"nombre": "TECNOLOGIA DE LOS MATERIALES", "seccion": "01", "profesor": "ESCALANTE CONTRERAS, JORGE", "creditos": 3, "dia": "LUNES", "hora": "18:00 - 20:00"},
+      {"nombre": "ECOLOGIA Y EVALUACION AMBIENTAL", "seccion": "01", "profesor": "CHAMBI ECHEGARAY, GINA GABRIELA", "creditos": 3, "dia": "MARTES", "hora": "08:00 - 10:00"}
     ],
     "laboratorio": [
-      {"nombre": "CÁLCULO IV (LAB)", "seccion": "00", "profesor": "BUSTAMANTE RAMOS, ELVIS", "creditos": 4, "dia": "MIERCOLES", "hora": "11:00 - 13:00"},
-      {"nombre": "ALGORITMO Y PROGRAMACIÓN (LAB)", "seccion": "00", "profesor": "AROSOQUIPA MINA, YVAN MANUEL", "creditos": 3, "dia": "JUEVES", "hora": "20:00 - 22:00"},
+      {"nombre": "CALCULO IV (LAB)", "seccion": "00", "profesor": "BUSTAMANTE RAMOS, ELVIS", "creditos": 4, "dia": "MIERCOLES", "hora": "11:00 - 13:00"},
+      {"nombre": "ALGORITMO Y PROGRAMACION (LAB)", "seccion": "00", "profesor": "AROSOQUIPA MINA, YVAN MANUEL", "creditos": 3, "dia": "JUEVES", "hora": "20:00 - 22:00"},
       {"nombre": "DIBUJO ASISTIDO POR COMPUTADORA (LAB)", "seccion": "00", "profesor": "CAYA RAMOS, OCTAVIO JOSE", "creditos": 3, "dia": "MIERCOLES", "hora": "14:00 - 18:00"},
-      {"nombre": "DIBUJO ASISTIDO POR COMPUTADORA (LAB)", "seccion": "00", "profesor": "CAYA RAMOS, OCTAVIO JOSE", "creditos": 3, "dia": "JUEVES", "hora": "14:00 - 18:00"},
-      {"nombre": "DIBUJO ASISTIDO POR COMPUTADORA (LAB)", "seccion": "00", "profesor": "CAYA RAMOS, OCTAVIO JOSE", "creditos": 3, "dia": "SABADO", "hora": "09:00 - 13:00"},
-      {"nombre": "DINÁMICA (LAB)", "seccion": "00", "profesor": "JIMENEZ RODRIGO, EDGAR GABRIEL", "creditos": 4, "dia": "VIERNES", "hora": "19:00 - 21:00"},
-      {"nombre": "DINÁMICA (LAB)", "seccion": "00", "profesor": "No especificado", "creditos": 4, "dia": "MIERCOLES", "hora": "19:00 - 21:00"},
-      {"nombre": "MECÁNICA DE SUELOS (LAB)", "seccion": "00", "profesor": "PEHOVAZ ALVAREZ, HUMBERTO IVÁN", "creditos": 4, "dia": "LUNES", "hora": "14:00 - 16:00"},
-      {"nombre": "MECÁNICA DE SUELOS (LAB)", "seccion": "00", "profesor": "PEHOVAZ ALVAREZ, HUMBERTO IVÁN", "creditos": 4, "dia": "LUNES", "hora": "16:00 - 18:00"},
-      {"nombre": "TECNOLOGÍA DE LOS MATERIALES (LAB)", "seccion": "00", "profesor": "ESCALANTE CONTRERAS, JORGE", "creditos": 3, "dia": "LUNES", "hora": "20:00 - 22:00"},
-      {"nombre": "TECNOLOGÍA DE LOS MATERIALES (LAB)", "seccion": "00", "profesor": "ESCALANTE CONTRERAS, JORGE", "creditos": 3, "dia": "VIERNES", "hora": "10:00 - 12:00"},
-      {"nombre": "ECOLOGÍA Y EVALUACIÓN AMBIENTAL (LAB)", "seccion": "00", "profesor": "CHAMBI ECHEGARAY, GINA GABRIELA", "creditos": 3, "dia": "MARTES", "hora": "10:00 - 12:00"},
-      {"nombre": "ECOLOGÍA Y EVALUACIÓN AMBIENTAL (LAB)", "seccion": "00", "profesor": "MALCA CASAVILCA, NORA ROSA CONCEPCIÓN", "creditos": 3, "dia": "JUEVES", "hora": "11:00 - 13:00"}
+      {"nombre": "DINAMICA (LAB)", "seccion": "00", "profesor": "JIMENEZ RODRIGO, EDGAR GABRIEL", "creditos": 4, "dia": "VIERNES", "hora": "19:00 - 21:00"},
+      {"nombre": "MECANICA DE SUELOS (LAB)", "seccion": "00", "profesor": "PEHOVAZ ALVAREZ, HUMBERTO IVAN", "creditos": 4, "dia": "LUNES", "hora": "14:00 - 16:00"},
+      {"nombre": "TECNOLOGIA DE LOS MATERIALES (LAB)", "seccion": "00", "profesor": "ESCALANTE CONTRERAS, JORGE", "creditos": 3, "dia": "LUNES", "hora": "20:00 - 22:00"},
+      {"nombre": "ECOLOGIA Y EVALUACION AMBIENTAL (LAB)", "seccion": "00", "profesor": "CHAMBI ECHEGARAY, GINA GABRIELA", "creditos": 3, "dia": "MARTES", "hora": "10:00 - 12:00"}
     ]
   },
   "Ciclo 5": {
     "teoria": [
-      {"nombre": "MECÁNICA DE FLUIDOS", "seccion": "01", "profesor": "AROSOQUIPA MINA, YVAN MANUEL", "creditos": 4, "dia": "VIERNES", "hora": "08:00 - 10:00"},
-      {"nombre": "CONSTRUCCIÓN I", "seccion": "01", "profesor": "SANCHEZ BENITES, FELIX SANTIAGO", "creditos": 4, "dia": "LUNES", "hora": "15:00 - 18:00"}
+      {"nombre": "MECANICA DE FLUIDOS", "seccion": "01", "profesor": "AROSOQUIPA MINA, YVAN MANUEL", "creditos": 4, "dia": "VIERNES", "hora": "08:00 - 10:00"},
+      {"nombre": "CONSTRUCCION I", "seccion": "01", "profesor": "SANCHEZ BENITES, FELIX SANTIAGO", "creditos": 4, "dia": "LUNES", "hora": "15:00 - 18:00"}
     ],
     "laboratorio": [
-      {"nombre": "MECÁNICA DE FLUIDOS (LAB)", "seccion": "00", "profesor": "AROSOQUIPA MINA, YVAN MANUEL", "creditos": 4, "dia": "VIERNES", "hora": "10:00 - 12:00"},
-      {"nombre": "CONSTRUCCIÓN I (LAB)", "seccion": "00", "profesor": "SANCHEZ BENITES, FELIX SANTIAGO", "creditos": 4, "dia": "LUNES", "hora": "18:00 - 20:00"}
+      {"nombre": "MECANICA DE FLUIDOS (LAB)", "seccion": "00", "profesor": "AROSOQUIPA MINA, YVAN MANUEL", "creditos": 4, "dia": "VIERNES", "hora": "10:00 - 12:00"},
+      {"nombre": "CONSTRUCCION I (LAB)", "seccion": "00", "profesor": "SANCHEZ BENITES, FELIX SANTIAGO", "creditos": 4, "dia": "LUNES", "hora": "18:00 - 20:00"}
     ]
   },
   "Ciclo 6": {
     "teoria": [
-      {"nombre": "HIDRÁULICA APLICADA", "seccion": "01", "profesor": "QUISCA ASTOCAHUANA, SAMUEL", "creditos": 4, "dia": "MIERCOLES", "hora": "08:00 - 11:00"},
-      {"nombre": "ANÁLISIS ESTRUCTURAL I", "seccion": "01", "profesor": "RICK MILTON, DELGADILLO AYALA", "creditos": 4, "dia": "JUEVES", "hora": "13:00 - 16:00"},
-      {"nombre": "GEOLOGÍA APLICADA A LA INGENIERÍA CIVIL", "seccion": "01", "profesor": "TOLENTINO YPARRAGUIRRE, VICTOR", "creditos": 4, "dia": "LUNES", "hora": "16:00 - 18:00"},
+      {"nombre": "HIDRAULICA APLICADA", "seccion": "01", "profesor": "QUISCA ASTOCAHUANA, SAMUEL", "creditos": 4, "dia": "MIERCOLES", "hora": "08:00 - 11:00"},
+      {"nombre": "ANALISIS ESTRUCTURAL I", "seccion": "01", "profesor": "RICK MILTON, DELGADILLO AYALA", "creditos": 4, "dia": "JUEVES", "hora": "13:00 - 16:00"},
+      {"nombre": "GEOLOGIA APLICADA A LA INGENIERIA CIVIL", "seccion": "01", "profesor": "TOLENTINO YPARRAGUIRRE, VICTOR", "creditos": 4, "dia": "LUNES", "hora": "16:00 - 18:00"},
       {"nombre": "DESARROLLO SUSTENTABLE Y RESPONSABILIDAD SOCIAL UNIVERSITARIA", "seccion": "01", "profesor": "CHAMBI ECHEGARAY, GINA GABRIELA", "creditos": 4, "dia": "JUEVES", "hora": "08:00 - 11:00"},
-      {"nombre": "MODELAMIENTO INFORMÁTICO EN LA CONSTRUCCIÓN (BIM)", "seccion": "01", "profesor": "No especificado", "creditos": 3, "dia": "MARTES", "hora": "08:00 - 10:00"},
-      {"nombre": "MODELAMIENTO INFORMÁTICO EN LA CONSTRUCCIÓN (BIM)", "seccion": "02", "profesor": "No especificado", "creditos": 3, "dia": "VIERNES", "hora": "08:00 - 10:00"},
-      {"nombre": "CONSTRUCCIÓN II", "seccion": "01", "profesor": "SANCHEZ BENITES, FELIX SANTIAGO", "creditos": 3, "dia": "MIERCOLES", "hora": "16:00 - 18:00"},
-      {"nombre": "GESTIÓN DE RIESGOS DE DESASTRES Y CAMBIO CLIMÁTICO", "seccion": "01", "profesor": "MORAN YAÑEZ, LUIS MIGUEL", "creditos": 3, "dia": "LUNES", "hora": "12:00 - 14:00"}
+      {"nombre": "MODELAMIENTO INFORMATICO EN LA CONSTRUCCION (BIM)", "seccion": "01", "profesor": "No especificado", "creditos": 3, "dia": "MARTES", "hora": "08:00 - 10:00"},
+      {"nombre": "CONSTRUCCION II", "seccion": "01", "profesor": "SANCHEZ BENITES, FELIX SANTIAGO", "creditos": 3, "dia": "MIERCOLES", "hora": "16:00 - 18:00"},
+      {"nombre": "GESTION DE RIESGOS DE DESASTRES Y CAMBIO CLIMATICO", "seccion": "01", "profesor": "MORAN YANEZ, LUIS MIGUEL", "creditos": 3, "dia": "LUNES", "hora": "12:00 - 14:00"}
     ],
     "laboratorio": [
-      {"nombre": "HIDRÁULICA APLICADA (LAB)", "seccion": "00", "profesor": "QUISCA ASTOCAHUANA, SAMUEL", "creditos": 4, "dia": "LUNES", "hora": "09:00 - 11:00"},
-      {"nombre": "ANÁLISIS ESTRUCTURAL I (LAB)", "seccion": "00", "profesor": "RICK MILTON, DELGADILLO AYALA", "creditos": 4, "dia": "JUEVES", "hora": "16:00 - 18:00"},
-      {"nombre": "GEOLOGÍA APLICADA A LA INGENIERÍA CIVIL (LAB)", "seccion": "00", "profesor": "TOLENTINO YPARRAGUIRRE, VICTOR", "creditos": 4, "dia": "LUNES", "hora": "18:00 - 22:00"},
+      {"nombre": "HIDRAULICA APLICADA (LAB)", "seccion": "00", "profesor": "QUISCA ASTOCAHUANA, SAMUEL", "creditos": 4, "dia": "LUNES", "hora": "09:00 - 11:00"},
+      {"nombre": "ANALISIS ESTRUCTURAL I (LAB)", "seccion": "00", "profesor": "RICK MILTON, DELGADILLO AYALA", "creditos": 4, "dia": "JUEVES", "hora": "16:00 - 18:00"},
+      {"nombre": "GEOLOGIA APLICADA A LA INGENIERIA CIVIL (LAB)", "seccion": "00", "profesor": "TOLENTINO YPARRAGUIRRE, VICTOR", "creditos": 4, "dia": "LUNES", "hora": "18:00 - 22:00"},
       {"nombre": "DESARROLLO SUSTENTABLE Y RESPONSABILIDAD SOCIAL UNIVERSITARIA (LAB)", "seccion": "00", "profesor": "CHAMBI ECHEGARAY, GINA GABRIELA", "creditos": 4, "dia": "JUEVES", "hora": "11:00 - 13:00"},
-      {"nombre": "MODELAMIENTO INFORMÁTICO EN LA CONSTRUCCIÓN (BIM) (LAB)", "seccion": "00", "profesor": "No especificado", "creditos": 3, "dia": "MARTES", "hora": "10:00 - 12:00"},
-      {"nombre": "MODELAMIENTO INFORMÁTICO EN LA CONSTRUCCIÓN (BIM) (LAB)", "seccion": "00", "profesor": "No especificado", "creditos": 3, "dia": "VIERNES", "hora": "10:00 - 12:00"},
-      {"nombre": "CONSTRUCCIÓN II (LAB)", "seccion": "00", "profesor": "SANCHEZ BENITES, FELIX SANTIAGO", "creditos": 3, "dia": "MIERCOLES", "hora": "18:00 - 20:00"},
-      {"nombre": "GESTIÓN DE RIESGOS DE DESASTRES Y CAMBIO CLIMÁTICO (LAB)", "seccion": "00", "profesor": "MORAN YAÑEZ, LUIS MIGUEL", "creditos": 3, "dia": "MIERCOLES", "hora": "11:00 - 13:00"}
+      {"nombre": "MODELAMIENTO INFORMATICO EN LA CONSTRUCCION (BIM) (LAB)", "seccion": "00", "profesor": "No especificado", "creditos": 3, "dia": "MARTES", "hora": "10:00 - 12:00"},
+      {"nombre": "CONSTRUCCION II (LAB)", "seccion": "00", "profesor": "SANCHEZ BENITES, FELIX SANTIAGO", "creditos": 3, "dia": "MIERCOLES", "hora": "18:00 - 20:00"},
+      {"nombre": "GESTION DE RIESGOS DE DESASTRES Y CAMBIO CLIMATICO (LAB)", "seccion": "00", "profesor": "MORAN YANEZ, LUIS MIGUEL", "creditos": 3, "dia": "MIERCOLES", "hora": "11:00 - 13:00"}
     ]
   }
 };
@@ -133,7 +107,7 @@ const paletaColores = [
     '#AF7AC5', '#5DADE2', '#58D68D', '#F4D03F', '#76D7C4'
 ];
 
-const dias = ['LUNES', 'MARTES', 'MIÉRCOLES', 'JUEVES', 'VIERNES', 'SÁBADO'];
+const dias = ['LUNES', 'MARTES', 'MIERCOLES', 'JUEVES', 'VIERNES', 'SABADO'];
 const horas = ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', 
                '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00'];
 
@@ -142,17 +116,17 @@ const horas = ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00',
 // ============================================================
 function obtenerColor(nombreCurso) {
     if (!coloresAsignados[nombreCurso]) {
-        const color = paletaColores[Object.keys(coloresAsignados).length % paletaColores.length];
+        var color = paletaColores[Object.keys(coloresAsignados).length % paletaColores.length];
         coloresAsignados[nombreCurso] = color;
     }
     return coloresAsignados[nombreCurso];
 }
 
 // ============================================================
-// FUNCIONES DE DATOS DEL USUARIO (LocalStorage)
+// FUNCIONES DE DATOS DEL USUARIO
 // ============================================================
 function getUserId() {
-    let userId = localStorage.getItem('userId');
+    var userId = localStorage.getItem('userId');
     if (!userId) {
         userId = 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5);
         localStorage.setItem('userId', userId);
@@ -161,8 +135,8 @@ function getUserId() {
 }
 
 function getUserData() {
-    const userId = getUserId();
-    const stored = localStorage.getItem('datosUsuario_' + userId);
+    var userId = getUserId();
+    var stored = localStorage.getItem('datosUsuario_' + userId);
     if (stored) {
         try {
             return JSON.parse(stored);
@@ -174,41 +148,23 @@ function getUserData() {
 }
 
 function saveUserData(data) {
-    const userId = getUserId();
+    var userId = getUserId();
     localStorage.setItem('datosUsuario_' + userId, JSON.stringify(data));
 }
 
 function guardarHorarioSeleccionado() {
-    const userData = getUserData() || {};
+    var userData = getUserData() || {};
     userData.cursosSeleccionados = cursosSeleccionados;
     userData.cicloActual = cicloActual;
     userData.modoActual = modoActual;
     saveUserData(userData);
 }
 
-function cargarHorarioSeleccionado() {
-    const userData = getUserData();
-    if (userData) {
-        if (userData.cursosSeleccionados) {
-            cursosSeleccionados = userData.cursosSeleccionados;
-        }
-        if (userData.cicloActual !== undefined) {
-            cicloActual = userData.cicloActual;
-        }
-        if (userData.modoActual) {
-            modoActual = userData.modoActual;
-            document.getElementById('btnTeoria').className = 'btn-teoria' + (modoActual === 'teoria' ? ' activo' : '');
-            document.getElementById('btnLaboratorio').className = 'btn-laboratorio' + (modoActual === 'laboratorio' ? ' activo' : '');
-        }
-        actualizarCreditos();
-    }
-}
-
 // ============================================================
 // FUNCIONES PRINCIPALES
 // ============================================================
 function actualizarCursos() {
-    const userData = getUserData();
+    var userData = getUserData();
     if (userData && userData.cursos) {
         datos = userData.cursos;
         ciclos = Object.keys(datos);
@@ -218,35 +174,35 @@ function actualizarCursos() {
     }
     
     if (ciclos.length === 0) {
-        document.getElementById('listaCursos').innerHTML = '<li style="text-align:center;padding:20px;color:#e74c3c;">⚠️ No hay datos de cursos. Carga un CSV o restaura los datos predeterminados.</li>';
+        document.getElementById('listaCursos').innerHTML = '<li style="text-align:center;padding:20px;color:#e74c3c;">No hay datos de cursos. Carga un CSV o restaura los datos predeterminados.</li>';
         return;
     }
     
-    const cicloNombre = ciclos[cicloActual] || ciclos[0];
+    var cicloNombre = ciclos[cicloActual] || ciclos[0];
     document.getElementById('labelCiclo').textContent = cicloNombre;
     
     if (!datos[cicloNombre]) {
-        document.getElementById('listaCursos').innerHTML = '<li style="text-align:center;padding:20px;color:#e74c3c;">⚠️ No hay datos para este ciclo.</li>';
+        document.getElementById('listaCursos').innerHTML = '<li style="text-align:center;padding:20px;color:#e74c3c;">No hay datos para este ciclo.</li>';
         return;
     }
     
-    const cursos = datos[cicloNombre][modoActual] || [];
-    cursosFiltrados = [...cursos];
+    var cursos = datos[cicloNombre][modoActual] || [];
+    cursosFiltrados = cursos.slice();
     mostrarCursos(cursosFiltrados);
     actualizarHorario();
 }
 
 function mostrarCursos(cursos) {
-    const lista = document.getElementById('listaCursos');
+    var lista = document.getElementById('listaCursos');
     lista.innerHTML = '';
     
-    cursos.forEach(curso => {
-        const li = document.createElement('li');
-        const enHorario = cursosSeleccionados.some(c => 
-            c.nombre === curso.nombre && c.dia === curso.dia && c.hora === curso.hora
-        );
+    cursos.forEach(function(curso) {
+        var li = document.createElement('li');
+        var enHorario = cursosSeleccionados.some(function(c) {
+            return c.nombre === curso.nombre && c.dia === curso.dia && c.hora === curso.hora;
+        });
         
-        let texto = `${curso.nombre.substring(0, 30)} | Sec:${curso.seccion} | ${curso.profesor.substring(0, 20)}`;
+        var texto = curso.nombre.substring(0, 30) + ' | Sec:' + curso.seccion + ' | ' + curso.profesor.substring(0, 20);
         if (enHorario) {
             texto = '✓ ' + texto;
             li.style.background = obtenerColor(curso.nombre);
@@ -258,39 +214,40 @@ function mostrarCursos(cursos) {
 }
 
 function filtrarCursos() {
-    const busqueda = document.getElementById('buscador').value.toLowerCase().trim();
-    const cicloNombre = ciclos[cicloActual] || ciclos[0];
-    const cursos = datos[cicloNombre] ? datos[cicloNombre][modoActual] : [];
+    var busqueda = document.getElementById('buscador').value.toLowerCase().trim();
+    var cicloNombre = ciclos[cicloActual] || ciclos[0];
+    var cursos = datos[cicloNombre] ? datos[cicloNombre][modoActual] : [];
     
     if (busqueda === '') {
-        cursosFiltrados = [...cursos];
+        cursosFiltrados = cursos.slice();
     } else {
-        cursosFiltrados = cursos.filter(curso => 
-            curso.nombre.toLowerCase().includes(busqueda) ||
-            curso.profesor.toLowerCase().includes(busqueda) ||
-            curso.seccion.includes(busqueda)
-        );
+        cursosFiltrados = cursos.filter(function(curso) {
+            return curso.nombre.toLowerCase().includes(busqueda) ||
+                   curso.profesor.toLowerCase().includes(busqueda) ||
+                   curso.seccion.includes(busqueda);
+        });
     }
     mostrarCursos(cursosFiltrados);
 }
 
 function clickCurso(curso) {
-    const index = cursosSeleccionados.findIndex(c => 
-        c.nombre === curso.nombre && c.dia === curso.dia && c.hora === curso.hora
-    );
+    var index = cursosSeleccionados.findIndex(function(c) {
+        return c.nombre === curso.nombre && c.dia === curso.dia && c.hora === curso.hora;
+    });
     
     if (index !== -1) {
         cursosSeleccionados.splice(index, 1);
-        mostrarMensaje('❌ Quitado: ' + curso.nombre, '#e74c3c');
+        mostrarMensaje('Quitado: ' + curso.nombre, '#e74c3c');
     } else {
-        for (const c of cursosSeleccionados) {
+        for (var i = 0; i < cursosSeleccionados.length; i++) {
+            var c = cursosSeleccionados[i];
             if (c.dia === curso.dia && horasSeSuperponen(c.hora, curso.hora)) {
-                mostrarMensaje('⚠️ Conflicto: ' + c.nombre + ' ya está en ' + c.dia + ' ' + c.hora, '#e67e22');
+                mostrarMensaje('Conflicto: ' + c.nombre + ' ya esta en ' + c.dia + ' ' + c.hora, '#e67e22');
                 return;
             }
         }
         cursosSeleccionados.push(curso);
-        mostrarMensaje('✅ Agregado: ' + curso.nombre, '#27ae60');
+        mostrarMensaje('Agregado: ' + curso.nombre, '#27ae60');
     }
     
     actualizarCreditos();
@@ -300,24 +257,26 @@ function clickCurso(curso) {
 
 function horasSeSuperponen(hora1, hora2) {
     function convertirAMinutos(horaStr) {
-        const partes = horaStr.split(' - ');
-        const inicio = partes[0].trim();
-        const fin = partes[1] ? partes[1].trim() : inicio;
+        var partes = horaStr.split(' - ');
+        var inicio = partes[0].trim();
+        var fin = partes[1] ? partes[1].trim() : inicio;
         
         function tiempoAMinutos(t) {
-            const [h, m] = t.split(':').map(Number);
-            return h * 60 + m;
+            var h_m = t.split(':');
+            return parseInt(h_m[0]) * 60 + parseInt(h_m[1]);
         }
         return [tiempoAMinutos(inicio), tiempoAMinutos(fin)];
     }
     
-    const [ini1, fin1] = convertirAMinutos(hora1);
-    const [ini2, fin2] = convertirAMinutos(hora2);
+    var ini1_fin1 = convertirAMinutos(hora1);
+    var ini2_fin2 = convertirAMinutos(hora2);
+    var ini1 = ini1_fin1[0], fin1 = ini1_fin1[1];
+    var ini2 = ini2_fin2[0], fin2 = ini2_fin2[1];
     return !(fin1 <= ini2 || fin2 <= ini1);
 }
 
 function mostrarMensaje(texto, color) {
-    const label = document.getElementById('labelInfo');
+    var label = document.getElementById('labelInfo');
     label.textContent = texto;
     label.style.color = color;
     label.style.fontWeight = 'bold';
@@ -327,22 +286,25 @@ function mostrarMensaje(texto, color) {
     }
     
     temporizadorMensaje = setTimeout(function() {
-        label.textContent = '💡 Haz click en un curso para agregarlo/quitarlo del horario';
+        label.textContent = 'Haz click en un curso para agregarlo/quitarlo del horario';
         label.style.color = '#b0b0b0';
         label.style.fontWeight = 'normal';
     }, 3000);
 }
 
 function actualizarCreditos() {
-    const total = cursosSeleccionados.reduce(function(sum, c) { return sum + c.creditos; }, 0);
-    document.getElementById('labelCreditos').textContent = 'Créditos: ' + total + ' | Cursos: ' + cursosSeleccionados.length;
+    var total = 0;
+    for (var i = 0; i < cursosSeleccionados.length; i++) {
+        total += cursosSeleccionados[i].creditos;
+    }
+    document.getElementById('labelCreditos').textContent = 'Creditos: ' + total + ' | Cursos: ' + cursosSeleccionados.length;
 }
 
 function actualizarHorario() {
-    const tbody = document.getElementById('cuerpoHorario');
+    var tbody = document.getElementById('cuerpoHorario');
     tbody.innerHTML = '';
     
-    const horario = {};
+    var horario = {};
     dias.forEach(function(dia) {
         horario[dia] = {};
         horas.forEach(function(hora) {
@@ -351,21 +313,21 @@ function actualizarHorario() {
     });
     
     cursosSeleccionados.forEach(function(curso) {
-        const dia = curso.dia;
+        var dia = curso.dia;
         if (!horario[dia]) return;
         
-        const partes = curso.hora.split(' - ');
+        var partes = curso.hora.split(' - ');
         if (partes.length !== 2) return;
         
-        const horaInicio = partes[0].trim();
-        const horaFin = partes[1].trim();
+        var horaInicio = partes[0].trim();
+        var horaFin = partes[1].trim();
         
-        const idxInicio = horas.indexOf(horaInicio);
-        const idxFin = horas.indexOf(horaFin);
+        var idxInicio = horas.indexOf(horaInicio);
+        var idxFin = horas.indexOf(horaFin);
         
         if (idxInicio === -1 || idxFin === -1) return;
         
-        for (let i = idxInicio; i < idxFin && i < horas.length; i++) {
+        for (var i = idxInicio; i < idxFin && i < horas.length; i++) {
             if (horario[dia][horas[i]] === null) {
                 horario[dia][horas[i]] = curso;
             }
@@ -373,8 +335,8 @@ function actualizarHorario() {
     });
     
     horas.forEach(function(hora) {
-        const tr = document.createElement('tr');
-        const tdHora = document.createElement('td');
+        var tr = document.createElement('tr');
+        var tdHora = document.createElement('td');
         tdHora.textContent = hora;
         tdHora.style.fontWeight = 'bold';
         tdHora.style.background = document.body.classList.contains('modo-claro') ? '#ecf0f1' : '#1a2a4a';
@@ -383,33 +345,33 @@ function actualizarHorario() {
         tr.appendChild(tdHora);
         
         dias.forEach(function(dia) {
-            const td = document.createElement('td');
+            var td = document.createElement('td');
             td.style.padding = '2px';
             td.style.height = '40px';
             td.style.verticalAlign = 'middle';
             td.style.textAlign = 'center';
             
-            const curso = horario[dia][hora];
+            var curso = horario[dia][hora];
             if (curso) {
-                const partes = curso.hora.split(' - ');
-                const horaInicio = partes[0].trim();
-                const horaFin = partes[1].trim();
-                const idxInicio = horas.indexOf(horaInicio);
-                const idxFin = horas.indexOf(horaFin);
+                var partes = curso.hora.split(' - ');
+                var horaInicio = partes[0].trim();
+                var horaFin = partes[1].trim();
+                var idxInicio = horas.indexOf(horaInicio);
+                var idxFin = horas.indexOf(horaFin);
                 
                 if (idxInicio === horas.indexOf(hora)) {
-                    const duracion = idxFin - idxInicio;
+                    var duracion = idxFin - idxInicio;
                     
-                    const div = document.createElement('div');
+                    var div = document.createElement('div');
                     div.className = 'bloque-curso';
                     div.style.background = obtenerColor(curso.nombre);
                     div.style.height = (duracion * 40 - 4) + 'px';
-                    div.title = curso.nombre + '\nSección: ' + curso.seccion + '\nProfesor: ' + curso.profesor + '\nCréditos: ' + curso.creditos;
+                    div.title = curso.nombre + '\nSeccion: ' + curso.seccion + '\nProfesor: ' + curso.profesor + '\nCreditos: ' + curso.creditos;
                     
-                    const nombreSpan = document.createElement('span');
+                    var nombreSpan = document.createElement('span');
                     nombreSpan.textContent = curso.nombre.substring(0, 15) + (curso.nombre.length > 15 ? '...' : '');
                     
-                    const seccionSpan = document.createElement('span');
+                    var seccionSpan = document.createElement('span');
                     seccionSpan.textContent = 'Sec:' + curso.seccion;
                     
                     div.appendChild(nombreSpan);
@@ -439,7 +401,7 @@ function cambiarModo(modo) {
 }
 
 function cambiarCiclo(direccion) {
-    const nuevo = cicloActual + direccion;
+    var nuevo = cicloActual + direccion;
     if (nuevo >= 0 && nuevo < ciclos.length) {
         cicloActual = nuevo;
         document.getElementById('buscador').value = '';
@@ -449,15 +411,15 @@ function cambiarCiclo(direccion) {
 }
 
 // ============================================================
-// CONFIRMAR LIMPIAR
+// LIMPIAR
 // ============================================================
 function confirmarLimpiar() {
     if (cursosSeleccionados.length === 0) {
-        mostrarMensaje('ℹ️ El horario ya está vacío', '#3498db');
+        mostrarMensaje('El horario ya esta vacio', '#3498db');
         return;
     }
     
-    if (confirm('¿Estás seguro de que quieres limpiar todo el horario?')) {
+    if (confirm('¿Estas seguro de que quieres limpiar todo el horario?')) {
         limpiarHorario();
     }
 }
@@ -468,34 +430,35 @@ function limpiarHorario() {
     actualizarCreditos();
     guardarHorarioSeleccionado();
     actualizarCursos();
-    mostrarMensaje('🗑️ Horario limpiado', '#e74c3c');
+    mostrarMensaje('Horario limpiado', '#e74c3c');
 }
 
 // ============================================================
-// GENERAR AUTOMÁTICO
+// GENERAR AUTOMATICO
 // ============================================================
 function generarAutomatico() {
-    const cicloNombre = ciclos[cicloActual] || ciclos[0];
-    const cursos = datos[cicloNombre] ? datos[cicloNombre][modoActual] : [];
+    var cicloNombre = ciclos[cicloActual] || ciclos[0];
+    var cursos = datos[cicloNombre] ? datos[cicloNombre][modoActual] : [];
     
     if (!cursos || cursos.length === 0) {
-        mostrarMensaje('❌ No hay cursos disponibles', '#e74c3c');
+        mostrarMensaje('No hay cursos disponibles', '#e74c3c');
         return;
     }
     
     cursosSeleccionados = [];
     coloresAsignados = {};
     
-    const numCursos = Math.min(5 + Math.floor(Math.random() * 4), cursos.length);
-    const seleccionados = [];
-    const disponibles = cursos.slice();
+    var numCursos = Math.min(5 + Math.floor(Math.random() * 4), cursos.length);
+    var seleccionados = [];
+    var disponibles = cursos.slice();
     
-    for (let i = 0; i < numCursos && disponibles.length > 0; i++) {
-        const idx = Math.floor(Math.random() * disponibles.length);
-        const curso = disponibles.splice(idx, 1)[0];
+    for (var i = 0; i < numCursos && disponibles.length > 0; i++) {
+        var idx = Math.floor(Math.random() * disponibles.length);
+        var curso = disponibles.splice(idx, 1)[0];
         
-        let conflicto = false;
-        for (const c of seleccionados) {
+        var conflicto = false;
+        for (var j = 0; j < seleccionados.length; j++) {
+            var c = seleccionados[j];
             if (c.dia === curso.dia && horasSeSuperponen(c.hora, curso.hora)) {
                 conflicto = true;
                 break;
@@ -510,7 +473,7 @@ function generarAutomatico() {
     actualizarCreditos();
     guardarHorarioSeleccionado();
     actualizarCursos();
-    mostrarMensaje('⚡ Generado: ' + cursosSeleccionados.length + ' cursos', '#2ecc71');
+    mostrarMensaje('Generado: ' + cursosSeleccionados.length + ' cursos', '#2ecc71');
 }
 
 // ============================================================
@@ -518,23 +481,23 @@ function generarAutomatico() {
 // ============================================================
 function exportarTexto() {
     if (cursosSeleccionados.length === 0) {
-        mostrarMensaje('❌ No hay cursos en el horario', '#e74c3c');
+        mostrarMensaje('No hay cursos en el horario', '#e74c3c');
         return;
     }
     
-    let texto = '='.repeat(70) + '\n';
+    var texto = '='.repeat(70) + '\n';
     texto += 'MI HORARIO GENERADO - UNMSM\n';
     texto += '='.repeat(70) + '\n\n';
     
     dias.forEach(function(dia) {
         texto += '\n' + dia + ':\n';
         texto += '-'.repeat(50) + '\n';
-        const cursosDia = cursosSeleccionados.filter(function(c) { return c.dia === dia; });
+        var cursosDia = cursosSeleccionados.filter(function(c) { return c.dia === dia; });
         if (cursosDia.length > 0) {
             cursosDia.forEach(function(curso) {
                 texto += '  ' + curso.hora + ' | ' + curso.nombre + '\n';
-                texto += '          Sección: ' + curso.seccion + ' | Prof: ' + curso.profesor + '\n';
-                texto += '          Créditos: ' + curso.creditos + '\n';
+                texto += '          Seccion: ' + curso.seccion + ' | Prof: ' + curso.profesor + '\n';
+                texto += '          Creditos: ' + curso.creditos + '\n';
             });
         } else {
             texto += '  (Sin cursos)\n';
@@ -542,14 +505,14 @@ function exportarTexto() {
         texto += '\n';
     });
     
-    const blob = new Blob([texto], { type: 'text/plain;charset=utf-8' });
-    const link = document.createElement('a');
+    var blob = new Blob([texto], { type: 'text/plain;charset=utf-8' });
+    var link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
     link.download = 'mi_horario.txt';
     link.click();
     URL.revokeObjectURL(link.href);
     
-    mostrarMensaje('✅ Texto exportado exitosamente', '#27ae60');
+    mostrarMensaje('Texto exportado exitosamente', '#27ae60');
 }
 
 // ============================================================
@@ -557,15 +520,15 @@ function exportarTexto() {
 // ============================================================
 function exportarImagen() {
     if (cursosSeleccionados.length === 0) {
-        mostrarMensaje('❌ No hay cursos en el horario', '#e74c3c');
+        mostrarMensaje('No hay cursos en el horario', '#e74c3c');
         return;
     }
     
-    const tabla = document.getElementById('tablaContainer');
-    mostrarMensaje('⏳ Generando imagen...', '#f39c12');
+    var tabla = document.getElementById('tablaContainer');
+    mostrarMensaje('Generando imagen...', '#f39c12');
     
     if (typeof html2canvas === 'undefined') {
-        mostrarMensaje('❌ Error: html2canvas no cargado', '#e74c3c');
+        mostrarMensaje('Error: html2canvas no cargado', '#e74c3c');
         return;
     }
     
@@ -576,14 +539,14 @@ function exportarImagen() {
         useCORS: true,
         logging: false
     }).then(function(canvas) {
-        const link = document.createElement('a');
+        var link = document.createElement('a');
         link.download = 'mi_horario.png';
         link.href = canvas.toDataURL('image/png');
         link.click();
-        mostrarMensaje('✅ Imagen exportada exitosamente', '#27ae60');
+        mostrarMensaje('Imagen exportada exitosamente', '#27ae60');
     }).catch(function(error) {
         console.error('Error:', error);
-        mostrarMensaje('❌ Error al generar imagen', '#e74c3c');
+        mostrarMensaje('Error al generar imagen', '#e74c3c');
     });
 }
 
@@ -592,11 +555,11 @@ function exportarImagen() {
 // ============================================================
 function guardarHorario() {
     if (cursosSeleccionados.length === 0) {
-        mostrarMensaje('❌ No hay cursos para guardar', '#e74c3c');
+        mostrarMensaje('No hay cursos para guardar', '#e74c3c');
         return;
     }
     
-    const datosGuardar = {
+    var datosGuardar = {
         fecha: new Date().toLocaleString(),
         ciclo: ciclos[cicloActual] || ciclos[0],
         modo: modoActual,
@@ -604,16 +567,16 @@ function guardarHorario() {
     };
     
     try {
-        const userData = getUserData() || {};
+        var userData = getUserData() || {};
         if (!userData.horariosGuardados) {
             userData.horariosGuardados = [];
         }
         userData.horariosGuardados.push(datosGuardar);
         saveUserData(userData);
         
-        mostrarMensaje('✅ Horario guardado exitosamente', '#27ae60');
+        mostrarMensaje('Horario guardado exitosamente', '#27ae60');
     } catch (error) {
-        mostrarMensaje('❌ Error al guardar', '#e74c3c');
+        mostrarMensaje('Error al guardar', '#e74c3c');
     }
 }
 
@@ -622,30 +585,30 @@ function guardarHorario() {
 // ============================================================
 function toggleModo() {
     document.body.classList.toggle('modo-claro');
-    const btn = document.getElementById('btnModo');
+    var btn = document.getElementById('btnModo');
     if (document.body.classList.contains('modo-claro')) {
-        btn.textContent = '🌙 Modo Oscuro';
+        btn.textContent = 'Modo Oscuro';
         localStorage.setItem('modoOscuro', 'false');
     } else {
-        btn.textContent = '☀️ Modo Claro';
+        btn.textContent = 'Modo Claro';
         localStorage.setItem('modoOscuro', 'true');
     }
     actualizarHorario();
 }
 
 function cargarModo() {
-    const modo = localStorage.getItem('modoOscuro');
+    var modo = localStorage.getItem('modoOscuro');
     if (modo === 'false') {
         document.body.classList.add('modo-claro');
-        document.getElementById('btnModo').textContent = '🌙 Modo Oscuro';
+        document.getElementById('btnModo').textContent = 'Modo Oscuro';
     } else {
         document.body.classList.remove('modo-claro');
-        document.getElementById('btnModo').textContent = '☀️ Modo Claro';
+        document.getElementById('btnModo').textContent = 'Modo Claro';
     }
 }
 
 // ============================================================
-// PANEL DE GESTIÓN DE DATOS
+// PANEL DE GESTION DE DATOS
 // ============================================================
 
 function abrirPanelDatos() {
@@ -660,25 +623,25 @@ function cerrarPanelDatos() {
 }
 
 function copiarPrompt() {
-    const promptText = document.getElementById('promptText').textContent;
+    var promptText = document.getElementById('promptText').textContent;
     navigator.clipboard.writeText(promptText).then(function() {
-        mostrarMensajePanel('✅ Prompt copiado al portapapeles', 'exito');
+        mostrarMensajePanel('Prompt copiado al portapapeles', 'exito');
     }).catch(function() {
-        mostrarMensajePanel('❌ Error al copiar', 'error');
+        mostrarMensajePanel('Error al copiar', 'error');
     });
 }
 
 function copiarEjemploCSV() {
-    const ejemplo = 'Ciclo 2,3,TOPOGRAFÍA APLICADA A LA INGENIERÍA CIVIL I,TEORIA,0,01,CRUZ MONTES, FRANCI BENITO,MIERCOLES,12:00,13:00,,,\nCiclo 2,3,TOPOGRAFÍA APLICADA A LA INGENIERÍA CIVIL I,LABORATORIO,0,00,CRUZ MONTES, FRANCI BENITO,MIERCOLES,13:00,17:00,,,\nCiclo 3,4,CÁLCULO III,TEORIA,0,01,BUSTAMANTE RAMOS, ELVIS,MIERCOLES,08:00,11:00,,,\nCiclo 4,3,ALGORITMO Y PROGRAMACIÓN,TEORIA,0,01,AROSOQUIPA MINA, YVAN MANUEL,JUEVES,18:00,20:00,,,\nCiclo 4,4,DINÁMICA,TEORIA,0,01,JIMENEZ RODRIGO, EDGAR GABRIEL,MARTES,17:00,21:00,,,';
+    var ejemplo = 'Ciclo 2,3,TOPOGRAFIA APLICADA A LA INGENIERIA CIVIL I,TEORIA,0,01,CRUZ MONTES, FRANCI BENITO,MIERCOLES,12:00,13:00,,,\nCiclo 2,3,TOPOGRAFIA APLICADA A LA INGENIERIA CIVIL I,LABORATORIO,0,00,CRUZ MONTES, FRANCI BENITO,MIERCOLES,13:00,17:00,,,';
     navigator.clipboard.writeText(ejemplo).then(function() {
-        mostrarMensajePanel('✅ Ejemplo CSV copiado al portapapeles', 'exito');
+        mostrarMensajePanel('Ejemplo CSV copiado al portapapeles', 'exito');
     }).catch(function() {
-        mostrarMensajePanel('❌ Error al copiar', 'error');
+        mostrarMensajePanel('Error al copiar', 'error');
     });
 }
 
 function mostrarMensajePanel(texto, tipo) {
-    const div = document.getElementById('mensajeProcesamiento');
+    var div = document.getElementById('mensajeProcesamiento');
     div.textContent = texto;
     div.className = 'mensaje-procesamiento ' + tipo;
     div.style.display = 'block';
@@ -695,28 +658,28 @@ function limpiarCSV() {
 }
 
 function procesarCSV() {
-    const csvText = document.getElementById('csvInput').value.trim();
+    var csvText = document.getElementById('csvInput').value.trim();
     
     if (!csvText) {
-        mostrarMensajePanel('❌ Por favor, pega un CSV válido', 'error');
+        mostrarMensajePanel('Por favor, pega un CSV valido', 'error');
         return;
     }
     
     try {
-        const nuevosDatos = convertirCSVaJSON(csvText);
+        var nuevosDatos = convertirCSVaJSON(csvText);
         
         if (Object.keys(nuevosDatos).length === 0) {
-            mostrarMensajePanel('❌ No se encontraron cursos en el CSV', 'error');
+            mostrarMensajePanel('No se encontraron cursos en el CSV', 'error');
             return;
         }
         
-        let totalCursos = 0;
-        let totalCiclos = Object.keys(nuevosDatos).length;
-        for (const ciclo in nuevosDatos) {
+        var totalCursos = 0;
+        var totalCiclos = Object.keys(nuevosDatos).length;
+        for (var ciclo in nuevosDatos) {
             totalCursos += nuevosDatos[ciclo].teoria.length + nuevosDatos[ciclo].laboratorio.length;
         }
         
-        const userData = getUserData() || {};
+        var userData = getUserData() || {};
         userData.cursos = nuevosDatos;
         saveUserData(userData);
         
@@ -732,30 +695,30 @@ function procesarCSV() {
         guardarHorarioSeleccionado();
         actualizarCursos();
         
-        mostrarMensajePanel('✅ Datos cargados exitosamente: ' + totalCiclos + ' ciclos, ' + totalCursos + ' cursos', 'exito');
+        mostrarMensajePanel('Datos cargados exitosamente: ' + totalCiclos + ' ciclos, ' + totalCursos + ' cursos', 'exito');
         actualizarVistaPrevia();
         
     } catch (error) {
-        mostrarMensajePanel('❌ Error al procesar CSV: ' + error.message, 'error');
+        mostrarMensajePanel('Error al procesar CSV: ' + error.message, 'error');
         console.error('Error CSV:', error);
     }
 }
 
 function convertirCSVaJSON(csvText) {
-    const lineas = csvText.split('\n').filter(function(line) { return line.trim() !== ''; });
-    const nuevosDatos = {};
+    var lineas = csvText.split('\n').filter(function(line) { return line.trim() !== ''; });
+    var nuevosDatos = {};
     
-    const ciclosPosibles = ['Ciclo 2', 'Ciclo 3', 'Ciclo 4', 'Ciclo 5', 'Ciclo 6', 'Ciclo 0'];
+    var ciclosPosibles = ['Ciclo 2', 'Ciclo 3', 'Ciclo 4', 'Ciclo 5', 'Ciclo 6', 'Ciclo 0'];
     ciclosPosibles.forEach(function(c) {
         nuevosDatos[c] = { teoria: [], laboratorio: [] };
     });
     
-    let cursosProcesados = 0;
-    let errores = [];
-    let lineasIgnoradas = 0;
+    var cursosProcesados = 0;
+    var errores = [];
+    var lineasIgnoradas = 0;
     
     lineas.forEach(function(linea, numLinea) {
-        let lineaLimpia = linea.trim().replace(/\r/g, '');
+        var lineaLimpia = linea.trim().replace(/\r/g, '');
         if (!lineaLimpia) {
             lineasIgnoradas++;
             return;
@@ -765,17 +728,17 @@ function convertirCSVaJSON(csvText) {
             lineaLimpia = lineaLimpia.substring(1, lineaLimpia.length - 1);
         }
         
-        let partes = lineaLimpia.split(',');
+        var partes = lineaLimpia.split(',');
         partes = partes.map(function(p) { return p.trim(); });
         
         if (partes.length < 10) {
-            errores.push('Línea ' + (numLinea + 1) + ': Formato incorrecto (' + partes.length + ' columnas)');
+            errores.push('Linea ' + (numLinea + 1) + ': Formato incorrecto (' + partes.length + ' columnas)');
             lineasIgnoradas++;
             return;
         }
         
         try {
-            let ciclo = partes[0] || '';
+            var ciclo = partes[0] || '';
             if (ciclo.toLowerCase().includes('ciclo 2') || ciclo === '2') {
                 ciclo = 'Ciclo 2';
             } else if (ciclo.toLowerCase().includes('ciclo 3') || ciclo === '3') {
@@ -789,7 +752,7 @@ function convertirCSVaJSON(csvText) {
             } else if (ciclo.toLowerCase().includes('ciclo 0') || ciclo === '0') {
                 ciclo = 'Ciclo 0';
             } else {
-                errores.push('Línea ' + (numLinea + 1) + ': Ciclo no reconocido "' + partes[0] + '"');
+                errores.push('Linea ' + (numLinea + 1) + ': Ciclo no reconocido "' + partes[0] + '"');
                 lineasIgnoradas++;
                 return;
             }
@@ -798,59 +761,56 @@ function convertirCSVaJSON(csvText) {
                 nuevosDatos[ciclo] = { teoria: [], laboratorio: [] };
             }
             
-            let creditos = parseInt(partes[1]) || 3;
+            var creditos = parseInt(partes[1]) || 3;
             if (isNaN(creditos) || creditos < 1) creditos = 3;
             
-            let curso = partes[2] || 'Curso sin nombre';
+            var curso = partes[2] || 'Curso sin nombre';
             if (curso === '' || curso === ' ') {
                 curso = 'Curso sin nombre';
             }
             
-            let tipo = partes[3] ? partes[3].toUpperCase() : '';
-            let tipoFinal = '';
-            if (tipo.includes('TEORIA') || tipo.includes('TEÓRICA') || tipo === 'T' || tipo === 'TEORÍA') {
+            var tipo = partes[3] ? partes[3].toUpperCase() : '';
+            var tipoFinal = '';
+            if (tipo.includes('TEORIA') || tipo.includes('TEORICA') || tipo === 'T' || tipo === 'TEORIA') {
                 tipoFinal = 'teoria';
             } else if (tipo.includes('LABORATORIO') || tipo.includes('LAB') || tipo === 'L' || tipo === 'LAB') {
                 tipoFinal = 'laboratorio';
-            } else if (tipo.includes('PRACTICA') || tipo.includes('PRÁCTICA')) {
-                tipoFinal = 'teoria';
             } else {
                 if (curso.includes('LAB') || curso.includes('LABORATORIO')) {
                     tipoFinal = 'laboratorio';
                 } else {
                     tipoFinal = 'teoria';
                 }
-                errores.push('Línea ' + (numLinea + 1) + ': Tipo no reconocido "' + partes[3] + '", se asume ' + tipoFinal.toUpperCase());
             }
             
-            let gr = partes[5] ? partes[5].trim() : '00';
+            var gr = partes[5] ? partes[5].trim() : '00';
             if (gr === '' || gr === ' ') gr = '00';
             
-            let docente = partes[6] ? partes[6].trim() : 'No especificado';
+            var docente = partes[6] ? partes[6].trim() : 'No especificado';
             if (docente === '' || docente === ' ') docente = 'No especificado';
             
-            const diasValidos = ['LUNES', 'MARTES', 'MIÉRCOLES', 'JUEVES', 'VIERNES', 'SÁBADO'];
+            var diasValidos = ['LUNES', 'MARTES', 'MIERCOLES', 'JUEVES', 'VIERNES', 'SABADO'];
             
-            const dia1 = partes[7] ? partes[7].trim().toUpperCase() : '';
-            const inicio1 = partes[8] ? partes[8].trim() : '';
-            const final1 = partes[9] ? partes[9].trim() : '';
-            const dia2 = partes[10] ? partes[10].trim().toUpperCase() : '';
-            const inicio2 = partes[11] ? partes[11].trim() : '';
-            const final2 = partes[12] ? partes[12].trim() : '';
+            var dia1 = partes[7] ? partes[7].trim().toUpperCase() : '';
+            var inicio1 = partes[8] ? partes[8].trim() : '';
+            var final1 = partes[9] ? partes[9].trim() : '';
+            var dia2 = partes[10] ? partes[10].trim().toUpperCase() : '';
+            var inicio2 = partes[11] ? partes[11].trim() : '';
+            var final2 = partes[12] ? partes[12].trim() : '';
             
             if (!dia1 || !diasValidos.includes(dia1)) {
-                errores.push('Línea ' + (numLinea + 1) + ': Día inválido "' + dia1 + '"');
+                errores.push('Linea ' + (numLinea + 1) + ': Dia invalido "' + dia1 + '"');
                 lineasIgnoradas++;
                 return;
             }
             
             if (!inicio1 || !final1) {
-                errores.push('Línea ' + (numLinea + 1) + ': Horas inválidas "' + inicio1 + ' - ' + final1 + '"');
+                errores.push('Linea ' + (numLinea + 1) + ': Horas invalidas "' + inicio1 + ' - ' + final1 + '"');
                 lineasIgnoradas++;
                 return;
             }
             
-            const cursoObj = {
+            var cursoObj = {
                 nombre: curso,
                 seccion: gr,
                 profesor: docente,
@@ -863,7 +823,7 @@ function convertirCSVaJSON(csvText) {
             
             if (dia2 && diasValidos.includes(dia2) && inicio2 && final2) {
                 if (dia2 !== dia1 || inicio2 !== inicio1 || final2 !== final1) {
-                    const cursoObj2 = {
+                    var cursoObj2 = {
                         nombre: curso,
                         seccion: gr,
                         profesor: docente,
@@ -877,52 +837,52 @@ function convertirCSVaJSON(csvText) {
             }
             
         } catch (e) {
-            errores.push('Línea ' + (numLinea + 1) + ': Error al procesar - ' + e.message);
+            errores.push('Linea ' + (numLinea + 1) + ': Error al procesar - ' + e.message);
             lineasIgnoradas++;
         }
     });
     
-    for (const ciclo in nuevosDatos) {
+    for (var ciclo in nuevosDatos) {
         if (nuevosDatos[ciclo].teoria.length === 0 && nuevosDatos[ciclo].laboratorio.length === 0) {
             delete nuevosDatos[ciclo];
         }
     }
     
     if (errores.length > 0) {
-        console.warn('⚠️ Errores en CSV:', errores);
+        console.warn('Errores en CSV:', errores);
         if (cursosProcesados === 0) {
-            throw new Error('No se pudo procesar ningún curso.\nErrores:\n' + errores.slice(0, 5).join('\n') + (errores.length > 5 ? '\n... y ' + (errores.length - 5) + ' más' : ''));
+            throw new Error('No se pudo procesar ningun curso.\nErrores:\n' + errores.slice(0, 5).join('\n'));
         }
-        mostrarMensajePanel('⚠️ ' + cursosProcesados + ' cursos procesados, ' + lineasIgnoradas + ' líneas ignoradas.', 'info');
+        mostrarMensajePanel('' + cursosProcesados + ' cursos procesados, ' + lineasIgnoradas + ' lineas ignoradas.', 'info');
     }
     
     if (cursosProcesados === 0) {
-        throw new Error('No se pudo procesar ningún curso del CSV. Verifica el formato.');
+        throw new Error('No se pudo procesar ningun curso del CSV. Verifica el formato.');
     }
     
     return nuevosDatos;
 }
 
 function actualizarVistaPrevia() {
-    const div = document.getElementById('vistaPrevia');
-    const userData = getUserData();
-    const datosActuales = userData && userData.cursos ? userData.cursos : datos;
+    var div = document.getElementById('vistaPrevia');
+    var userData = getUserData();
+    var datosActuales = userData && userData.cursos ? userData.cursos : datos;
     
-    let html = '';
-    let totalCursos = 0;
+    var html = '';
+    var totalCursos = 0;
     
-    for (const ciclo in datosActuales) {
-        const teoria = datosActuales[ciclo].teoria.length;
-        const laboratorio = datosActuales[ciclo].laboratorio.length;
-        const total = teoria + laboratorio;
+    for (var ciclo in datosActuales) {
+        var teoria = datosActuales[ciclo].teoria.length;
+        var laboratorio = datosActuales[ciclo].laboratorio.length;
+        var total = teoria + laboratorio;
         totalCursos += total;
-        html += '<div class="resumen-linea">📂 ' + ciclo + ': ' + total + ' cursos (Teoría: ' + teoria + ' | Laboratorio: ' + laboratorio + ')</div>';
+        html += '<div class="resumen-linea">' + ciclo + ': ' + total + ' cursos (Teoria: ' + teoria + ' | Laboratorio: ' + laboratorio + ')</div>';
     }
     
-    html += '<div class="resumen-linea total">📊 Total: ' + totalCursos + ' cursos en ' + Object.keys(datosActuales).length + ' ciclos</div>';
+    html += '<div class="resumen-linea total">Total: ' + totalCursos + ' cursos en ' + Object.keys(datosActuales).length + ' ciclos</div>';
     
     if (totalCursos === 0) {
-        div.innerHTML = '<p>⚠️ No hay datos cargados. Carga un CSV o restaura los datos predeterminados.</p>';
+        div.innerHTML = '<p>No hay datos cargados. Carga un CSV o restaura los datos predeterminados.</p>';
     } else {
         div.innerHTML = html;
     }
@@ -930,11 +890,11 @@ function actualizarVistaPrevia() {
 
 function verDatosActuales() {
     actualizarVistaPrevia();
-    mostrarMensajePanel('📋 Vista previa actualizada', 'info');
+    mostrarMensajePanel('Vista previa actualizada', 'info');
 }
 
 function restaurarDatosDefault() {
-    if (!confirm('¿Estás seguro de que quieres restaurar los datos predeterminados? Se perderán tus datos personalizados.')) {
+    if (!confirm('¿Estas seguro de que quieres restaurar los datos predeterminados? Se perderan tus datos personalizados.')) {
         return;
     }
     
@@ -944,7 +904,7 @@ function restaurarDatosDefault() {
         cicloActual = 0;
     }
     
-    const userData = getUserData() || {};
+    var userData = getUserData() || {};
     userData.cursos = datos;
     saveUserData(userData);
     
@@ -954,63 +914,45 @@ function restaurarDatosDefault() {
     guardarHorarioSeleccionado();
     actualizarCursos();
     actualizarVistaPrevia();
-    mostrarMensajePanel('🔄 Datos restaurados a los valores predeterminados', 'exito');
+    mostrarMensajePanel('Datos restaurados a los valores predeterminados', 'exito');
 }
 
 // ============================================================
-// CARGAR DATOS GUARDADOS AL INICIO
-// ============================================================
-
-function cargarDatosUsuario() {
-    const userData = getUserData();
-    if (userData) {
-        if (userData.cursos) {
-            datos = userData.cursos;
-            ciclos = Object.keys(datos);
-            console.log('✅ Datos de cursos cargados desde LocalStorage');
-        }
-        if (userData.cursosSeleccionados) {
-            cursosSeleccionados = userData.cursosSeleccionados;
-            console.log('✅ Horario cargado desde LocalStorage');
-        }
-        if (userData.cicloActual !== undefined) {
-            cicloActual = userData.cicloActual;
-        }
-        if (userData.modoActual) {
-            modoActual = userData.modoActual;
-            document.getElementById('btnTeoria').className = 'btn-teoria' + (modoActual === 'teoria' ? ' activo' : '');
-            document.getElementById('btnLaboratorio').className = 'btn-laboratorio' + (modoActual === 'laboratorio' ? ' activo' : '');
-        }
-        return true;
-    }
-    return false;
-}
-
-// ============================================================
-// INICIALIZACIÓN
+// INICIALIZACION
 // ============================================================
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Cargar modo
     cargarModo();
     
-    // Cargar datos del usuario
-    cargarDatosUsuario();
+    var userData = getUserData();
+    if (userData && userData.cursos) {
+        datos = userData.cursos;
+        ciclos = Object.keys(datos);
+        console.log('Datos de cursos cargados desde LocalStorage');
+    }
+    if (userData && userData.cursosSeleccionados) {
+        cursosSeleccionados = userData.cursosSeleccionados;
+        console.log('Horario cargado desde LocalStorage');
+    }
+    if (userData && userData.cicloActual !== undefined) {
+        cicloActual = userData.cicloActual;
+    }
+    if (userData && userData.modoActual) {
+        modoActual = userData.modoActual;
+        document.getElementById('btnTeoria').className = 'btn-teoria' + (modoActual === 'teoria' ? ' activo' : '');
+        document.getElementById('btnLaboratorio').className = 'btn-laboratorio' + (modoActual === 'laboratorio' ? ' activo' : '');
+    }
     
-    // Actualizar créditos
     actualizarCreditos();
-    
-    // Actualizar cursos
     actualizarCursos();
     
-    // Mostrar cantidad de horarios guardados
     try {
-        const userData = getUserData();
-        if (userData && userData.horariosGuardados) {
-            const cantidad = userData.horariosGuardados.length;
+        var userData2 = getUserData();
+        if (userData2 && userData2.horariosGuardados) {
+            var cantidad = userData2.horariosGuardados.length;
             if (cantidad > 0) {
                 setTimeout(function() {
-                    mostrarMensaje('📂 ' + cantidad + ' horario(s) guardado(s)', '#3498db');
+                    mostrarMensaje(cantidad + ' horario(s) guardado(s)', '#3498db');
                 }, 500);
             }
         }
@@ -1069,7 +1011,7 @@ document.addEventListener('keydown', function(event) {
 
 // Cerrar modal al hacer clic fuera
 window.addEventListener('click', function(event) {
-    const modal = document.getElementById('panelDatos');
+    var modal = document.getElementById('panelDatos');
     if (event.target === modal) {
         cerrarPanelDatos();
     }
