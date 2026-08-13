@@ -106,21 +106,27 @@
                 <div class="seccion-prompt">
                     <h3>📋 1. COPIAR PROMPT PARA IA</h3>
                     <div class="prompt-box">
-                        <div class="prompt-text" id="promptText">
+                       <div class="prompt-text" id="promptText">
 Proporciona el contenido en formato CSV (solo texto, sin cabecera) con las siguientes columnas en este orden:
 CICLO,CRÉDITOS,CURSO,TIPO,HRS,GR,DOCENTE,DIA1,INICIO1,FINAL1,DIA2,INICIO2,FINAL2
 
-REGLAS IMPORTANTES:
-1. El campo DOCENTE DEBE QUEDAR ENTRE GR y DIA1. Si el profesor tiene comas en su nombre, está bien, solo ponlo como aparece.
-2. CICLO: "Ciclo 2", "Ciclo 3", "Ciclo 4", "Ciclo 5" o "Ciclo 6"
-3. TIPO: "TEORIA" o "LABORATORIO"
-4. Días válidos: LUNES, MARTES, MIÉRCOLES, JUEVES, VIERNES, SÁBADO
-5. Horas en formato: HH:MM
-6. Si tiene 2 días, llenar DIA2, INICIO2, FINAL2
-7. Si solo tiene 1 día, dejar DIA2, INICIO2, FINAL2 vacíos (,,)
+REGLAS IMPORTANTES PARA LOS CICLOS:
+- Ciclo 2: TOPOGRAFÍA, GEOMETRÍA DESCRIPTIVA, INVESTIGACIÓN FORMATIVA, REALIDAD NACIONAL, CÁLCULO II, FÍSICA I, QUÍMICA GENERAL
+- Ciclo 3: CÁLCULO III, GEOLOGÍA, FÍSICA II, ESTÁTICA
+- Ciclo 4: CÁLCULO IV, ALGORITMO Y PROGRAMACIÓN, DIBUJO ASISTIDO, DINÁMICA, MECÁNICA DE SUELOS, TECNOLOGÍA DE LOS MATERIALES, ECOLOGÍA
+- Ciclo 5: MECÁNICA DE FLUIDOS, CONSTRUCCIÓN I
+- Ciclo 6: HIDRÁULICA APLICADA, ANÁLISIS ESTRUCTURAL I, GEOLOGÍA APLICADA, DESARROLLO SUSTENTABLE, MODELAMIENTO INFORMÁTICO (BIM), CONSTRUCCIÓN II, GESTIÓN DE RIESGOS
+- ECONOMIA GENERAL: Ciclo 2
+
+OTRAS REGLAS:
+1. TIPO: "TEORIA" o "LABORATORIO"
+2. Días válidos: LUNES, MARTES, MIÉRCOLES, JUEVES, VIERNES, SÁBADO
+3. Horas en formato: HH:MM
+4. Si tiene 2 días, llenar DIA2, INICIO2, FINAL2
+5. Si solo tiene 1 día, dejar DIA2, INICIO2, FINAL2 vacíos (,,)
 
 EJEMPLO DE UNA LÍNEA CORRECTA:
-Ciclo 2,3,TOPOGRAFIA APLICADA A LA INGENIERIA CIVIL I,TEORIA,0,01,CRUZ MONTES, FRANCI BENITO,MIERCOLES,12:00,13:00,,,
+Ciclo 6,4,HIDRÁULICA APLICADA,TEORIA,0,01,QUISCA ASTOCAHUANA, SAMUEL,MIERCOLES,08:00,11:00,,,
 
 IMPORTANTE: Solo responde con el CSV, sin texto adicional.
                         </div>
