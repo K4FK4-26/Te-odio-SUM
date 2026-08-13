@@ -125,7 +125,6 @@ let cursosSeleccionados = [];
 let coloresAsignados = {};
 let cursosFiltrados = [];
 let temporizadorMensaje = null;
-let datosUsuario = null;
 
 const paletaColores = [
     '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7',
@@ -179,15 +178,36 @@ function saveUserData(data) {
     localStorage.setItem('datosUsuario_' + userId, JSON.stringify(data));
 }
 
-function getUserKey() {
-    return 'datosUsuario_' + getUserId();
+function guardarHorarioSeleccionado() {
+    const userData = getUserData() || {};
+    userData.cursosSeleccionados = cursosSeleccionados;
+    userData.cicloActual = cicloActual;
+    userData.modoActual = modoActual;
+    saveUserData(userData);
+}
+
+function cargarHorarioSeleccionado() {
+    const userData = getUserData();
+    if (userData) {
+        if (userData.cursosSeleccionados) {
+            cursosSeleccionados = userData.cursosSeleccionados;
+        }
+        if (userData.cicloActual !== undefined) {
+            cicloActual = userData.cicloActual;
+        }
+        if (userData.modoActual) {
+            modoActual = userData.modoActual;
+            document.getElementById('btnTeoria').className = 'btn-teoria' + (modoActual === 'teoria' ? ' activo' : '');
+            document.getElementById('btnLaboratorio').className = 'btn-laboratorio' + (modoActual === 'laboratorio' ? ' activo' : '');
+        }
+        actualizarCreditos();
+    }
 }
 
 // ============================================================
 // FUNCIONES PRINCIPALES
 // ============================================================
 function actualizarCursos() {
-    // Cargar datos del usuario si existen
     const userData = getUserData();
     if (userData && userData.cursos) {
         datos = userData.cursos;
@@ -197,23 +217,20 @@ function actualizarCursos() {
         }
     }
     
-    const cicloNombre = ciclos[cicloActual];
-    document.getElementById('labelCiclo').textContent = cicloNombre;
-    
-    if (!datos[cicloNombre]) {
-        const ciclosDisponibles = Object.keys(datos);
-        if (ciclosDisponibles.length > 0) {
-            const nuevoCiclo = ciclosDisponibles[0];
-            cicloActual = ciclos.indexOf(nuevoCiclo);
-            document.getElementById('labelCiclo').textContent = nuevoCiclo;
-            actualizarCursos();
-            return;
-        }
+    if (ciclos.length === 0) {
         document.getElementById('listaCursos').innerHTML = '<li style="text-align:center;padding:20px;color:#e74c3c;">⚠️ No hay datos de cursos. Carga un CSV o restaura los datos predeterminados.</li>';
         return;
     }
     
-    const cursos = datos[cicloNombre][modoActual];
+    const cicloNombre = ciclos[cicloActual] || ciclos[0];
+    document.getElementById('labelCiclo').textContent = cicloNombre;
+    
+    if (!datos[cicloNombre]) {
+        document.getElementById('listaCursos').innerHTML = '<li style="text-align:center;padding:20px;color:#e74c3c;">⚠️ No hay datos para este ciclo.</li>';
+        return;
+    }
+    
+    const cursos = datos[cicloNombre][modoActual] || [];
     cursosFiltrados = [...cursos];
     mostrarCursos(cursosFiltrados);
     actualizarHorario();
@@ -235,16 +252,15 @@ function mostrarCursos(cursos) {
             li.style.background = obtenerColor(curso.nombre);
         }
         li.textContent = texto;
-        li.dataset.idx = cursos.indexOf(curso);
-        li.onclick = () => clickCurso(curso);
+        li.onclick = function() { clickCurso(curso); };
         lista.appendChild(li);
     });
 }
 
 function filtrarCursos() {
     const busqueda = document.getElementById('buscador').value.toLowerCase().trim();
-    const cicloNombre = ciclos[cicloActual];
-    const cursos = datos[cicloNombre][modoActual];
+    const cicloNombre = ciclos[cicloActual] || ciclos[0];
+    const cursos = datos[cicloNombre] ? datos[cicloNombre][modoActual] : [];
     
     if (busqueda === '') {
         cursosFiltrados = [...cursos];
@@ -265,47 +281,21 @@ function clickCurso(curso) {
     
     if (index !== -1) {
         cursosSeleccionados.splice(index, 1);
-        mostrarMensaje(`❌ Quitado: ${curso.nombre}`, '#e74c3c');
+        mostrarMensaje('❌ Quitado: ' + curso.nombre, '#e74c3c');
     } else {
         for (const c of cursosSeleccionados) {
             if (c.dia === curso.dia && horasSeSuperponen(c.hora, curso.hora)) {
-                mostrarMensaje(`⚠️ Conflicto: ${c.nombre} ya está en ${c.dia} ${c.hora}`, '#e67e22');
+                mostrarMensaje('⚠️ Conflicto: ' + c.nombre + ' ya está en ' + c.dia + ' ' + c.hora, '#e67e22');
                 return;
             }
         }
         cursosSeleccionados.push(curso);
-        mostrarMensaje(`✅ Agregado: ${curso.nombre}`, '#27ae60');
+        mostrarMensaje('✅ Agregado: ' + curso.nombre, '#27ae60');
     }
     
     actualizarCreditos();
-    actualizarCursos();
     guardarHorarioSeleccionado();
-}
-
-function guardarHorarioSeleccionado() {
-    const userData = getUserData() || {};
-    userData.cursosSeleccionados = cursosSeleccionados;
-    userData.cicloActual = cicloActual;
-    userData.modoActual = modoActual;
-    saveUserData(userData);
-}
-
-function cargarHorarioSeleccionado() {
-    const userData = getUserData();
-    if (userData) {
-        if (userData.cursosSeleccionados) {
-            cursosSeleccionados = userData.cursosSeleccionados;
-        }
-        if (userData.cicloActual !== undefined) {
-            cicloActual = userData.cicloActual;
-        }
-        if (userData.modoActual) {
-            modoActual = userData.modoActual;
-            document.getElementById('btnTeoria').className = `btn-teoria ${modoActual === 'teoria' ? 'activo' : ''}`;
-            document.getElementById('btnLaboratorio').className = `btn-laboratorio ${modoActual === 'laboratorio' ? 'activo' : ''}`;
-        }
-        actualizarCreditos();
-    }
+    actualizarCursos();
 }
 
 function horasSeSuperponen(hora1, hora2) {
@@ -336,16 +326,16 @@ function mostrarMensaje(texto, color) {
         clearTimeout(temporizadorMensaje);
     }
     
-    temporizadorMensaje = setTimeout(() => {
+    temporizadorMensaje = setTimeout(function() {
         label.textContent = '💡 Haz click en un curso para agregarlo/quitarlo del horario';
-        label.style.color = '#7f8c8d';
+        label.style.color = '#b0b0b0';
         label.style.fontWeight = 'normal';
     }, 3000);
 }
 
 function actualizarCreditos() {
-    const total = cursosSeleccionados.reduce((sum, c) => sum + c.creditos, 0);
-    document.getElementById('labelCreditos').textContent = `Créditos: ${total} | Cursos: ${cursosSeleccionados.length}`;
+    const total = cursosSeleccionados.reduce(function(sum, c) { return sum + c.creditos; }, 0);
+    document.getElementById('labelCreditos').textContent = 'Créditos: ' + total + ' | Cursos: ' + cursosSeleccionados.length;
 }
 
 function actualizarHorario() {
@@ -353,14 +343,14 @@ function actualizarHorario() {
     tbody.innerHTML = '';
     
     const horario = {};
-    dias.forEach(dia => {
+    dias.forEach(function(dia) {
         horario[dia] = {};
-        horas.forEach(hora => {
+        horas.forEach(function(hora) {
             horario[dia][hora] = null;
         });
     });
     
-    cursosSeleccionados.forEach(curso => {
+    cursosSeleccionados.forEach(function(curso) {
         const dia = curso.dia;
         if (!horario[dia]) return;
         
@@ -382,17 +372,17 @@ function actualizarHorario() {
         }
     });
     
-    horas.forEach(hora => {
+    horas.forEach(function(hora) {
         const tr = document.createElement('tr');
         const tdHora = document.createElement('td');
         tdHora.textContent = hora;
         tdHora.style.fontWeight = 'bold';
-        tdHora.style.background = document.body.classList.contains('modo-oscuro') ? '#1a2a4a' : '#ecf0f1';
+        tdHora.style.background = document.body.classList.contains('modo-claro') ? '#ecf0f1' : '#1a2a4a';
         tdHora.style.width = '60px';
         tdHora.style.fontSize = '12px';
         tr.appendChild(tdHora);
         
-        dias.forEach(dia => {
+        dias.forEach(function(dia) {
             const td = document.createElement('td');
             td.style.padding = '2px';
             td.style.height = '40px';
@@ -414,13 +404,13 @@ function actualizarHorario() {
                     div.className = 'bloque-curso';
                     div.style.background = obtenerColor(curso.nombre);
                     div.style.height = (duracion * 40 - 4) + 'px';
-                    div.title = `${curso.nombre}\nSección: ${curso.seccion}\nProfesor: ${curso.profesor}\nCréditos: ${curso.creditos}`;
+                    div.title = curso.nombre + '\nSección: ' + curso.seccion + '\nProfesor: ' + curso.profesor + '\nCréditos: ' + curso.creditos;
                     
                     const nombreSpan = document.createElement('span');
                     nombreSpan.textContent = curso.nombre.substring(0, 15) + (curso.nombre.length > 15 ? '...' : '');
                     
                     const seccionSpan = document.createElement('span');
-                    seccionSpan.textContent = `Sec:${curso.seccion}`;
+                    seccionSpan.textContent = 'Sec:' + curso.seccion;
                     
                     div.appendChild(nombreSpan);
                     div.appendChild(seccionSpan);
@@ -441,8 +431,8 @@ function actualizarHorario() {
 
 function cambiarModo(modo) {
     modoActual = modo;
-    document.getElementById('btnTeoria').className = `btn-teoria ${modo === 'teoria' ? 'activo' : ''}`;
-    document.getElementById('btnLaboratorio').className = `btn-laboratorio ${modo === 'laboratorio' ? 'activo' : ''}`;
+    document.getElementById('btnTeoria').className = 'btn-teoria' + (modo === 'teoria' ? ' activo' : '');
+    document.getElementById('btnLaboratorio').className = 'btn-laboratorio' + (modo === 'laboratorio' ? ' activo' : '');
     document.getElementById('buscador').value = '';
     guardarHorarioSeleccionado();
     actualizarCursos();
@@ -476,8 +466,8 @@ function limpiarHorario() {
     cursosSeleccionados = [];
     coloresAsignados = {};
     actualizarCreditos();
-    actualizarCursos();
     guardarHorarioSeleccionado();
+    actualizarCursos();
     mostrarMensaje('🗑️ Horario limpiado', '#e74c3c');
 }
 
@@ -485,8 +475,8 @@ function limpiarHorario() {
 // GENERAR AUTOMÁTICO
 // ============================================================
 function generarAutomatico() {
-    const cicloNombre = ciclos[cicloActual];
-    const cursos = datos[cicloNombre][modoActual];
+    const cicloNombre = ciclos[cicloActual] || ciclos[0];
+    const cursos = datos[cicloNombre] ? datos[cicloNombre][modoActual] : [];
     
     if (!cursos || cursos.length === 0) {
         mostrarMensaje('❌ No hay cursos disponibles', '#e74c3c');
@@ -498,7 +488,7 @@ function generarAutomatico() {
     
     const numCursos = Math.min(5 + Math.floor(Math.random() * 4), cursos.length);
     const seleccionados = [];
-    const disponibles = [...cursos];
+    const disponibles = cursos.slice();
     
     for (let i = 0; i < numCursos && disponibles.length > 0; i++) {
         const idx = Math.floor(Math.random() * disponibles.length);
@@ -520,7 +510,7 @@ function generarAutomatico() {
     actualizarCreditos();
     guardarHorarioSeleccionado();
     actualizarCursos();
-    mostrarMensaje(`⚡ Generado: ${cursosSeleccionados.length} cursos`, '#2ecc71');
+    mostrarMensaje('⚡ Generado: ' + cursosSeleccionados.length + ' cursos', '#2ecc71');
 }
 
 // ============================================================
@@ -536,15 +526,15 @@ function exportarTexto() {
     texto += 'MI HORARIO GENERADO - UNMSM\n';
     texto += '='.repeat(70) + '\n\n';
     
-    dias.forEach(dia => {
-        texto += `\n${dia}:\n`;
+    dias.forEach(function(dia) {
+        texto += '\n' + dia + ':\n';
         texto += '-'.repeat(50) + '\n';
-        const cursosDia = cursosSeleccionados.filter(c => c.dia === dia);
+        const cursosDia = cursosSeleccionados.filter(function(c) { return c.dia === dia; });
         if (cursosDia.length > 0) {
-            cursosDia.forEach(curso => {
-                texto += `  ${curso.hora} | ${curso.nombre}\n`;
-                texto += `          Sección: ${curso.seccion} | Prof: ${curso.profesor}\n`;
-                texto += `          Créditos: ${curso.creditos}\n`;
+            cursosDia.forEach(function(curso) {
+                texto += '  ' + curso.hora + ' | ' + curso.nombre + '\n';
+                texto += '          Sección: ' + curso.seccion + ' | Prof: ' + curso.profesor + '\n';
+                texto += '          Créditos: ' + curso.creditos + '\n';
             });
         } else {
             texto += '  (Sin cursos)\n';
@@ -581,24 +571,24 @@ function exportarImagen() {
     
     html2canvas(tabla, {
         scale: 2,
-        backgroundColor: document.body.classList.contains('modo-oscuro') ? '#1a1a2e' : '#ffffff',
+        backgroundColor: document.body.classList.contains('modo-claro') ? '#ffffff' : '#1a1a2e',
         allowTaint: true,
         useCORS: true,
         logging: false
-    }).then(canvas => {
+    }).then(function(canvas) {
         const link = document.createElement('a');
         link.download = 'mi_horario.png';
         link.href = canvas.toDataURL('image/png');
         link.click();
         mostrarMensaje('✅ Imagen exportada exitosamente', '#27ae60');
-    }).catch(error => {
+    }).catch(function(error) {
         console.error('Error:', error);
         mostrarMensaje('❌ Error al generar imagen', '#e74c3c');
     });
 }
 
 // ============================================================
-// GUARDAR HORARIO (LocalStorage)
+// GUARDAR HORARIO
 // ============================================================
 function guardarHorario() {
     if (cursosSeleccionados.length === 0) {
@@ -608,7 +598,7 @@ function guardarHorario() {
     
     const datosGuardar = {
         fecha: new Date().toLocaleString(),
-        ciclo: ciclos[cicloActual],
+        ciclo: ciclos[cicloActual] || ciclos[0],
         modo: modoActual,
         cursos: cursosSeleccionados
     };
@@ -628,54 +618,31 @@ function guardarHorario() {
 }
 
 // ============================================================
-// MODO OSCURO
+// MODO OSCURO/CLARO
 // ============================================================
 function toggleModo() {
-    document.body.classList.toggle('modo-oscuro');
+    document.body.classList.toggle('modo-claro');
     const btn = document.getElementById('btnModo');
-    if (document.body.classList.contains('modo-oscuro')) {
-        btn.textContent = '☀️ Modo Claro';
-        localStorage.setItem('modoOscuro', 'true');
-    } else {
+    if (document.body.classList.contains('modo-claro')) {
         btn.textContent = '🌙 Modo Oscuro';
         localStorage.setItem('modoOscuro', 'false');
+    } else {
+        btn.textContent = '☀️ Modo Claro';
+        localStorage.setItem('modoOscuro', 'true');
     }
     actualizarHorario();
 }
 
 function cargarModo() {
     const modo = localStorage.getItem('modoOscuro');
-    if (modo === 'true') {
-        document.body.classList.add('modo-oscuro');
+    if (modo === 'false') {
+        document.body.classList.add('modo-claro');
+        document.getElementById('btnModo').textContent = '🌙 Modo Oscuro';
+    } else {
+        document.body.classList.remove('modo-claro');
         document.getElementById('btnModo').textContent = '☀️ Modo Claro';
     }
 }
-
-// ============================================================
-// ATEJOS DE TECLADO
-// ============================================================
-document.addEventListener('keydown', function(event) {
-    if (event.key === 'ArrowLeft') {
-        cambiarCiclo(-1);
-        event.preventDefault();
-    } else if (event.key === 'ArrowRight') {
-        cambiarCiclo(1);
-        event.preventDefault();
-    } else if (event.key === 'l' || event.key === 'L') {
-        confirmarLimpiar();
-        event.preventDefault();
-    } else if (event.key === 'g' || event.key === 'G') {
-        generarAutomatico();
-        event.preventDefault();
-    } else if (event.key === 'd' || event.key === 'D') {
-        toggleModo();
-        event.preventDefault();
-    } else if (event.key === 'Escape') {
-        if (document.getElementById('panelDatos').style.display === 'block') {
-            cerrarPanelDatos();
-        }
-    }
-});
 
 // ============================================================
 // PANEL DE GESTIÓN DE DATOS
@@ -692,31 +659,20 @@ function cerrarPanelDatos() {
     document.body.style.overflow = 'auto';
 }
 
-window.onclick = function(event) {
-    const modal = document.getElementById('panelDatos');
-    if (event.target === modal) {
-        cerrarPanelDatos();
-    }
-}
-
 function copiarPrompt() {
     const promptText = document.getElementById('promptText').textContent;
-    navigator.clipboard.writeText(promptText).then(() => {
+    navigator.clipboard.writeText(promptText).then(function() {
         mostrarMensajePanel('✅ Prompt copiado al portapapeles', 'exito');
-    }).catch(() => {
+    }).catch(function() {
         mostrarMensajePanel('❌ Error al copiar', 'error');
     });
 }
 
 function copiarEjemploCSV() {
-    const ejemplo = `Ciclo 2,3,TOPOGRAFÍA APLICADA A LA INGENIERÍA CIVIL I,TEORIA,0,01,CRUZ MONTES, FRANCI BENITO,MIERCOLES,12:00,13:00,,,
-Ciclo 2,3,TOPOGRAFÍA APLICADA A LA INGENIERÍA CIVIL I,LABORATORIO,0,00,CRUZ MONTES, FRANCI BENITO,MIERCOLES,13:00,17:00,,,
-Ciclo 3,4,CÁLCULO III,TEORIA,0,01,BUSTAMANTE RAMOS, ELVIS,MIERCOLES,08:00,11:00,,,
-Ciclo 4,3,ALGORITMO Y PROGRAMACIÓN,TEORIA,0,01,AROSOQUIPA MINA, YVAN MANUEL,JUEVES,18:00,20:00,,,
-Ciclo 4,4,DINÁMICA,TEORIA,0,01,JIMENEZ RODRIGO, EDGAR GABRIEL,MARTES,17:00,21:00,,,`;
-    navigator.clipboard.writeText(ejemplo).then(() => {
+    const ejemplo = 'Ciclo 2,3,TOPOGRAFÍA APLICADA A LA INGENIERÍA CIVIL I,TEORIA,0,01,CRUZ MONTES, FRANCI BENITO,MIERCOLES,12:00,13:00,,,\nCiclo 2,3,TOPOGRAFÍA APLICADA A LA INGENIERÍA CIVIL I,LABORATORIO,0,00,CRUZ MONTES, FRANCI BENITO,MIERCOLES,13:00,17:00,,,\nCiclo 3,4,CÁLCULO III,TEORIA,0,01,BUSTAMANTE RAMOS, ELVIS,MIERCOLES,08:00,11:00,,,\nCiclo 4,3,ALGORITMO Y PROGRAMACIÓN,TEORIA,0,01,AROSOQUIPA MINA, YVAN MANUEL,JUEVES,18:00,20:00,,,\nCiclo 4,4,DINÁMICA,TEORIA,0,01,JIMENEZ RODRIGO, EDGAR GABRIEL,MARTES,17:00,21:00,,,';
+    navigator.clipboard.writeText(ejemplo).then(function() {
         mostrarMensajePanel('✅ Ejemplo CSV copiado al portapapeles', 'exito');
-    }).catch(() => {
+    }).catch(function() {
         mostrarMensajePanel('❌ Error al copiar', 'error');
     });
 }
@@ -728,7 +684,7 @@ function mostrarMensajePanel(texto, tipo) {
     div.style.display = 'block';
     
     clearTimeout(window.timerMensajePanel);
-    window.timerMensajePanel = setTimeout(() => {
+    window.timerMensajePanel = setTimeout(function() {
         div.style.display = 'none';
     }, 5000);
 }
@@ -760,40 +716,37 @@ function procesarCSV() {
             totalCursos += nuevosDatos[ciclo].teoria.length + nuevosDatos[ciclo].laboratorio.length;
         }
         
-        // Guardar en localStorage del usuario
         const userData = getUserData() || {};
         userData.cursos = nuevosDatos;
         saveUserData(userData);
         
-        // Actualizar variable global
         datos = nuevosDatos;
         ciclos = Object.keys(datos);
         if (cicloActual >= ciclos.length) {
             cicloActual = 0;
         }
         
-        // Limpiar horario seleccionado al cambiar datos
         cursosSeleccionados = [];
         coloresAsignados = {};
         actualizarCreditos();
         guardarHorarioSeleccionado();
         actualizarCursos();
         
-        mostrarMensajePanel(`✅ Datos cargados exitosamente: ${totalCiclos} ciclos, ${totalCursos} cursos`, 'exito');
+        mostrarMensajePanel('✅ Datos cargados exitosamente: ' + totalCiclos + ' ciclos, ' + totalCursos + ' cursos', 'exito');
         actualizarVistaPrevia();
         
     } catch (error) {
-        mostrarMensajePanel(`❌ Error al procesar CSV: ${error.message}`, 'error');
+        mostrarMensajePanel('❌ Error al procesar CSV: ' + error.message, 'error');
         console.error('Error CSV:', error);
     }
 }
 
 function convertirCSVaJSON(csvText) {
-    const lineas = csvText.split('\n').filter(line => line.trim() !== '');
+    const lineas = csvText.split('\n').filter(function(line) { return line.trim() !== ''; });
     const nuevosDatos = {};
     
     const ciclosPosibles = ['Ciclo 2', 'Ciclo 3', 'Ciclo 4', 'Ciclo 5', 'Ciclo 6', 'Ciclo 0'];
-    ciclosPosibles.forEach(c => {
+    ciclosPosibles.forEach(function(c) {
         nuevosDatos[c] = { teoria: [], laboratorio: [] };
     });
     
@@ -801,7 +754,7 @@ function convertirCSVaJSON(csvText) {
     let errores = [];
     let lineasIgnoradas = 0;
     
-    lineas.forEach((linea, numLinea) => {
+    lineas.forEach(function(linea, numLinea) {
         let lineaLimpia = linea.trim().replace(/\r/g, '');
         if (!lineaLimpia) {
             lineasIgnoradas++;
@@ -813,10 +766,10 @@ function convertirCSVaJSON(csvText) {
         }
         
         let partes = lineaLimpia.split(',');
-        partes = partes.map(p => p.trim());
+        partes = partes.map(function(p) { return p.trim(); });
         
         if (partes.length < 10) {
-            errores.push(`Línea ${numLinea + 1}: Formato incorrecto (${partes.length} columnas) - Línea ignorada`);
+            errores.push('Línea ' + (numLinea + 1) + ': Formato incorrecto (' + partes.length + ' columnas)');
             lineasIgnoradas++;
             return;
         }
@@ -836,7 +789,7 @@ function convertirCSVaJSON(csvText) {
             } else if (ciclo.toLowerCase().includes('ciclo 0') || ciclo === '0') {
                 ciclo = 'Ciclo 0';
             } else {
-                errores.push(`Línea ${numLinea + 1}: Ciclo no reconocido "${partes[0]}" - Línea ignorada`);
+                errores.push('Línea ' + (numLinea + 1) + ': Ciclo no reconocido "' + partes[0] + '"');
                 lineasIgnoradas++;
                 return;
             }
@@ -867,7 +820,7 @@ function convertirCSVaJSON(csvText) {
                 } else {
                     tipoFinal = 'teoria';
                 }
-                errores.push(`Línea ${numLinea + 1}: Tipo no reconocido "${partes[3]}", se asume ${tipoFinal.toUpperCase()}`);
+                errores.push('Línea ' + (numLinea + 1) + ': Tipo no reconocido "' + partes[3] + '", se asume ' + tipoFinal.toUpperCase());
             }
             
             let gr = partes[5] ? partes[5].trim() : '00';
@@ -886,13 +839,13 @@ function convertirCSVaJSON(csvText) {
             const final2 = partes[12] ? partes[12].trim() : '';
             
             if (!dia1 || !diasValidos.includes(dia1)) {
-                errores.push(`Línea ${numLinea + 1}: Día inválido "${dia1}" - Línea ignorada`);
+                errores.push('Línea ' + (numLinea + 1) + ': Día inválido "' + dia1 + '"');
                 lineasIgnoradas++;
                 return;
             }
             
             if (!inicio1 || !final1) {
-                errores.push(`Línea ${numLinea + 1}: Horas inválidas "${inicio1} - ${final1}" - Línea ignorada`);
+                errores.push('Línea ' + (numLinea + 1) + ': Horas inválidas "' + inicio1 + ' - ' + final1 + '"');
                 lineasIgnoradas++;
                 return;
             }
@@ -903,7 +856,7 @@ function convertirCSVaJSON(csvText) {
                 profesor: docente,
                 creditos: creditos,
                 dia: dia1,
-                hora: `${inicio1} - ${final1}`
+                hora: inicio1 + ' - ' + final1
             };
             nuevosDatos[ciclo][tipoFinal].push(cursoObj);
             cursosProcesados++;
@@ -916,7 +869,7 @@ function convertirCSVaJSON(csvText) {
                         profesor: docente,
                         creditos: creditos,
                         dia: dia2,
-                        hora: `${inicio2} - ${final2}`
+                        hora: inicio2 + ' - ' + final2
                     };
                     nuevosDatos[ciclo][tipoFinal].push(cursoObj2);
                     cursosProcesados++;
@@ -924,7 +877,7 @@ function convertirCSVaJSON(csvText) {
             }
             
         } catch (e) {
-            errores.push(`Línea ${numLinea + 1}: Error al procesar - ${e.message}`);
+            errores.push('Línea ' + (numLinea + 1) + ': Error al procesar - ' + e.message);
             lineasIgnoradas++;
         }
     });
@@ -938,10 +891,9 @@ function convertirCSVaJSON(csvText) {
     if (errores.length > 0) {
         console.warn('⚠️ Errores en CSV:', errores);
         if (cursosProcesados === 0) {
-            throw new Error(`No se pudo procesar ningún curso.\nErrores:\n${errores.slice(0, 5).join('\n')}${errores.length > 5 ? `\n... y ${errores.length - 5} más` : ''}`);
+            throw new Error('No se pudo procesar ningún curso.\nErrores:\n' + errores.slice(0, 5).join('\n') + (errores.length > 5 ? '\n... y ' + (errores.length - 5) + ' más' : ''));
         }
-        const mensaje = `⚠️ ${cursosProcesados} cursos procesados, ${lineasIgnoradas} líneas ignoradas. Revisa la consola para más detalles.`;
-        mostrarMensajePanel(mensaje, 'info');
+        mostrarMensajePanel('⚠️ ' + cursosProcesados + ' cursos procesados, ' + lineasIgnoradas + ' líneas ignoradas.', 'info');
     }
     
     if (cursosProcesados === 0) {
@@ -964,10 +916,10 @@ function actualizarVistaPrevia() {
         const laboratorio = datosActuales[ciclo].laboratorio.length;
         const total = teoria + laboratorio;
         totalCursos += total;
-        html += `<div class="resumen-linea">📂 ${ciclo}: ${total} cursos (Teoría: ${teoria} | Laboratorio: ${laboratorio})</div>`;
+        html += '<div class="resumen-linea">📂 ' + ciclo + ': ' + total + ' cursos (Teoría: ' + teoria + ' | Laboratorio: ' + laboratorio + ')</div>';
     }
     
-    html += `<div class="resumen-linea total">📊 Total: ${totalCursos} cursos en ${Object.keys(datosActuales).length} ciclos</div>`;
+    html += '<div class="resumen-linea total">📊 Total: ' + totalCursos + ' cursos en ' + Object.keys(datosActuales).length + ' ciclos</div>';
     
     if (totalCursos === 0) {
         div.innerHTML = '<p>⚠️ No hay datos cargados. Carga un CSV o restaura los datos predeterminados.</p>';
@@ -986,19 +938,16 @@ function restaurarDatosDefault() {
         return;
     }
     
-    // Restaurar datos
     datos = JSON.parse(JSON.stringify(DATOS_DEFAULT));
     ciclos = Object.keys(datos);
     if (cicloActual >= ciclos.length) {
         cicloActual = 0;
     }
     
-    // Guardar en localStorage del usuario
     const userData = getUserData() || {};
     userData.cursos = datos;
     saveUserData(userData);
     
-    // Limpiar horario seleccionado
     cursosSeleccionados = [];
     coloresAsignados = {};
     actualizarCreditos();
@@ -1029,8 +978,8 @@ function cargarDatosUsuario() {
         }
         if (userData.modoActual) {
             modoActual = userData.modoActual;
-            document.getElementById('btnTeoria').className = `btn-teoria ${modoActual === 'teoria' ? 'activo' : ''}`;
-            document.getElementById('btnLaboratorio').className = `btn-laboratorio ${modoActual === 'laboratorio' ? 'activo' : ''}`;
+            document.getElementById('btnTeoria').className = 'btn-teoria' + (modoActual === 'teoria' ? ' activo' : '');
+            document.getElementById('btnLaboratorio').className = 'btn-laboratorio' + (modoActual === 'laboratorio' ? ' activo' : '');
         }
         return true;
     }
@@ -1041,10 +990,17 @@ function cargarDatosUsuario() {
 // INICIALIZACIÓN
 // ============================================================
 
-window.addEventListener('load', function() {
+document.addEventListener('DOMContentLoaded', function() {
+    // Cargar modo
     cargarModo();
+    
+    // Cargar datos del usuario
     cargarDatosUsuario();
+    
+    // Actualizar créditos
     actualizarCreditos();
+    
+    // Actualizar cursos
     actualizarCursos();
     
     // Mostrar cantidad de horarios guardados
@@ -1053,23 +1009,68 @@ window.addEventListener('load', function() {
         if (userData && userData.horariosGuardados) {
             const cantidad = userData.horariosGuardados.length;
             if (cantidad > 0) {
-                setTimeout(() => {
-                    mostrarMensaje(`📂 ${cantidad} horario(s) guardado(s)`, '#3498db');
+                setTimeout(function() {
+                    mostrarMensaje('📂 ' + cantidad + ' horario(s) guardado(s)', '#3498db');
                 }, 500);
             }
         }
     } catch (e) {}
-    
-    if (document.getElementById('panelDatos').style.display === 'block') {
-        actualizarVistaPrevia();
-    }
 });
 
 // ============================================================
 // EVENTOS
 // ============================================================
-document.getElementById('btnAnterior').onclick = () => cambiarCiclo(-1);
-document.getElementById('btnSiguiente').onclick = () => cambiarCiclo(1);
-document.getElementById('btnTeoria').onclick = () => cambiarModo('teoria');
-document.getElementById('btnLaboratorio').onclick = () => cambiarModo('laboratorio');
-document.getElementById('btnModo').onclick = toggleModo;
+document.getElementById('btnAnterior').addEventListener('click', function() { cambiarCiclo(-1); });
+document.getElementById('btnSiguiente').addEventListener('click', function() { cambiarCiclo(1); });
+document.getElementById('btnTeoria').addEventListener('click', function() { cambiarModo('teoria'); });
+document.getElementById('btnLaboratorio').addEventListener('click', function() { cambiarModo('laboratorio'); });
+document.getElementById('btnModo').addEventListener('click', toggleModo);
+document.getElementById('btnGuardar').addEventListener('click', guardarHorario);
+document.getElementById('btnGestionarDatos').addEventListener('click', abrirPanelDatos);
+document.getElementById('btnCerrarModal').addEventListener('click', cerrarPanelDatos);
+document.getElementById('btnCerrarModalFooter').addEventListener('click', cerrarPanelDatos);
+document.getElementById('btnCopiarPrompt').addEventListener('click', copiarPrompt);
+document.getElementById('btnCopiarEjemplo').addEventListener('click', copiarEjemploCSV);
+document.getElementById('btnProcesarCSV').addEventListener('click', procesarCSV);
+document.getElementById('btnVerDatos').addEventListener('click', verDatosActuales);
+document.getElementById('btnLimpiarCSV').addEventListener('click', limpiarCSV);
+document.getElementById('btnRestaurar').addEventListener('click', restaurarDatosDefault);
+document.getElementById('btnGenerar').addEventListener('click', generarAutomatico);
+document.getElementById('btnLimpiar').addEventListener('click', confirmarLimpiar);
+document.getElementById('btnExportarTexto').addEventListener('click', exportarTexto);
+document.getElementById('btnExportarImagen').addEventListener('click', exportarImagen);
+document.getElementById('buscador').addEventListener('keyup', filtrarCursos);
+
+// ============================================================
+// ATEJOS DE TECLADO
+// ============================================================
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'ArrowLeft') {
+        cambiarCiclo(-1);
+        event.preventDefault();
+    } else if (event.key === 'ArrowRight') {
+        cambiarCiclo(1);
+        event.preventDefault();
+    } else if (event.key === 'l' || event.key === 'L') {
+        confirmarLimpiar();
+        event.preventDefault();
+    } else if (event.key === 'g' || event.key === 'G') {
+        generarAutomatico();
+        event.preventDefault();
+    } else if (event.key === 'd' || event.key === 'D') {
+        toggleModo();
+        event.preventDefault();
+    } else if (event.key === 'Escape') {
+        if (document.getElementById('panelDatos').style.display === 'block') {
+            cerrarPanelDatos();
+        }
+    }
+});
+
+// Cerrar modal al hacer clic fuera
+window.addEventListener('click', function(event) {
+    const modal = document.getElementById('panelDatos');
+    if (event.target === modal) {
+        cerrarPanelDatos();
+    }
+});
