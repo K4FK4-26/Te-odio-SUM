@@ -110,16 +110,19 @@
 Proporciona el contenido en formato CSV (solo texto, sin cabecera) con las siguientes columnas en este orden:
 CICLO,CRÉDITOS,CURSO,TIPO,HRS,GR,DOCENTE,DIA1,INICIO1,FINAL1,DIA2,INICIO2,FINAL2
 
-REGLAS:
-- CICLO: "Ciclo 2", "Ciclo 3", "Ciclo 4", "Ciclo 5" o "Ciclo 6"
-- TIPO: "TEORIA" o "LABORATORIO"
-- DOCENTE: Si no aparece, usa "No especificado"
-- Días válidos: LUNES, MARTES, MIÉRCOLES, JUEVES, VIERNES, SÁBADO
-- Horas en formato: HH:MM
-- Si tiene 2 días, llenar DIA2, INICIO2, FINAL2
-- Si solo tiene 1 día, dejar DIA2, INICIO2, FINAL2 vacíos (,,)
+REGLAS IMPORTANTES:
+1. El campo DOCENTE DEBE QUEDAR ENTRE GR y DIA1. Si el profesor tiene comas en su nombre, está bien, solo ponlo como aparece.
+2. CICLO: "Ciclo 2", "Ciclo 3", "Ciclo 4", "Ciclo 5" o "Ciclo 6"
+3. TIPO: "TEORIA" o "LABORATORIO"
+4. Días válidos: LUNES, MARTES, MIÉRCOLES, JUEVES, VIERNES, SÁBADO
+5. Horas en formato: HH:MM
+6. Si tiene 2 días, llenar DIA2, INICIO2, FINAL2
+7. Si solo tiene 1 día, dejar DIA2, INICIO2, FINAL2 vacíos (,,)
 
-⚠️ IMPORTANTE: Solo responde con el CSV, sin texto adicional.
+EJEMPLO DE UNA LÍNEA CORRECTA:
+Ciclo 2,3,TOPOGRAFIA APLICADA A LA INGENIERIA CIVIL I,TEORIA,0,01,CRUZ MONTES, FRANCI BENITO,MIERCOLES,12:00,13:00,,,
+
+IMPORTANTE: Solo responde con el CSV, sin texto adicional.
                         </div>
                         <div class="prompt-botones">
                             <button id="btnCopiarPrompt" class="btn-copiar">📋 Copiar Prompt</button>
