@@ -1,17 +1,7 @@
 // ============================================================
-// DATOS DE CURSOS - COMPLETO
+// DATOS DE CURSOS - PREDETERMINADOS (BACKUP)
 // ============================================================
-const datos = {
-  "Ciclo 0": {
-    "teoria": [
-      {"nombre": "ECONOMIA GENERAL", "seccion": "01", "profesor": "RENDON SCHNEIR, ERIC", "creditos": 2, "dia": "MIERCOLES", "hora": "19:00 - 21:00"},
-      {"nombre": "ECONOMIA GENERAL", "seccion": "02", "profesor": "CRUZ MONTES, FRANCI BENITO", "creditos": 2, "dia": "MARTES", "hora": "08:00 - 09:00"}
-    ],
-    "laboratorio": [
-      {"nombre": "ECONOMIA GENERAL (LAB)", "seccion": "00", "profesor": "RENDON SCHNEIR, ERIC", "creditos": 2, "dia": "MIERCOLES", "hora": "20:00 - 22:00"},
-      {"nombre": "ECONOMIA GENERAL (LAB)", "seccion": "00", "profesor": "CRUZ MONTES, FRANCI BENITO", "creditos": 2, "dia": "MARTES", "hora": "09:00 - 11:00"}
-    ]
-  },
+const DATOS_DEFAULT = {
   "Ciclo 2": {
     "teoria": [
       {"nombre": "TOPOGRAFÍA APLICADA A LA INGENIERÍA CIVIL I", "seccion": "01", "profesor": "CRUZ MONTES, FRANCI BENITO", "creditos": 3, "dia": "MIERCOLES", "hora": "12:00 - 13:00"},
@@ -127,6 +117,7 @@ const datos = {
 // ============================================================
 // VARIABLES GLOBALES
 // ============================================================
+let datos = JSON.parse(JSON.stringify(DATOS_DEFAULT));
 let cicloActual = 0;
 const ciclos = Object.keys(datos);
 let modoActual = 'teoria';
@@ -163,6 +154,19 @@ function obtenerColor(nombreCurso) {
 function actualizarCursos() {
     const cicloNombre = ciclos[cicloActual];
     document.getElementById('labelCiclo').textContent = cicloNombre;
+    
+    if (!datos[cicloNombre]) {
+        const ciclosDisponibles = Object.keys(datos);
+        if (ciclosDisponibles.length > 0) {
+            const nuevoCiclo = ciclosDisponibles[0];
+            cicloActual = ciclos.indexOf(nuevoCiclo);
+            document.getElementById('labelCiclo').textContent = nuevoCiclo;
+            actualizarCursos();
+            return;
+        }
+        document.getElementById('listaCursos').innerHTML = '<li style="text-align:center;padding:20px;color:#e74c3c;">⚠️ No hay datos de cursos. Carga un CSV o restaura los datos predeterminados.</li>';
+        return;
+    }
     
     const cursos = datos[cicloNombre][modoActual];
     cursosFiltrados = [...cursos];
@@ -218,7 +222,6 @@ function clickCurso(curso) {
         cursosSeleccionados.splice(index, 1);
         mostrarMensaje(`❌ Quitado: ${curso.nombre}`, '#e74c3c');
     } else {
-        // Verificar conflicto
         for (const c of cursosSeleccionados) {
             if (c.dia === curso.dia && horasSeSuperponen(c.hora, curso.hora)) {
                 mostrarMensaje(`⚠️ Conflicto: ${c.nombre} ya está en ${c.dia} ${c.hora}`, '#e67e22');
@@ -257,12 +260,10 @@ function mostrarMensaje(texto, color) {
     label.style.color = color;
     label.style.fontWeight = 'bold';
     
-    // Limpiar temporizador anterior
     if (temporizadorMensaje) {
         clearTimeout(temporizadorMensaje);
     }
     
-    // Restaurar mensaje después de 3 segundos
     temporizadorMensaje = setTimeout(() => {
         label.textContent = '💡 Haz click en un curso para agregarlo/quitarlo del horario';
         label.style.color = '#7f8c8d';
@@ -279,7 +280,6 @@ function actualizarHorario() {
     const tbody = document.getElementById('cuerpoHorario');
     tbody.innerHTML = '';
     
-    // Crear estructura de horario
     const horario = {};
     dias.forEach(dia => {
         horario[dia] = {};
@@ -288,7 +288,6 @@ function actualizarHorario() {
         });
     });
     
-    // Llenar con cursos seleccionados
     cursosSeleccionados.forEach(curso => {
         const dia = curso.dia;
         if (!horario[dia]) return;
@@ -311,7 +310,6 @@ function actualizarHorario() {
         }
     });
     
-    // Dibujar tabla
     horas.forEach(hora => {
         const tr = document.createElement('tr');
         const tdHora = document.createElement('td');
@@ -337,7 +335,6 @@ function actualizarHorario() {
                 const idxInicio = horas.indexOf(horaInicio);
                 const idxFin = horas.indexOf(horaFin);
                 
-                // Solo mostrar el bloque en la hora de inicio
                 if (idxInicio === horas.indexOf(hora)) {
                     const duracion = idxFin - idxInicio;
                     
@@ -501,7 +498,6 @@ function exportarImagen() {
     const tabla = document.getElementById('tablaContainer');
     mostrarMensaje('⏳ Generando imagen...', '#f39c12');
     
-    // Verificar que html2canvas esté disponible
     if (typeof html2canvas === 'undefined') {
         mostrarMensaje('❌ Error: html2canvas no cargado', '#e74c3c');
         return;
@@ -542,7 +538,6 @@ function guardarHorario() {
     };
     
     try {
-        // Obtener horarios guardados
         let horariosGuardados = JSON.parse(localStorage.getItem('horariosGuardados')) || [];
         horariosGuardados.push(datosGuardar);
         localStorage.setItem('horariosGuardados', JSON.stringify(horariosGuardados));
@@ -550,35 +545,6 @@ function guardarHorario() {
         mostrarMensaje('✅ Horario guardado exitosamente', '#27ae60');
     } catch (error) {
         mostrarMensaje('❌ Error al guardar', '#e74c3c');
-    }
-}
-
-// ============================================================
-// CARGAR HORARIO DESDE LOCALSTORAGE
-// ============================================================
-function cargarHorarioGuardado(index) {
-    try {
-        const horariosGuardados = JSON.parse(localStorage.getItem('horariosGuardados')) || [];
-        if (index >= 0 && index < horariosGuardados.length) {
-            const datos = horariosGuardados[index];
-            // Cambiar al ciclo y modo correspondiente
-            const cicloIndex = ciclos.indexOf(datos.ciclo);
-            if (cicloIndex !== -1) {
-                cicloActual = cicloIndex;
-                modoActual = datos.modo;
-                cursosSeleccionados = datos.cursos;
-                
-                // Actualizar UI
-                document.getElementById('btnTeoria').className = `btn-teoria ${modoActual === 'teoria' ? 'activo' : ''}`;
-                document.getElementById('btnLaboratorio').className = `btn-laboratorio ${modoActual === 'laboratorio' ? 'activo' : ''}`;
-                
-                actualizarCreditos();
-                actualizarCursos();
-                mostrarMensaje('✅ Horario cargado exitosamente', '#27ae60');
-            }
-        }
-    } catch (error) {
-        mostrarMensaje('❌ Error al cargar', '#e74c3c');
     }
 }
 
@@ -610,30 +576,322 @@ function cargarModo() {
 // ATEJOS DE TECLADO
 // ============================================================
 document.addEventListener('keydown', function(event) {
-    // Flecha izquierda: ciclo anterior
     if (event.key === 'ArrowLeft') {
         cambiarCiclo(-1);
         event.preventDefault();
-    }
-    // Flecha derecha: ciclo siguiente
-    else if (event.key === 'ArrowRight') {
+    } else if (event.key === 'ArrowRight') {
         cambiarCiclo(1);
         event.preventDefault();
-    }
-    // Tecla 'L' o 'l': limpiar horario
-    else if (event.key === 'l' || event.key === 'L') {
+    } else if (event.key === 'l' || event.key === 'L') {
         confirmarLimpiar();
         event.preventDefault();
-    }
-    // Tecla 'G' o 'g': generar automático
-    else if (event.key === 'g' || event.key === 'G') {
+    } else if (event.key === 'g' || event.key === 'G') {
         generarAutomatico();
         event.preventDefault();
-    }
-    // Tecla 'D' o 'd': modo oscuro
-    else if (event.key === 'd' || event.key === 'D') {
+    } else if (event.key === 'd' || event.key === 'D') {
         toggleModo();
         event.preventDefault();
+    } else if (event.key === 'Escape') {
+        if (document.getElementById('panelDatos').style.display === 'block') {
+            cerrarPanelDatos();
+        }
+    }
+});
+
+// ============================================================
+// PANEL DE GESTIÓN DE DATOS
+// ============================================================
+
+function abrirPanelDatos() {
+    document.getElementById('panelDatos').style.display = 'block';
+    document.body.style.overflow = 'hidden';
+    actualizarVistaPrevia();
+}
+
+function cerrarPanelDatos() {
+    document.getElementById('panelDatos').style.display = 'none';
+    document.body.style.overflow = 'auto';
+}
+
+window.onclick = function(event) {
+    const modal = document.getElementById('panelDatos');
+    if (event.target === modal) {
+        cerrarPanelDatos();
+    }
+}
+
+function copiarPrompt() {
+    const promptText = document.getElementById('promptText').textContent;
+    navigator.clipboard.writeText(promptText).then(() => {
+        mostrarMensajePanel('✅ Prompt copiado al portapapeles', 'exito');
+    }).catch(() => {
+        mostrarMensajePanel('❌ Error al copiar', 'error');
+    });
+}
+
+function copiarEjemploCSV() {
+    const ejemplo = `Ciclo 2,3,TOPOGRAFÍA APLICADA A LA INGENIERÍA CIVIL I,TEORIA,0,01,CRUZ MONTES, FRANCI BENITO,MIERCOLES,12:00,13:00,,,
+Ciclo 2,3,TOPOGRAFÍA APLICADA A LA INGENIERÍA CIVIL I,LABORATORIO,0,00,CRUZ MONTES, FRANCI BENITO,MIERCOLES,13:00,17:00,,,
+Ciclo 3,4,CÁLCULO III,TEORIA,0,01,BUSTAMANTE RAMOS, ELVIS,MIERCOLES,08:00,11:00,,,
+Ciclo 4,3,ALGORITMO Y PROGRAMACIÓN,TEORIA,0,01,AROSOQUIPA MINA, YVAN MANUEL,JUEVES,18:00,20:00,,,
+Ciclo 4,4,DINÁMICA,TEORIA,0,01,JIMENEZ RODRIGO, EDGAR GABRIEL,MARTES,17:00,21:00,,,`;
+    navigator.clipboard.writeText(ejemplo).then(() => {
+        mostrarMensajePanel('✅ Ejemplo CSV copiado al portapapeles', 'exito');
+    }).catch(() => {
+        mostrarMensajePanel('❌ Error al copiar', 'error');
+    });
+}
+
+function mostrarMensajePanel(texto, tipo) {
+    const div = document.getElementById('mensajeProcesamiento');
+    div.textContent = texto;
+    div.className = 'mensaje-procesamiento ' + tipo;
+    div.style.display = 'block';
+    
+    clearTimeout(window.timerMensajePanel);
+    window.timerMensajePanel = setTimeout(() => {
+        div.style.display = 'none';
+    }, 5000);
+}
+
+function limpiarCSV() {
+    document.getElementById('csvInput').value = '';
+    document.getElementById('mensajeProcesamiento').style.display = 'none';
+}
+
+function procesarCSV() {
+    const csvText = document.getElementById('csvInput').value.trim();
+    
+    if (!csvText) {
+        mostrarMensajePanel('❌ Por favor, pega un CSV válido', 'error');
+        return;
+    }
+    
+    try {
+        const nuevosDatos = convertirCSVaJSON(csvText);
+        
+        if (Object.keys(nuevosDatos).length === 0) {
+            mostrarMensajePanel('❌ No se encontraron cursos en el CSV', 'error');
+            return;
+        }
+        
+        let totalCursos = 0;
+        let totalCiclos = Object.keys(nuevosDatos).length;
+        for (const ciclo in nuevosDatos) {
+            totalCursos += nuevosDatos[ciclo].teoria.length + nuevosDatos[ciclo].laboratorio.length;
+        }
+        
+        localStorage.setItem('datosCursos', JSON.stringify(nuevosDatos));
+        Object.assign(datos, nuevosDatos);
+        
+        // Actualizar lista de ciclos
+        ciclos.length = 0;
+        Object.keys(datos).forEach(c => ciclos.push(c));
+        
+        actualizarCursos();
+        
+        mostrarMensajePanel(`✅ Datos cargados exitosamente: ${totalCiclos} ciclos, ${totalCursos} cursos`, 'exito');
+        actualizarVistaPrevia();
+        
+    } catch (error) {
+        mostrarMensajePanel(`❌ Error al procesar CSV: ${error.message}`, 'error');
+        console.error('Error CSV:', error);
+    }
+}
+
+function convertirCSVaJSON(csvText) {
+    const lineas = csvText.split('\n').filter(line => line.trim() !== '');
+    const nuevosDatos = {};
+    
+    const ciclosEsperados = ['Ciclo 2', 'Ciclo 3', 'Ciclo 4', 'Ciclo 5', 'Ciclo 6'];
+    ciclosEsperados.forEach(c => {
+        nuevosDatos[c] = { teoria: [], laboratorio: [] };
+    });
+    
+    let errores = [];
+    let cursosProcesados = 0;
+    
+    lineas.forEach((linea, numLinea) => {
+        const partes = linea.split(',');
+        
+        if (partes.length < 10) {
+            errores.push(`Línea ${numLinea + 1}: Formato incorrecto (${partes.length} columnas, se esperan 13)`);
+            return;
+        }
+        
+        try {
+            const ciclo = partes[0].trim();
+            const creditos = parseInt(partes[1].trim()) || 3;
+            const curso = partes[2].trim();
+            const tipo = partes[3].trim().toUpperCase();
+            const gr = partes[5] ? partes[5].trim() : '00';
+            const docente = partes[6] ? partes[6].trim() : 'No especificado';
+            const dia1 = partes[7] ? partes[7].trim() : '';
+            const inicio1 = partes[8] ? partes[8].trim() : '';
+            const final1 = partes[9] ? partes[9].trim() : '';
+            const dia2 = partes[10] ? partes[10].trim() : '';
+            const inicio2 = partes[11] ? partes[11].trim() : '';
+            const final2 = partes[12] ? partes[12].trim() : '';
+            
+            if (!ciclosEsperados.includes(ciclo)) {
+                errores.push(`Línea ${numLinea + 1}: Ciclo inválido "${ciclo}"`);
+                return;
+            }
+            
+            let tipoFinal = '';
+            if (tipo.includes('TEORIA') || tipo.includes('TEÓRICA') || tipo === 'T') {
+                tipoFinal = 'teoria';
+            } else if (tipo.includes('LABORATORIO') || tipo.includes('LAB') || tipo === 'L') {
+                tipoFinal = 'laboratorio';
+            } else {
+                errores.push(`Línea ${numLinea + 1}: Tipo inválido "${tipo}" (debe ser TEORIA o LABORATORIO)`);
+                return;
+            }
+            
+            const diasValidos = ['LUNES', 'MARTES', 'MIÉRCOLES', 'JUEVES', 'VIERNES', 'SÁBADO'];
+            if (dia1 && !diasValidos.includes(dia1)) {
+                errores.push(`Línea ${numLinea + 1}: Día inválido "${dia1}"`);
+                return;
+            }
+            
+            if (dia1 && inicio1 && final1) {
+                const cursoObj = {
+                    nombre: curso,
+                    seccion: gr,
+                    profesor: docente,
+                    creditos: creditos,
+                    dia: dia1,
+                    hora: `${inicio1} - ${final1}`
+                };
+                nuevosDatos[ciclo][tipoFinal].push(cursoObj);
+                cursosProcesados++;
+            }
+            
+            if (dia2 && inicio2 && final2) {
+                const cursoObj2 = {
+                    nombre: curso,
+                    seccion: gr,
+                    profesor: docente,
+                    creditos: creditos,
+                    dia: dia2,
+                    hora: `${inicio2} - ${final2}`
+                };
+                nuevosDatos[ciclo][tipoFinal].push(cursoObj2);
+                cursosProcesados++;
+            }
+            
+        } catch (e) {
+            errores.push(`Línea ${numLinea + 1}: Error al procesar - ${e.message}`);
+        }
+    });
+    
+    for (const ciclo in nuevosDatos) {
+        if (nuevosDatos[ciclo].teoria.length === 0 && nuevosDatos[ciclo].laboratorio.length === 0) {
+            delete nuevosDatos[ciclo];
+        }
+    }
+    
+    if (errores.length > 0) {
+        console.warn('Errores en CSV:', errores);
+        if (cursosProcesados === 0) {
+            throw new Error(`No se pudo procesar ningún curso. Errores:\n${errores.join('\n')}`);
+        }
+        mostrarMensajePanel(`⚠️ ${cursosProcesados} cursos procesados con ${errores.length} advertencias`, 'info');
+    }
+    
+    return nuevosDatos;
+}
+
+function actualizarVistaPrevia() {
+    const div = document.getElementById('vistaPrevia');
+    const datosActuales = JSON.parse(localStorage.getItem('datosCursos')) || datos;
+    
+    let html = '';
+    let totalCursos = 0;
+    
+    for (const ciclo in datosActuales) {
+        const teoria = datosActuales[ciclo].teoria.length;
+        const laboratorio = datosActuales[ciclo].laboratorio.length;
+        const total = teoria + laboratorio;
+        totalCursos += total;
+        html += `<div class="resumen-linea">📂 ${ciclo}: ${total} cursos (Teoría: ${teoria} | Laboratorio: ${laboratorio})</div>`;
+    }
+    
+    html += `<div class="resumen-linea total">📊 Total: ${totalCursos} cursos en ${Object.keys(datosActuales).length} ciclos</div>`;
+    
+    if (totalCursos === 0) {
+        div.innerHTML = '<p>⚠️ No hay datos cargados. Carga un CSV o restaura los datos predeterminados.</p>';
+    } else {
+        div.innerHTML = html;
+    }
+}
+
+function verDatosActuales() {
+    actualizarVistaPrevia();
+    mostrarMensajePanel('📋 Vista previa actualizada', 'info');
+}
+
+function restaurarDatosDefault() {
+    if (!confirm('¿Estás seguro de que quieres restaurar los datos predeterminados? Se perderán los datos personalizados.')) {
+        return;
+    }
+    
+    Object.assign(datos, JSON.parse(JSON.stringify(DATOS_DEFAULT)));
+    localStorage.removeItem('datosCursos');
+    
+    // Actualizar lista de ciclos
+    ciclos.length = 0;
+    Object.keys(datos).forEach(c => ciclos.push(c));
+    
+    actualizarCursos();
+    actualizarVistaPrevia();
+    mostrarMensajePanel('🔄 Datos restaurados a los valores predeterminados', 'exito');
+}
+
+// ============================================================
+// CARGAR DATOS GUARDADOS AL INICIO
+// ============================================================
+
+function cargarDatosGuardados() {
+    try {
+        const datosGuardados = localStorage.getItem('datosCursos');
+        if (datosGuardados) {
+            const datosParseados = JSON.parse(datosGuardados);
+            if (typeof datosParseados === 'object' && Object.keys(datosParseados).length > 0) {
+                Object.assign(datos, datosParseados);
+                // Actualizar lista de ciclos
+                ciclos.length = 0;
+                Object.keys(datos).forEach(c => ciclos.push(c));
+                console.log('✅ Datos cargados desde LocalStorage');
+                return true;
+            }
+        }
+    } catch (e) {
+        console.warn('Error al cargar datos guardados:', e);
+    }
+    return false;
+}
+
+// ============================================================
+// INICIALIZACIÓN
+// ============================================================
+
+window.addEventListener('load', function() {
+    cargarModo();
+    cargarDatosGuardados();
+    actualizarCursos();
+    
+    try {
+        const horariosGuardados = JSON.parse(localStorage.getItem('horariosGuardados')) || [];
+        if (horariosGuardados.length > 0) {
+            setTimeout(() => {
+                mostrarMensaje(`📂 ${horariosGuardados.length} horario(s) guardado(s)`, '#3498db');
+            }, 500);
+        }
+    } catch (e) {}
+    
+    if (document.getElementById('panelDatos').style.display === 'block') {
+        actualizarVistaPrevia();
     }
 });
 
@@ -645,23 +903,3 @@ document.getElementById('btnSiguiente').onclick = () => cambiarCiclo(1);
 document.getElementById('btnTeoria').onclick = () => cambiarModo('teoria');
 document.getElementById('btnLaboratorio').onclick = () => cambiarModo('laboratorio');
 document.getElementById('btnModo').onclick = toggleModo;
-
-// ============================================================
-// INICIALIZAR
-// ============================================================
-cargarModo();
-actualizarCursos();
-
-// Mostrar horarios guardados al cargar
-window.addEventListener('load', function() {
-    try {
-        const horariosGuardados = JSON.parse(localStorage.getItem('horariosGuardados')) || [];
-        if (horariosGuardados.length > 0) {
-            console.log(`📂 ${horariosGuardados.length} horario(s) guardado(s)`);
-            // Opcional: mostrar un mensaje con la cantidad
-            setTimeout(() => {
-                mostrarMensaje(`📂 ${horariosGuardados.length} horario(s) guardado(s)`, '#3498db');
-            }, 500);
-        }
-    } catch (e) {}
-});
