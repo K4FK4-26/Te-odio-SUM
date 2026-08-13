@@ -1,4 +1,3 @@
-/* ========== ESTILOS GLOBALES ========== */
 * {
     margin: 0;
     padding: 0;
@@ -13,7 +12,6 @@ body {
     transition: background 0.3s, color 0.3s;
 }
 
-/* ========== MODO CLARO ========== */
 body.modo-claro {
     background: #f0f4f8;
     color: #2c3e50;
@@ -140,14 +138,12 @@ body.modo-claro .prompt-text {
     color: #e0e0e0;
 }
 
-/* ========== CONTENEDOR PRINCIPAL ========== */
 .container {
     max-width: 1500px;
     margin: 0 auto;
     padding: 20px;
 }
 
-/* ========== HEADER ========== */
 header {
     display: flex;
     justify-content: space-between;
@@ -216,14 +212,12 @@ header h1 {
     background: #7d3c98;
 }
 
-/* ========== CONTENIDO PRINCIPAL ========== */
 .main-content {
     display: flex;
     gap: 20px;
     min-height: 600px;
 }
 
-/* ========== COLUMNA IZQUIERDA ========== */
 .col-izquierda {
     flex: 1;
     background: #16213e;
@@ -241,7 +235,6 @@ header h1 {
     color: #e0e0e0;
 }
 
-/* ========== BUSCADOR ========== */
 .buscador-container {
     margin-bottom: 10px;
 }
@@ -267,7 +260,6 @@ header h1 {
     box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
 }
 
-/* ========== NAVEGACIÓN ========== */
 .nav-ciclos {
     display: flex;
     justify-content: center;
@@ -299,7 +291,6 @@ header h1 {
     text-align: center;
 }
 
-/* ========== SWITCH TEORÍA/LABORATORIO ========== */
 .switch-modo {
     display: flex;
     justify-content: center;
@@ -334,7 +325,6 @@ header h1 {
     background: #2ecc71;
 }
 
-/* ========== LISTA DE CURSOS ========== */
 .lista-cursos-container {
     max-height: 450px;
     overflow-y: auto;
@@ -364,7 +354,6 @@ header h1 {
     background: #2a3a5a;
 }
 
-/* ========== LEYENDA ========== */
 .leyenda {
     text-align: center;
     padding: 10px;
@@ -375,7 +364,6 @@ header h1 {
     color: #b0b0b0;
 }
 
-/* ========== COLUMNA DERECHA ========== */
 .col-derecha {
     flex: 2;
     background: #16213e;
@@ -407,7 +395,6 @@ header h1 {
     color: #b0b0b0;
 }
 
-/* ========== TABLA DEL HORARIO ========== */
 .tabla-container {
     flex: 1;
     overflow: auto;
@@ -446,7 +433,6 @@ table td.vacio {
     background: #1a1a2e;
 }
 
-/* ========== BLOQUES DE CURSOS ========== */
 .bloque-curso {
     padding: 6px 4px;
     border-radius: 6px;
@@ -483,7 +469,6 @@ table td.vacio {
     opacity: 0.8;
 }
 
-/* ========== BOTONES INFERIORES ========== */
 .botones-inferiores {
     display: flex;
     justify-content: center;
@@ -534,7 +519,6 @@ table td.vacio {
     background: #16a085;
 }
 
-/* ========== LABEL DE INFORMACIÓN ========== */
 .label-info {
     text-align: center;
     padding: 10px;
@@ -543,7 +527,6 @@ table td.vacio {
     transition: all 0.3s;
 }
 
-/* ========== RESPONSIVE ========== */
 @media (max-width: 900px) {
     .main-content {
         flex-direction: column;
@@ -610,7 +593,6 @@ table td.vacio {
     }
 }
 
-/* ========== ANIMACIONES ========== */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(-10px); }
     to { opacity: 1; transform: translateY(0); }
@@ -630,7 +612,6 @@ table td.vacio {
     animation: pulse 0.2s ease;
 }
 
-/* ========== SCROLLBAR PERSONALIZADA ========== */
 .lista-cursos-container::-webkit-scrollbar,
 .tabla-container::-webkit-scrollbar {
     width: 8px;
@@ -654,10 +635,7 @@ table td.vacio {
     background: #3a4a6a;
 }
 
-/* ================================================================ */
-/* PANEL DE GESTIÓN DE DATOS (MODAL) */
-/* ================================================================ */
-
+/* MODAL */
 .modal {
     display: none;
     position: fixed;
@@ -940,10 +918,6 @@ table td.vacio {
     padding-top: 8px;
     border-top: 2px solid #3498db;
 }
-
-/* ================================================================ */
-/* RESPONSIVE - PANEL */
-/* ================================================================ */
 
 @media (max-width: 768px) {
     .modal-content {
