@@ -111,24 +111,30 @@
                         <div class="prompt-text" id="promptText">
 Proporciona el contenido en formato CSV (solo texto, sin cabecera) con las siguientes columnas en este orden: CICLO,CRÉDITOS,CURSO,TIPO,HRS,GR,DOCENTE,DIA1,INICIO1,FINAL1,DIA2,INICIO2,FINAL2.
 
-Reglas:
-• Asigna el valor 0 a todos los registros en la columna HRS
-• En la columna TIPO, solo deben aparecer dos opciones: 'TEORIA' o 'LABORATORIO' (considera 'TEORÍA Y PRÁCTICA' como 'TEORIA')
-• No modifiques el contenido de la columna DOCENTE, incluso si contiene dos nombres
-• Días válidos: LUNES, MARTES, MIÉRCOLES, JUEVES, VIERNES, SÁBADO
-• Horas en formato: HH:MM (ejemplo: 08:00, 13:00, 17:00)
-• Si un curso tiene 2 días diferentes, usa DIA2, INICIO2, FINAL2
-• Si un curso solo tiene 1 día, deja DIA2, INICIO2, FINAL2 vacíos
-• Los ciclos son: Ciclo 2, Ciclo 3, Ciclo 4, Ciclo 5, Ciclo 6
-• La columna GR es el número de grupo/sección (ejemplo: 01, 02, 03 para teoría, 00 para laboratorio)
-• Extrae TODOS los cursos que aparecen en el PDF
+REGLAS ESTRICTAS:
+1. CICLO: Solo estos valores exactos: "Ciclo 2", "Ciclo 3", "Ciclo 4", "Ciclo 5", "Ciclo 6". NO uses "Ciclo 0" ni "Ciclo 1".
+2. CRÉDITOS: Número entero (2, 3, 4, etc.)
+3. CURSO: El nombre COMPLETO del curso, sin abreviaturas.
+4. TIPO: Solo "TEORIA" o "LABORATORIO" (sin acentos, todo mayúsculas)
+5. HRS: Siempre 0 (cero)
+6. GR: Número de grupo (01, 02, 03, etc. para teoría; 00 para laboratorio)
+7. DOCENTE: Nombre completo del profesor. Si no aparece, usa "No especificado" (NUNCA dejes vacío).
+8. DIA1, INICIO1, FINAL1: Día y hora del primer horario.
+9. DIA2, INICIO2, FINAL2: Si el curso tiene UN SOLO horario, déjalos VACÍOS (,,). Si tiene DOS horarios diferentes, llena DIA2, INICIO2, FINAL2.
+
+FORMATO EXACTO - EJEMPLOS:
+✅ CORRECTO (1 día): Ciclo 2,3,TOPOGRAFÍA APLICADA A LA INGENIERÍA CIVIL I,TEORIA,0,01,CRUZ MONTES, FRANCI BENITO,MIERCOLES,12:00,13:00,,,
+✅ CORRECTO (2 días): Ciclo 2,3,GEOMETRÍA DESCRIPTIVA,TEORIA,0,01,RAMIREZ PEJERREY, VICTOR NICOLAS,MARTES,18:00,20:00,JUEVES,08:00,10:00
+❌ INCORRECTO: Ciclo 5,3,GEOLOGÍA APLICADA A LA INGENIERÍA CIVIL,TEORIA,0,01,TOLENTINO YPARRAGUIRRE, VICTOR,LUNES,16:00,18:00,,,
+
+OTRAS REGLAS:
+- NO uses "Ciclo 0" - todos los cursos están en Ciclo 2, 3, 4, 5 o 6
+- Si un profesor no aparece, usa "No especificado"
+- NO agregues comas extra al final de la línea
+- Cada línea debe tener EXACTAMENTE 13 columnas
+- Extrae TODOS los cursos del PDF, incluyendo teoría y laboratorio
 
 ⚠️ IMPORTANTE: Solo responde con el CSV, sin texto adicional, sin explicaciones, sin markdown, sin comillas triples.
-
-Ejemplo de formato CSV:
-Ciclo 2,3,TOPOGRAFÍA APLICADA A LA INGENIERÍA CIVIL I,TEORIA,0,01,CRUZ MONTES, FRANCI BENITO,MIERCOLES,12:00,13:00,,,
-Ciclo 2,3,TOPOGRAFÍA APLICADA A LA INGENIERÍA CIVIL I,LABORATORIO,0,00,CRUZ MONTES, FRANCI BENITO,MIERCOLES,13:00,17:00,,,
-Ciclo 3,4,CÁLCULO III,TEORIA,0,01,BUSTAMANTE RAMOS, ELVIS,MIERCOLES,08:00,11:00,,,
                         </div>
                         <div class="prompt-botones">
                             <button class="btn-copiar" onclick="copiarPrompt()">📋 Copiar Prompt</button>
