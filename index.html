@@ -6,42 +6,63 @@
     <title>Generador de Horarios - UNMSM</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="modo-oscuro">
+<body>
+    <!-- Fondo con el escudo de la UNMSM -->
+    <div class="fondo-escudo"></div>
+
     <div class="container">
         <header>
-            <h1>Generador de Horarios - UNMSM</h1>
+            <h1>📚 GENERADOR DE HORARIOS - UNMSM</h1>
             <div class="header-botones">
-                <button id="btnModo" class="btn-modo">Modo Claro</button>
-                <button id="btnGuardar" class="btn-guardar">Guardar Horario</button>
-                <button id="btnGestionarDatos" class="btn-gestionar">Gestionar Datos</button>
+                <button id="btnModo" class="btn-modo">🌙 Modo Oscuro</button>
+                <button id="btnGuardar" class="btn-guardar">💾 Guardar</button>
+                <button id="btnGestionarDatos" class="btn-gestionar">📊 Gestionar Datos</button>
             </div>
         </header>
 
-        <div class="main-content">
+        <!-- Mensaje de bienvenida cuando no hay datos -->
+        <div id="mensajeBienvenida" class="mensaje-bienvenida">
+            <div class="bienvenida-content">
+                <h2>🏛️ Bienvenido al Generador de Horarios</h2>
+                <p>Para comenzar, haz clic en <strong>"Gestionar Datos"</strong> y carga tus cursos.</p>
+                <p>📋 <strong>Pasos:</strong></p>
+                <ol>
+                    <li>Descarga tu <strong>Programación de Asignaturas</strong> (PDF) desde el sistema de la universidad</li>
+                    <li>Usa una IA (ChatGPT, Claude, etc.) con el <strong>prompt que te proporcionamos</strong></li>
+                    <li>Pega el <strong>CSV generado</strong> en el panel de gestión</li>
+                    <li>¡Listo! Tus cursos aparecerán automáticamente</li>
+                </ol>
+                <button id="btnIrGestionar" class="btn-gestionar-grande">📊 Ir a Gestionar Datos</button>
+            </div>
+        </div>
+
+        <div class="main-content" id="mainContent" style="display:none;">
             <div class="col-izquierda">
-                <h2>Cursos Disponibles</h2>
+                <h2>📋 Cursos Disponibles</h2>
                 <div class="buscador-container">
-                    <input type="text" id="buscador" placeholder="Buscar curso...">
+                    <input type="text" id="buscador" placeholder="🔍 Buscar curso...">
                 </div>
                 <div class="nav-ciclos">
-                    <button id="btnAnterior" class="btn-nav"><</button>
+                    <button id="btnAnterior" class="btn-nav">◄</button>
                     <span id="labelCiclo" class="label-ciclo">CICLO 2</span>
-                    <button id="btnSiguiente" class="btn-nav">></button>
+                    <button id="btnSiguiente" class="btn-nav">►</button>
                 </div>
                 <div class="switch-modo">
-                    <button id="btnTeoria" class="btn-teoria activo">Teoria</button>
-                    <button id="btnLaboratorio" class="btn-laboratorio">Laboratorio</button>
+                    <button id="btnTeoria" class="btn-teoria activo">📖 Teoría</button>
+                    <button id="btnLaboratorio" class="btn-laboratorio">🔬 Laboratorio</button>
                 </div>
                 <div class="lista-cursos-container">
-                    <ul id="listaCursos"></ul>
+                    <ul id="listaCursos">
+                        <li style="text-align:center;padding:20px;color:#7f8c8d;">No hay cursos cargados. Ve a "Gestionar Datos"</li>
+                    </ul>
                 </div>
-                <div class="leyenda">Click en curso -> Agregar/Quitar</div>
+                <div class="leyenda">💡 Click en curso → Agregar/Quitar</div>
             </div>
             
             <div class="col-derecha">
                 <div class="header-horario">
-                    <h2>Mi Horario</h2>
-                    <span id="labelCreditos" class="label-creditos">Creditos: 0 | Cursos: 0</span>
+                    <h2>📅 Mi Horario</h2>
+                    <span id="labelCreditos" class="label-creditos">Créditos: 0 | Cursos: 0</span>
                 </div>
                 <div class="tabla-container" id="tablaContainer">
                     <table id="tablaHorario">
@@ -50,10 +71,10 @@
                                 <th>Hora</th>
                                 <th>LUNES</th>
                                 <th>MARTES</th>
-                                <th>MIERCOLES</th>
+                                <th>MIÉRCOLES</th>
                                 <th>JUEVES</th>
                                 <th>VIERNES</th>
-                                <th>SABADO</th>
+                                <th>SÁBADO</th>
                             </tr>
                         </thead>
                         <tbody id="cuerpoHorario"></tbody>
@@ -62,15 +83,15 @@
             </div>
         </div>
         
-        <div class="botones-inferiores">
-            <button id="btnGenerar" class="btn-generar">Generar Automatico</button>
-            <button id="btnLimpiar" class="btn-limpiar">Limpiar</button>
-            <button id="btnExportarTexto" class="btn-exportar">Exportar Texto</button>
-            <button id="btnExportarImagen" class="btn-exportar-imagen">Exportar Imagen</button>
+        <div class="botones-inferiores" id="botonesInferiores" style="display:none;">
+            <button id="btnGenerar" class="btn-generar">⚡ Generar</button>
+            <button id="btnLimpiar" class="btn-limpiar">🗑️ Limpiar</button>
+            <button id="btnExportarTexto" class="btn-exportar">📄 Texto</button>
+            <button id="btnExportarImagen" class="btn-exportar-imagen">🖼️ Imagen</button>
         </div>
         
         <div id="labelInfo" class="label-info">
-            Haz click en un curso para agregarlo/quitarlo del horario
+            💡 Haz click en un curso para agregarlo/quitarlo del horario
         </div>
     </div>
 
@@ -78,58 +99,56 @@
     <div id="panelDatos" class="modal" style="display:none;">
         <div class="modal-content">
             <div class="modal-header">
-                <h2>Gestion de Datos de Cursos</h2>
-                <button class="modal-close" id="btnCerrarModal">X</button>
+                <h2>📊 GESTIÓN DE DATOS</h2>
+                <button class="modal-close" id="btnCerrarModal">✕</button>
             </div>
             <div class="modal-body">
                 <div class="seccion-prompt">
-                    <h3>1. Copiar Prompt para IA (CSV)</h3>
+                    <h3>📋 1. COPIAR PROMPT PARA IA</h3>
                     <div class="prompt-box">
-                        <p><strong>Instrucciones para la IA:</strong></p>
                         <div class="prompt-text" id="promptText">
-Proporciona el contenido en formato CSV (solo texto, sin cabecera) con las siguientes columnas en este orden: CICLO,CREDITOS,CURSO,TIPO,HRS,GR,DOCENTE,DIA1,INICIO1,FINAL1,DIA2,INICIO2,FINAL2.
+Proporciona el contenido en formato CSV (solo texto, sin cabecera) con las siguientes columnas en este orden:
+CICLO,CRÉDITOS,CURSO,TIPO,HRS,GR,DOCENTE,DIA1,INICIO1,FINAL1,DIA2,INICIO2,FINAL2
 
 REGLAS:
-1. CICLO: Usa "Ciclo 2", "Ciclo 3", "Ciclo 4", "Ciclo 5" o "Ciclo 6"
-2. CREDITOS: Numero entero (2, 3, 4, etc.)
-3. CURSO: El nombre completo del curso
-4. TIPO: Solo "TEORIA" o "LABORATORIO"
-5. HRS: Siempre 0
-6. GR: Numero de grupo (01, 02, etc. para teoria; 00 para laboratorio)
-7. DOCENTE: Nombre completo. Si no aparece, usa "No especificado"
-8. DIA1, INICIO1, FINAL1: Dia y hora del primer horario
-9. DIA2, INICIO2, FINAL2: Si tiene 2 dias, llenar; si no, dejar vacios (,,)
+- CICLO: "Ciclo 2", "Ciclo 3", "Ciclo 4", "Ciclo 5" o "Ciclo 6"
+- TIPO: "TEORIA" o "LABORATORIO"
+- DOCENTE: Si no aparece, usa "No especificado"
+- Días válidos: LUNES, MARTES, MIÉRCOLES, JUEVES, VIERNES, SÁBADO
+- Horas en formato: HH:MM
+- Si tiene 2 días, llenar DIA2, INICIO2, FINAL2
+- Si solo tiene 1 día, dejar DIA2, INICIO2, FINAL2 vacíos (,,)
 
-IMPORTANTE: Solo responde con el CSV, sin texto adicional.
+⚠️ IMPORTANTE: Solo responde con el CSV, sin texto adicional.
                         </div>
                         <div class="prompt-botones">
-                            <button id="btnCopiarPrompt" class="btn-copiar">Copiar Prompt</button>
-                            <button id="btnCopiarEjemplo" class="btn-ejemplo">Copiar Ejemplo CSV</button>
+                            <button id="btnCopiarPrompt" class="btn-copiar">📋 Copiar Prompt</button>
+                            <button id="btnCopiarEjemplo" class="btn-ejemplo">📋 Copiar Ejemplo</button>
                         </div>
                     </div>
                 </div>
 
                 <div class="seccion-csv">
-                    <h3>2. Pega el CSV que te dio la IA</h3>
-                    <textarea id="csvInput" class="csv-textarea" placeholder="Pega aqui el CSV que te dio la IA..."></textarea>
+                    <h3>📋 2. PEGA EL CSV GENERADO</h3>
+                    <textarea id="csvInput" class="csv-textarea" placeholder="Pega aquí el CSV que te dio la IA..."></textarea>
                     <div class="csv-botones">
-                        <button id="btnProcesarCSV" class="btn-procesar">Procesar CSV</button>
-                        <button id="btnVerDatos" class="btn-ver-datos">Ver Datos Actuales</button>
-                        <button id="btnLimpiarCSV" class="btn-limpiar-csv">Limpiar</button>
+                        <button id="btnProcesarCSV" class="btn-procesar">📥 Procesar CSV</button>
+                        <button id="btnVerDatos" class="btn-ver-datos">👁️ Ver Datos</button>
+                        <button id="btnLimpiarCSV" class="btn-limpiar-csv">🗑️ Limpiar</button>
                     </div>
                     <div id="mensajeProcesamiento" class="mensaje-procesamiento"></div>
                 </div>
 
                 <div class="seccion-preview">
-                    <h3>3. Vista Previa de Datos Actuales</h3>
+                    <h3>📊 3. VISTA PREVIA</h3>
                     <div id="vistaPrevia" class="vista-previa">
-                        <p>Cargando datos...</p>
+                        <p>No hay datos cargados.</p>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="btnRestaurar" class="btn-restaurar">Restaurar Datos Predeterminados</button>
-                <button id="btnCerrarModalFooter" class="btn-cerrar-modal">Cerrar</button>
+                <button id="btnRestaurar" class="btn-restaurar">🔄 Restaurar</button>
+                <button id="btnCerrarModalFooter" class="btn-cerrar-modal">✕ Cerrar</button>
             </div>
         </div>
     </div>
